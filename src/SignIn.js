@@ -1,7 +1,7 @@
 import React from 'react'
 import { 
     View, Text, StyleSheet, ImageBackground, Image, Platform,
-    KeyboardAvoidingView, ActivityIndicator
+    KeyboardAvoidingView, ActivityIndicator, AsyncStorage
 } from 'react-native';
 import { 
     Container, Header, Left, Body, Right, Button, Icon, 
@@ -44,6 +44,14 @@ class SignIn extends React.Component{
         loading: false
       };
 
+      session(data){
+        try {
+          AsyncStorage.setItem('profile', JSON.stringify(data));
+        } catch (error) {
+          // Error saving data
+        }
+      }
+
       login(){
           this.setState({loading: true})
           fetch('http://azizpc.codepanda.web.id/api/auth/login',{
@@ -63,6 +71,7 @@ class SignIn extends React.Component{
                             // console.error(responseJSON)
                             alert("Login Berhasil")
                             this.setState({loading: false})
+                            this.session(responseJSON)
                             this.redirect_Home(responseJSON)
                         }
                         else{

@@ -36,6 +36,7 @@ export default class App extends React.Component {
   }
   state = {
     fontLoaded: false,
+    myProfile : false
   }
   // async componentWillMount() {
   //   await Expo.Font.loadAsync({
@@ -49,17 +50,21 @@ export default class App extends React.Component {
     try {
       const value = await AsyncStorage.getItem('profile');
       let parsed  = JSON.parse(value)
+      // console.error(parsed.data.nama)
       if (value !== null){
         // We have data!!
         console.error(parsed.nama);
+        this.setState({ myProfile: true });
       }
     } catch (error) {
       // Error retrieving data
+      console.error("erro")
     }
   }
 
   render() {
-    if(this.parsed === null){
+    if(!this.state.myProfile){
+      // console.error(this.state.myProfile)
       if(this.state.fontLoaded){
         return (
           <View style={styles.container}>
@@ -76,6 +81,7 @@ export default class App extends React.Component {
       }
     }
     else{
+      console.error(this.state.myProfile)
       if(this.state.fontLoaded){
         return (
           <View style={styles.container}>

@@ -39,7 +39,7 @@ export default class HomeScreen extends React.Component {
     super(props)
     // this.data = this.props.navigation.state.params.data
     // this.session(this.data)
-    // this.fetchProfile();
+    this.fetchProfile();
   }
   
   session(data){
