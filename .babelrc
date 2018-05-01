@@ -1,3 +1,12 @@
 {
+<<<<<<< HEAD
   "presets": ["react-native"]
+=======
+  "presets": ["babel-preset-expo"],
+  "env": {
+    "development": {
+      "plugins": ["transform-react-jsx-source"]
+    }
+  }
+>>>>>>> 21b9a14f71c90611e1ce42fa5bafc1d17c350a8e
 }

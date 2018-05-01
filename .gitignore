@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # OSX
 #
 .DS_Store
@@ -54,3 +55,8 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+=======
+node_modules/**/*
+.expo/*
+npm-debug.*
+>>>>>>> 21b9a14f71c90611e1ce42fa5bafc1d17c350a8e
