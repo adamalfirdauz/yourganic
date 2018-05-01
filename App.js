@@ -53,7 +53,7 @@ export default class App extends React.Component {
       // console.error(parsed.data.nama)
       if (value !== null){
         // We have data!!
-        console.error(parsed.nama);
+        // console.error(parsed.nama);
         this.setState({ myProfile: true });
       }
     } catch (error) {
