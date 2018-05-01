@@ -93,86 +93,74 @@ class SignIn extends React.Component{
 
     render() {
         return (
-            <ImageBackground source={myBackground}
-                style={{ width: '100%', height: '100%' }}>
-                <ScrollView style={{flex:1}}>
-                    <KeyboardAvoidingView behavior="padding">
-                        <Image source={logo} style={styles.logo} />
-                        <ActivityIndicator animating={this.state.loading}/>
-                        <Content>
-                            {/* <Text style={styles.titleStyle}>Welcome to Yourganic!</Text> */}
-                            <Form>
-                                <Item floatingLabel>
-                                    <Label style={styles.labelStyle}>Email</Label>
-                                    <Input 
-                                    style={styles.inputTextStyle} 
-                                    onChangeText={(email) => this.setState({email})} 
-                                    />
-                                </Item>
-                                <Item floatingLabel last>
-                                    <Label style={styles.labelStyle}>Password</Label>
-                                    <Input 
-                                    style={styles.inputTextStyle} 
-                                    onChangeText={(password) => this.setState({password})} 
-                                    />
-                                </Item>
-                            </Form>
+            <Container style={styles.container}>
+                <View style={{ flex: 2, alignSelf: 'center' }}>
+                    <Image source={logo} style={styles.logo} />
+                </View>
+                <View style={{ flex: 2, alignSelf: 'stretch', flexDirection: 'column' }}>
+                    <KeyboardAvoidingView style={{ flex: 2 }}>
+                        <View style={{ flex: 3, paddingHorizontal: 20 }}>
+                            <Item floatingLabel>
+                                <Label style={styles.labelStyle}>Email</Label>
+                                <Input
+                                    style={styles.inputTextStyle}
+                                    onChangeText={(email) => this.setState({ email })}
+                                />
+                            </Item>
+                            <Item floatingLabel>
+                                <Label style={styles.labelStyle}>Password</Label>
+                                <Input
+                                    style={styles.inputTextStyle}
+                                    onChangeText={(password) => this.setState({ password })}
+                                />
+                            </Item>
                             <Button
                                 onPress={() => this.login()}
                                 block={true}
                                 style={styles.buttonStyle}>
-                                <Text style={styles.buttonTextStyle}>Sign In</Text>
-                                
+                                <Text style={styles.buttonTextStyle}>Login</Text>
                             </Button>
-                            <Text style={{ color: 'white', alignSelf: 'center', marginTop: 60, }}> Dont have account? SIGN UP</Text>
-                        </Content>
+                            <View>
+                                <Text style={{ color: 'white', alignSelf: 'center' }}> Dont have an account? Register here.</Text>
+                            </View>
+                        </View>
                     </KeyboardAvoidingView>
-                </ScrollView>
-            </ImageBackground>
+                </View>
+            </Container>
         );
     }
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#00c600',
         alignItems: 'center',
-        justifyContent: 'center', 
+        justifyContent: 'center',
     },
     titleStyle: {
-        fontSize: 25,
-        color: 'white',
-        // alignItems: 'center',
-        alignSelf: 'center'
     },
     buttonStyle: {
-        marginTop: 10,
-        marginBottom: 10,
+        marginVertical: 20,
+        borderRadius: 20,
+        backgroundColor: '#009400'
     },
     buttonTextStyle: {
         color: 'white'
     },
     logo: {
-        // flex: 1,
+        flex: 1,
         justifyContent: 'center',
-        marginTop: 70,
-        marginBottom: 50,
         width: 250,
         height: 250,
         resizeMode: 'contain',
-        alignSelf: 'center',
     },
     headerStyle: {
-        backgroundColor: 'transparent', 
-        marginTop: Platform.OS === "android" ? 13 : 0,
-        // paddingTop: 18,
-        // marginTop: Platform.OS === "android" ? 18 : 0,
-        // backgroundColor: 'gray',
     },
     labelStyle: {
         color: 'white',
     },
-    inputTextStyle: { 
-        color: 'white' 
+    inputTextStyle: {
+        color: 'white',
     }
 });
 

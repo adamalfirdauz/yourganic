@@ -1,5 +1,8 @@
 import React from 'react'
-import { View, Text, StyleSheet, ImageBackground, Image, Platform} from 'react-native';
+import { 
+    View, Text, StyleSheet, ImageBackground, Image, Platform,
+    KeyboardAvoidingView
+} from 'react-native';
 import { 
     Container, Header, Left, Body, Right, Button, Icon, 
     Title, Content, FooterTab, Footer, Form, Item, Input ,
@@ -37,31 +40,30 @@ class Mains extends React.Component{
 
     render() {
         return (
-            <Container style={styles.headerStyle}>
-                <ImageBackground source={myBackground}
-                    style={{ width: '100%', height: '100%' }}>
-                    <ScrollView style={{flex: 1}}>
-                        <Image source={logo} style={styles.logo} />
-                        <Text style={styles.titleStyle}>Welcome to Yourganic!</Text>
-
-                        <Button
-                            block={true}
-                            style={styles.buttonStyle}
-                            onPress={() => this.redirect_signIn()}
+            <Container style={styles.container}>
+                <View style={{ flex: 2, alignSelf: 'center', flexDirection: 'column', alignItems: 'center' }}>
+                    <Image source={logo} style={styles.logo} />
+                </View>
+                <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'column' }}>
+                    <View style={{ flex: 2 }}>
+                        <View style={{ flex: 3, paddingHorizontal: 20 }}>
+                            <Button
+                                block={true}
+                                style={styles.buttonStyle}
+                                onPress={() => this.redirect_signIn()}
                             >
-                            <Text style={styles.buttonTextStyle}>Sign In</Text>
-                        </Button>
-
-                        <Button
-                            block={true}
-                            style={styles.buttonRegister}
-                            onPress={() => this.redirect_register()}
+                                <Text style={styles.buttonTextStyle}>Login</Text>
+                            </Button>
+                            <Button
+                                block={true}
+                                style={styles.buttonStyle}
+                                onPress={() => this.redirect_register()}
                             >
-                            <Text style={styles.buttonTextStyle}>Register</Text>
-                        </Button>
-                        {/* </Container> */}
-                    </ScrollView>
-                </ImageBackground>
+                                <Text style={styles.buttonTextStyle}>Register</Text>
+                            </Button>
+                        </View>
+                    </View>
+                </View>
             </Container>
         );
     }
@@ -69,53 +71,25 @@ class Mains extends React.Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#00c600',
         alignItems: 'center',
-        justifyContent: 'center', 
-    },
-    titleStyle: {
-        fontSize: 25,
-        color: 'white',
-        alignSelf: 'center'
+        justifyContent: 'center',
     },
     buttonStyle: {
-        margin: 30,
-        width:150,
-        backgroundColor: 'grey'
+        marginVertical: 10,
+        borderRadius: 20,
+        backgroundColor: '#009400'
     },
     buttonTextStyle: {
         color: 'white'
     },
-
-    buttonRegister:{
-        width:150,
-        // backgroundColor: 'grey',
-        left : 200,
-        top: 385.2,
-        position : 'absolute'
-    },
-
     logo: {
         flex: 1,
-        alignSelf: 'center',
         justifyContent: 'center',
-        marginTop: 25,
-        // marginBottom: 20,
-        width: 300,
-        height: 300,
-        resizeMode: 'contain'
-    },
-    headerStyle: {
-        // paddingTop: 18,
-        // marginTop: Platform.OS === "android" ? 18 : 0,
-        backgroundColor: 'gray',
-    },
-    labelStyle: {
-        color: 'white',
-    },
-    inputTextStyle: { 
-        color: 'white' 
-    },
-    
+        width: 250,
+        height: 250,
+        resizeMode: 'contain',
+    },    
 });
 
 export default Mains;

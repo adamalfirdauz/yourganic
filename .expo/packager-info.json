@@ -1,0 +1,8 @@
+{
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://93-565.adamfir.yourganic.exp.direct",
+  "packagerNgrokUrl": "https://packager.93-565.adamfir.yourganic.exp.direct",
+  "ngrokPid": 5552,
+  "packagerPort": 19001,
+  "packagerPid": 5414
+}
