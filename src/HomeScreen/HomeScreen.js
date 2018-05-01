@@ -13,7 +13,10 @@ import { View,
   Platform,
   KeyboardAvoidingView,
   StatusBar, 
-  AsyncStorage } from "react-native";
+  AsyncStorage,
+  FlatList,
+  TouchableOpacity
+ } from "react-native";
 import {
   Button,
   Text,
@@ -67,8 +70,8 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      <Container>
-        <Header style={styles.headerStyle}>
+      <Container style={{flex:1, backgroundColor:'white'}}>
+        <Header style={styles.headerStyle} androidStatusBarColor='#004600' noShadow>
           <Left>
             <Button
               transparent
@@ -78,11 +81,28 @@ export default class HomeScreen extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>HomeScreen</Title>
+            <Title>Home</Title>
           </Body>
           <Right />
         </Header>
-        <Content>
+        <Content style={styles.content}>
+          <View style={styles.FlatList}>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={[
+                { key: 'SAYURAN' },
+                { key: 'BUAH' },
+                { key: 'MENU SEHAT' },
+              ]}
+              renderItem={({ item }) => (
+                <TouchableOpacity >
+                  <Text style={styles.item}>{item.key}</Text>
+                </TouchableOpacity>
+              )
+              }
+            />
+          </View>
           <Card style={styles.carding}>
             <Image style={styles.cardImage}
               source={sayur}
@@ -105,35 +125,39 @@ export default class HomeScreen extends React.Component {
 }
 const styles = StyleSheet.create({
   headerStyle: {
-      backgroundColor: 'green',
-      height: 50,
-      paddingTop: Platform.OS === "android" ? 2 : 0,
-      // paddingTop: 18,
-      // marginTop: Platform.OS === "android" ? 18 : 0,
-      // backgroundColor: 'gray',
+    backgroundColor: '#007300',
+    padding: Platform.OS === "android" ? 20 : 0,
+    paddingTop: 18,
+  },
+  content: {
+    flex: 10
+  },
+  FlatList: {
+    flex: 5,
+    backgroundColor:'#007300',
   },
   carding: {
-      margin: 20,
-      marginLeft: 10,
-      width : 360
+    margin: 20,
+    marginLeft: 10,
+    width : 360
   },
   container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center', 
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center', 
   },
   titleStyle: {
-      fontSize: 25,
-      color: 'white',
-      // alignItems: 'center',
-      alignSelf: 'center'
+    fontSize: 25,
+    color: 'white',
+    // alignItems: 'center',
+    alignSelf: 'center'
   },
   buttonStyle: {
-      marginTop: 10,
-      marginBottom: 10,
+    marginTop: 10,
+    marginBottom: 10,
   },
   buttonTextStyle: {
-      color: 'white'
+    color: 'white'
   },
   cardImage: {
     width: 360,
@@ -144,19 +168,31 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   logo: {
-      // flex: 1,
-      justifyContent: 'center',
-      marginTop: 70,
-      marginBottom: 50,
-      width: 250,
-      height: 250,
-      resizeMode: 'contain',
-      alignSelf: 'center',
+    // flex: 1,
+    justifyContent: 'center',
+    marginTop: 70,
+    marginBottom: 50,
+    width: 250,
+    height: 250,
+    resizeMode: 'contain',
+    alignSelf: 'center',
   },
   labelStyle: {
-      color: 'white',
+    color: 'white',
   },
   inputTextStyle: { 
-      color: 'white' 
-  }
+    color: 'white' 
+  },
+  item: {
+    // backgroundColor: '#004600',
+    // borderRadius: 50,
+    // paddingVertical: 3,
+    paddingHorizontal:16,
+    // marginTop:3,
+    marginHorizontal:4,
+    fontSize: 16,
+    height: 32,
+    color: 'white',
+    fontWeight: 'bold'
+  },
 });

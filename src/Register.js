@@ -1,7 +1,7 @@
 import React from 'react'
 import {
     View,Text,StyleSheet,ImageBackground, TextInput, ScrollView, ActivityIndicator,
-    Image, KeyboardAvoidingView
+    Image, KeyboardAvoidingView, StatusBar
 } from 'react-native';
 import { 
     Container, Header, Left, Body, Right, Button, Icon, 
@@ -95,6 +95,10 @@ class Register extends React.Component{
         // const { navigate } = this.props.navigation;
         return (
             <Container style={styles.container}>
+                <StatusBar
+                    backgroundColor="#004600"
+                    barStyle="light-content"
+                />
                 <View style={{ flex: 1, alignSelf: 'center' }}>
                     <Image source={logo} style={styles.logo} />
                 </View>
@@ -153,7 +157,7 @@ class Register extends React.Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#00c600',
+        backgroundColor: '#007300',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
     buttonStyle: {
         marginVertical: 20,
         borderRadius: 20,
-        backgroundColor: '#009400'
+        backgroundColor: '#004600'
     },
     buttonTextStyle: {
         color: 'white'

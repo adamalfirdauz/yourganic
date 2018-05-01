@@ -1,7 +1,7 @@
 import React from 'react'
 import { 
     View, Text, StyleSheet, ImageBackground, Image, Platform,
-    KeyboardAvoidingView, ActivityIndicator, AsyncStorage
+    KeyboardAvoidingView, ActivityIndicator, AsyncStorage, StatusBar
 } from 'react-native';
 import { 
     Container, Header, Left, Body, Right, Button, Icon, 
@@ -37,53 +37,52 @@ class SignIn extends React.Component{
     }
     constructor(props) {
         super(props);
-      }
-      state = {
+    }
+    state = {
         email: '',
         password:'',
         loading: false
-      };
+    };
 
-      session(data){
+    session(data){
         try {
-          AsyncStorage.setItem('profile', JSON.stringify(data));
+            AsyncStorage.setItem('profile', JSON.stringify(data));
         } catch (error) {
-          // Error saving data
+            // Error saving data
         }
-      }
+    }
 
-      login(){
-          this.setState({loading: true})
-          fetch('http://azizpc.codepanda.web.id/api/auth/login',{
-              method: 'post',
-              headers:{
-                  Accept: 'application/json',
-                  'Content-type' : 'application/json' 
-              },
-              body:JSON.stringify({
-                  email: this.state.email,
-                  password: this.state.password,
-              })
-
-          }).then((response)=> response.json())
-                    .then((responseJSON)=> {
-                        if(responseJSON.data){
-                            // console.error(responseJSON)
-                            alert("Login Berhasil")
-                            this.setState({loading: false})
-                            this.session(responseJSON)
-                            this.redirect_Home(responseJSON)
-                        }
-                        else{
-                            // console.error(responseJSON)
-                            alert("Login gagal, periksa email dan password anda")
-                            this.setState({loading: false})
-                        }
-                    })
-                    .catch((error)=>{
-                        console.error(error)
-                    })
-      }
+    login(){
+        this.setState({loading: true})
+        fetch('http://azizpc.codepanda.web.id/api/auth/login',{
+            method: 'post',
+            headers:{
+                Accept: 'application/json',
+                'Content-type' : 'application/json' 
+            },
+            body:JSON.stringify({
+                email: this.state.email,
+                password: this.state.password,
+            })
+        }).then((response)=> response.json())
+                .then((responseJSON)=> {
+                    if(responseJSON.data){
+                        // console.error(responseJSON)
+                        // alert("Login Berhasil")
+                        this.setState({loading: true})
+                        this.session(responseJSON)
+                        this.redirect_Home(responseJSON)
+                    }
+                    else{
+                        // console.error(responseJSON)
+                        alert("Login gagal, periksa email dan password anda")
+                        this.setState({loading: false})
+                    }
+                })
+                .catch((error)=>{
+                    console.error(error)
+                })
+    }
     redirect(){
         this.props.navigation.navigate('Register')
     }
@@ -94,6 +93,10 @@ class SignIn extends React.Component{
     render() {
         return (
             <Container style={styles.container}>
+                <StatusBar
+                    backgroundColor="#004600"
+                    barStyle="light-content"
+                />
                 <View style={{ flex: 2, alignSelf: 'center' }}>
                     <Image source={logo} style={styles.logo} />
                     <ActivityIndicator size="large" animating={this.state.loading}/>
@@ -135,7 +138,7 @@ class SignIn extends React.Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#00c600',
+        backgroundColor: '#007300',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -144,7 +147,7 @@ const styles = StyleSheet.create({
     buttonStyle: {
         marginVertical: 20,
         borderRadius: 20,
-        backgroundColor: '#009400'
+        backgroundColor: '#004600'
     },
     buttonTextStyle: {
         color: 'white'
