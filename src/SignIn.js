@@ -96,6 +96,7 @@ class SignIn extends React.Component{
             <Container style={styles.container}>
                 <View style={{ flex: 2, alignSelf: 'center' }}>
                     <Image source={logo} style={styles.logo} />
+                    <ActivityIndicator size="large" animating={this.state.loading}/>
                 </View>
                 <View style={{ flex: 2, alignSelf: 'stretch', flexDirection: 'column' }}>
                     <KeyboardAvoidingView style={{ flex: 2 }}>
@@ -111,6 +112,7 @@ class SignIn extends React.Component{
                                 <Label style={styles.labelStyle}>Password</Label>
                                 <Input
                                     style={styles.inputTextStyle}
+                                    secureTextEntry={true}
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
