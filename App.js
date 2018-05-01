@@ -81,7 +81,7 @@ export default class App extends React.Component {
       }
     }
     else{
-      console.error(this.state.myProfile)
+      // console.error(this.state.myProfile)
       if(this.state.fontLoaded){
         return (
           <View style={styles.container}>

@@ -56,7 +56,7 @@ export default class HomeScreen extends React.Component {
       let parsed  = JSON.parse(value)
       if (value !== null){
         // We have data!!
-        console.error(parsed.nama);
+        // console.error(parsed.nama);
       }
     } catch (error) {
       // Error retrieving data
