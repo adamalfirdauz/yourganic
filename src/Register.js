@@ -1,5 +1,8 @@
 import React from 'react'
-import {View,Text,StyleSheet,ImageBackground, TextInput, ScrollView, ActivityIndicator} from 'react-native';
+import {
+    View,Text,StyleSheet,ImageBackground, TextInput, ScrollView, ActivityIndicator,
+    Image, KeyboardAvoidingView
+} from 'react-native';
 import { 
     Container, Header, Left, Body, Right, Button, Icon, 
     Title, Content, FooterTab, Footer, Form, Item, Input, Label
@@ -9,7 +12,8 @@ import {StackNavigator} from 'react-navigation';
 import SignIn from './SignIn';
 // import Register from './register';
 
-var myBackground = require('../assets/image/pink.jpg');
+var logo = require('../assets/image/Logo.png');
+// var myBackground = require('../assets/image/pink.jpg');
 
 class Register extends React.Component{
     static navigationOptions = {
@@ -90,72 +94,57 @@ class Register extends React.Component{
     render() {
         // const { navigate } = this.props.navigation;
         return (
-            <Container style={styles.headerStyle}>   
-                <ImageBackground source={myBackground}
-                    style={{ width: '100%', height: '100%' }}>
-                    <Header style={{ backgroundColor: 'transparent' }} noShadow>
-                        <Left>
-                            <Button transparent         
-                                title="Go to Jane's profile"
-                                onPress={() =>
-                                this.redirect()}>
-                                <Icon name='arrow-back' />
-                            </Button>
-                        </Left>
-                        <Body>
-                            <Title style={styles.title}>Register</Title>
-                        </Body>
-                        <Right />
-                    </Header>
-                    <ScrollView style={styles.container}>
-                        <Text style={styles.titleStyle}>
-                            Welcome to Yourganic!
-                        </Text>
-                        <Form>
+            <Container style={styles.container}>
+                <View style={{ flex: 1, alignSelf: 'center' }}>
+                    <Image source={logo} style={styles.logo} />
+                </View>
+                <View style={{ flex: 2, alignSelf: 'stretch', flexDirection: 'column' }}>
+                    <KeyboardAvoidingView style={{ flex: 2 }}>
+                        <View style={{ flex: 3, paddingHorizontal: 20 }}>
                             <Item floatingLabel>
-                                 <Label style={styles.title}>Email</Label>
-                                 <Input style={styles.input} 
-                                 onChangeText={(email) => this.setState({email})} 
-                                 />
+                                <Label style={styles.title}>Email</Label>
+                                <Input style={styles.input}
+                                    onChangeText={(email) => this.setState({ email })}
+                                />
                             </Item>
-                            <ActivityIndicator animating={this.state.loading} size="large" style={styles.loader}/>
                             <Item floatingLabel >
                                 <Label style={styles.title}>Password</Label>
-                                <Input 
-                                style={styles.input}
-                                secureTextEntry= {true} 
-                                onChangeText={(password) => this.setState({password})}
+                                <Input
+                                    style={styles.input}
+                                    secureTextEntry={true}
+                                    onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
 
                             <Item floatingLabel >
                                 <Label style={styles.title}>Retype Password</Label>
-                                <Input 
-                                style={styles.input}
-                                secureTextEntry= {true} 
-                                onChangeText={(retype) => this.setState({retype})}
-                            />
+                                <Input
+                                    style={styles.input}
+                                    secureTextEntry={true}
+                                    onChangeText={(retype) => this.setState({ retype })}
+                                />
                             </Item>
 
                             <Item floatingLabel >
                                 <Label style={styles.title}>Handphone</Label>
-                                <Input 
-                                style={styles.input}
-                                keyboardType={"numeric"}
-                                onChangeText={(handphone) => this.setState({handphone})}
+                                <Input
+                                    style={styles.input}
+                                    keyboardType={"numeric"}
+                                    onChangeText={(handphone) => this.setState({ handphone })}
                                 />
                             </Item>
-                        </Form>
-
-                        <Button
-                            block={true}
-                            style={styles.buttonStyle}
-                            onPress={() => this.register()}
-                            >
-                            <Text style={styles.buttonTextStyle}>Register</Text>
-                        </Button>
-                    </ScrollView>
-                </ImageBackground>
+                            <Button
+                                onPress={() => this.login()}
+                                block={true}
+                                style={styles.buttonStyle}>
+                                <Text style={styles.buttonTextStyle}>Register</Text>
+                            </Button>
+                            <View>
+                                <Text style={{ color: 'white', alignSelf: 'center' }}> Already have an account? Login here.</Text>
+                            </View>
+                        </View>
+                    </KeyboardAvoidingView>
+                </View>
             </Container>
         );
     }
@@ -163,33 +152,43 @@ class Register extends React.Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: 'center', 
+        backgroundColor: '#00c600',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     titleStyle: {
         fontSize: 30,
         color: 'white',
         alignSelf: 'center',
-        margin:20,
+        margin: 20,
         paddingTop: 70,
     },
     buttonStyle: {
-        margin: 10
+        marginVertical: 20,
+        borderRadius: 20,
+        backgroundColor: '#009400'
     },
     buttonTextStyle: {
-        color: 'white',
-
-    },
-    title:{
         color: 'white'
     },
-    input:{
+    logo: {
+        flex: 1,
+        justifyContent: 'center',
+        width: 200,
+        height: 200,
+        resizeMode: 'contain',
+    },
+    labelStyle: {
         color: 'white',
     },
-    loader:{
-        position : 'absolute',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        paddingTop : 100
+    inputTextStyle: {
+        color: 'white',
+    },
+    title: {
+        color: 'white'
+    },
+    input: {
+        color: 'white',
     }
 });
 
