@@ -9,7 +9,7 @@ import SideBar from '../SideBar/SideBar'
 
 const DrawerNav = DrawerNavigator({
     Home : {screen: HomeScreen},
-    Main:{ screen: Mains },
+    Profile:{ screen: Mains },
     SignIn: { screen: SignIn },
     Register: { screen: Register },
   },

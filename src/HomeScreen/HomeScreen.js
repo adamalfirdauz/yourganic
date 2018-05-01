@@ -39,7 +39,7 @@ export default class HomeScreen extends React.Component {
     super(props)
     // this.data = this.props.navigation.state.params.data
     // this.session(this.data)
-    this.fetchProfile();
+    // this.fetchProfile();
   }
   
   session(data){
@@ -104,14 +104,16 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   headerStyle: {
       backgroundColor: 'green',
-      height: 70,
-      paddingTop: Platform.OS === "android" ? 20 : 0,
+      height: 50,
+      paddingTop: Platform.OS === "android" ? 2 : 0,
       // paddingTop: 18,
       // marginTop: Platform.OS === "android" ? 18 : 0,
       // backgroundColor: 'gray',
   },
   carding: {
-      marginTop: 20,
+      margin: 20,
+      marginLeft: 10,
+      width : 360
   },
   container: {
       flex: 1,
