@@ -8,12 +8,11 @@ import HomeScreen from '../HomeScreen/HomeScreen.js'
 
 import DrawerNav from './DrawerNav'
 
-const StackNav = StackNavigator({
+const DetailStackNav = StackNavigator({
     Main:{ screen: Mains },
     SignIn: { screen: SignIn },
     Register: { screen: Register },
-    Home : {screen: DrawerNav}
   },
     {headerMode : "none"}
   );
-  export default StackNav; 
+  export default DetailStackNav; 

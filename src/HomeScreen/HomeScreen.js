@@ -37,7 +37,9 @@ var buah = require('../../assets/image/buah.png');
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
-    // this.data = this.props.navigation.state.params.data
+    // if(this.props.navigation.state.params.data == 1){
+    //   this.props.navigation.goBack()
+    // }
     // this.session(this.data)
     // this.fetchProfile();
   }
