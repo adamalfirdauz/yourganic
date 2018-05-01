@@ -1,7 +1,7 @@
 import React from 'react'
 import { 
     View, Text, StyleSheet, ImageBackground, Image, Platform,
-    KeyboardAvoidingView
+    KeyboardAvoidingView, StatusBar
 } from 'react-native';
 import { 
     Container, Header, Left, Body, Right, Button, Icon, 
@@ -41,6 +41,10 @@ class Mains extends React.Component{
     render() {
         return (
             <Container style={styles.container}>
+                <StatusBar
+                    backgroundColor="#004600"
+                    barStyle="light-content"
+                />
                 <View style={{ flex: 2, alignSelf: 'center', flexDirection: 'column', alignItems: 'center' }}>
                     <Image source={logo} style={styles.logo} />
                 </View>
@@ -71,14 +75,14 @@ class Mains extends React.Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#00c600',
+        backgroundColor: '#007300',
         alignItems: 'center',
         justifyContent: 'center',
     },
     buttonStyle: {
         marginVertical: 10,
         borderRadius: 20,
-        backgroundColor: '#009400'
+        backgroundColor: '#004600'
     },
     buttonTextStyle: {
         color: 'white'

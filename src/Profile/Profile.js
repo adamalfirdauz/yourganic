@@ -80,7 +80,7 @@ export default class Profile extends React.Component {
   render() {
     return (
       <Container>
-        <Header style={styles.headerStyle}>
+        <Header style={styles.headerStyle} androidStatusBarColor='#004600'>
           <Left>
             <Button
               transparent
@@ -94,7 +94,7 @@ export default class Profile extends React.Component {
           </Body>
           <Right />
         </Header>
-        <ScrollView style={{flex:1}}>
+        <View style={{flex:1}}>
             <Content>
                 <Icon name="person" style={styles.photoProfile} />
                 <Text style={styles.nama}>{this.state.nama}</Text>
@@ -136,14 +136,14 @@ export default class Profile extends React.Component {
                     <Text style={styles.logoutbuttonTextStyle}>Log Out</Text>
                 </Button>
             </Content>
-        </ScrollView>
+        </View>
       </Container>
     );
   }
 }
 const styles = StyleSheet.create({
   headerStyle: {
-      backgroundColor: 'green',
+      backgroundColor: '#007300',
       height: 50,
       paddingTop: Platform.OS === "android" ? 2 : 0,
       // paddingTop: 18,
