@@ -70,15 +70,13 @@ export default class Profile extends React.Component {
  async logOut(){
     await AsyncStorage.clear()
     // this.props.navigation.goBack({data:1})
-    this.props.navigation.dispatch(NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Main' })],
-      key: null  
-    }));
-  }
-
-  editProfile(){
-    this.props.navigation.navigate('editProfile')
+    this.props.navigation.dispatch(NavigationActions.pop(
+        // {
+        // index: 0,
+        // actions: [NavigationActions.navigate({ routeName: 'Main' })],
+        // key: null  
+        // }
+    ));
   }
 
   render() {
@@ -88,9 +86,10 @@ export default class Profile extends React.Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate("DrawerOpen")}
+              onPress={() => this.props.navigation.navigate('Profile')
+            }
             > 
-              <Icon name="menu" />
+              <Icon name="ios-arrow-back" />
             </Button>
           </Left>
           <Body>
@@ -128,16 +127,10 @@ export default class Profile extends React.Component {
                 </View>
                 <View style={styles.hairStyles}/>
                 <Button
-                    onPress={() => this.editProfile()}
+                    onPress={() => this.login()}
                     block={true}
                     style={styles.buttonStyle}>
-                    <Text style={styles.buttonTextStyle}>Update Profile</Text>
-                </Button>
-                <Button
-                    onPress={() => this.logOut()}
-                    block={true}
-                    style={styles.logoutbuttonStyle}>
-                    <Text style={styles.logoutbuttonTextStyle}>Log Out</Text>
+                    <Text style={styles.buttonTextStyle}>Simpan</Text>
                 </Button>
             </Content>
         </View>
@@ -155,20 +148,20 @@ const styles = StyleSheet.create({
       // backgroundColor: 'gray',
   },
   carding: {
-    margin: 20,
-    marginLeft: 10,
-    width : 360
+      margin: 20,
+      marginLeft: 10,
+      width : 360
   },
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center', 
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center', 
   },
   titleStyle: {
-    fontSize: 25,
-    color: 'white',
-    // alignItems: 'center',
-    alignSelf: 'center'
+      fontSize: 25,
+      color: 'white',
+      // alignItems: 'center',
+      alignSelf: 'center'
   },
   buttonStyle: {
     margin:10,
@@ -182,7 +175,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   buttonTextStyle: {
-    color: 'white'
+      color: 'white'
   },
   logoutbuttonTextStyle: {
     color: 'red'
@@ -196,14 +189,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   logo: {
-    // flex: 1,
-    justifyContent: 'center',
-    marginTop: 70,
-    marginBottom: 50,
-    width: 250,
-    height: 250,
-    resizeMode: 'contain',
-    alignSelf: 'center',
+      // flex: 1,
+      justifyContent: 'center',
+      marginTop: 70,
+      marginBottom: 50,
+      width: 250,
+      height: 250,
+      resizeMode: 'contain',
+      alignSelf: 'center',
   },
   labelStyle: {
       color: 'white',
@@ -224,7 +217,6 @@ const styles = StyleSheet.create({
     paddingLeft : 20,
     paddingTop :5
   },
-
   phoneIcon:{
     fontSize : 50,
     alignSelf: 'flex-start',

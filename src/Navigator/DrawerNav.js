@@ -4,15 +4,16 @@ import SideMenus from '../SideMenus'
 import HomeScreen from '../HomeScreen/HomeScreen.js'
 import Profile from '../Profile/Profile.js'
 import SideBar from '../SideBar/SideBar'
+import UpdateProfile from '../UpdateProfile/UpdateProfile';
 
-import DetailStackNav from './DetailStackNav'
+import ProfileStackNav from './ProfileStackNav'
 import StackNav from './StackNav'
 
 const DrawerNav = DrawerNavigator({
     Home : {screen: HomeScreen},
     Profile:{ screen: Profile },
-    // LogOut: { screen: DetailStackNav },
     Register: { screen: Register },
+    editProfile : {screen: UpdateProfile}
   },
     {headerMode : "none",
     contentComponent : SideBar
