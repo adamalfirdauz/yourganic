@@ -127,31 +127,37 @@ export default class HomeScreen extends React.Component {
                     price: "10.000",
                     unit: "250 gr",
                     image: require('../../assets/image/card/fruit/strawberry.jpg'),
+                    key :'1'
                   }, {
                     title: "Banana",
                     price: "15.000",
                     unit: "500 gr",
                     image: require('../../assets/image/card/fruit/banana.jpg'),
+                    key :'2'
                   }, {
                     title: "Strawberry",
                     price: "10.000",
                     unit: "250 gr",
                     image: require('../../assets/image/card/fruit/strawberry.jpg'),
+                    key :'3'
                   }, {
                     title: "Banana Panjang Gimana dong",
                     price: "15.000",
                     unit: "500 gr",
                     image: require('../../assets/image/card/fruit/banana.jpg'),
+                    key :'4'
                   }, {
                     title: "Strawberry",
                     price: "10.000",
                     unit: "250 gr",
                     image: require('../../assets/image/card/fruit/strawberry.jpg'),
+                    key :'5'
                   }, {
                     title: "Banana",
                     price: "15.000",
                     unit: "500 gr",
                     image: require('../../assets/image/card/fruit/banana.jpg'),
+                    key:'6'
                   },
                 ]}
                 renderItem={({ item }) => (

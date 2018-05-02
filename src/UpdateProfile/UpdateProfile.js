@@ -32,12 +32,6 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import { NavigationActions } from 'react-navigation'
 
-
-
-var sayur = require('../../assets/image/sayur.png');
-var resep = require('../../assets/image/resep.png');
-var buah = require('../../assets/image/buah.png');
-
 export default class Profile extends React.Component {
   constructor(props) {
     super(props)
@@ -79,7 +73,7 @@ export default class Profile extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{backgroundColor:'white'}}>
         <Header style={styles.headerStyle} androidStatusBarColor='#004600'>
           <Left>
             <Button

@@ -68,13 +68,13 @@ export default class Profile extends React.Component {
     }
   }
  async logOut(){
-    await AsyncStorage.clear()
     // this.props.navigation.goBack({data:1})
     this.props.navigation.dispatch(NavigationActions.reset({
       index: 0,
       actions: [NavigationActions.navigate({ routeName: 'Main' })],
       key: null  
     }));
+    await AsyncStorage.clear()
   }
 
   editProfile(){
@@ -83,7 +83,7 @@ export default class Profile extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{backgroundColor:'white'}}>
         <Header style={styles.headerStyle} androidStatusBarColor='#004600'>
           <Left>
             <Button

@@ -1,5 +1,5 @@
 import React from "react";
-import { AppRegistry, Image, StatusBar } from "react-native";
+import { AppRegistry, Image, StatusBar, AsyncStorage } from "react-native";
 import {
   Button,
   Text,
@@ -11,6 +11,31 @@ import {
 } from "native-base";
 const routes = ["Home", "Profile"];
 export default class SideBar extends React.Component {
+
+  constructor(props) {
+    super(props)
+    var data = this.fetchProfile()
+    // console.error(this.state.foto)
+  }
+
+  state = {
+    foto : 'a'
+}
+
+  async fetchProfile(){
+    try {
+      const value = await AsyncStorage.getItem('profile');
+      let parsed  = JSON.parse(value)
+      if (value !== null){
+        // We have data!!
+        this.setState({foto : 'http://azizpc.codepanda.web.id/'+parsed.data.foto})
+        return parsed
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
+
   render() {
     return (
       <Container>
@@ -34,11 +59,11 @@ export default class SideBar extends React.Component {
               width: 70,
               position: "absolute",
               alignSelf: "center",
-              top: 20
+              top: 20,
+              borderRadius: 80
             }}
             source={{
-              uri:
-                "https://raw.githubusercontent.com/GeekyAnts/NativeBase-KitchenSink/master/assets/logo.png"
+              uri: this.state.foto
             }}
           />
           <List
