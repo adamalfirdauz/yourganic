@@ -31,11 +31,17 @@ import {
   Icon,
   Right
 } from "native-base";
+import {
+  Col,
+  Row,
+  Grid
+} from 'react-native-easy-grid';
 
 
 var sayur = require('../../assets/image/sayur.png');
 var resep = require('../../assets/image/resep.png');
 var buah = require('../../assets/image/buah.png');
+var strawberry = require('../../assets/image/card/fruit/strawberry.jpg');
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -70,22 +76,22 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      <Container style={{flex:1, backgroundColor:'white'}}>
-        <Header style={styles.headerStyle} androidStatusBarColor='#004600' noShadow>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.navigate("DrawerOpen")}
-            > 
-              <Icon name="menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Home</Title>
-          </Body>
-          <Right />
-        </Header>
-        <Content style={styles.content}>
+      <Container style={{flex:1, backgroundColor:'#f6f6f6'}}>
+        <View>
+          <Header style={styles.headerStyle} androidStatusBarColor='#004600' noShadow>
+            <Left>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.navigate("DrawerOpen")}
+              > 
+                <Icon name="menu" />
+              </Button>
+            </Left>
+            <Body>
+              <Title>Home</Title>
+            </Body>
+            <Right />
+          </Header>
           <View style={styles.FlatList}>
             <FlatList
               horizontal
@@ -94,15 +100,74 @@ export default class HomeScreen extends React.Component {
                 { key: 'SAYURAN' },
                 { key: 'BUAH' },
                 { key: 'MENU SEHAT' },
+                { key: 'SAYURAN' },
+                { key: 'BUAH' },
+                { key: 'MENU SEHAT' },
               ]}
               renderItem={({ item }) => (
                 <TouchableOpacity >
                   <Text style={styles.item}>{item.key}</Text>
                 </TouchableOpacity>
-              )
-              }
+              )}
             />
           </View>
+        </View>
+        <Content style={styles.content}>
+          <Card>
+            {/* <CardItem header style={{padding:0}}> */}
+              <Text style={{paddingTop:5, paddingHorizontal:12.5, fontWeight:'400', color: '#004600'}}>Organic Fruit</Text>
+            {/* </CardItem> */}
+            {/* <CardItem> */}
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={[
+                  { 
+                    title: "Strawberry",
+                    price: "10.000",
+                    unit: "250 gr",
+                    image: require('../../assets/image/card/fruit/strawberry.jpg'),
+                  }, {
+                    title: "Banana",
+                    price: "15.000",
+                    unit: "500 gr",
+                    image: require('../../assets/image/card/fruit/banana.jpg'),
+                  }, {
+                    title: "Strawberry",
+                    price: "10.000",
+                    unit: "250 gr",
+                    image: require('../../assets/image/card/fruit/strawberry.jpg'),
+                  }, {
+                    title: "Banana Panjang Gimana dong",
+                    price: "15.000",
+                    unit: "500 gr",
+                    image: require('../../assets/image/card/fruit/banana.jpg'),
+                  }, {
+                    title: "Strawberry",
+                    price: "10.000",
+                    unit: "250 gr",
+                    image: require('../../assets/image/card/fruit/strawberry.jpg'),
+                  }, {
+                    title: "Banana",
+                    price: "15.000",
+                    unit: "500 gr",
+                    image: require('../../assets/image/card/fruit/banana.jpg'),
+                  },
+                ]}
+                renderItem={({ item }) => (
+                  <TouchableOpacity>
+                    <Card noShadow style={styles.carding}>
+                      <Image style={styles.cardImage}
+                        source={item.image}
+                      />
+                      <Text style={styles.cardTitleStyle}>{item.title}</Text>
+                      <Text style={styles.cardPriceStyle}>Rp {item.price}/{item.unit}</Text>
+                    </Card>
+                  </TouchableOpacity>
+                )}
+              />
+            {/* </CardItem> */}
+          </Card>
           <Card style={styles.carding}>
             <Image style={styles.cardImage}
               source={sayur}
@@ -130,16 +195,11 @@ const styles = StyleSheet.create({
     paddingTop: 18,
   },
   content: {
-    flex: 10
+    // flex: 10
   },
   FlatList: {
-    flex: 5,
+    // flex: 5,
     backgroundColor:'#007300',
-  },
-  carding: {
-    margin: 20,
-    marginLeft: 10,
-    width : 360
   },
   container: {
     flex: 1,
@@ -159,23 +219,33 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     color: 'white'
   },
+  carding: {
+    margin: 0,
+    padding: 0,
+    width: 120,
+    height: 160,
+    borderWidth: 0,
+    borderColor: 'white',
+  },
   cardImage: {
-    width: 360,
-    height: 135,
+    height: 115,
+    width: 115,
     padding: 0,
     margin: 0,
     resizeMode: 'contain',
     alignSelf: 'center',
   },
-  logo: {
-    // flex: 1,
-    justifyContent: 'center',
-    marginTop: 70,
-    marginBottom: 50,
-    width: 250,
-    height: 250,
-    resizeMode: 'contain',
-    alignSelf: 'center',
+  cardTitleStyle: {
+    paddingHorizontal: 5,
+    color: '#007300',
+    fontWeight:'100',
+    fontSize: 14.5
+  },
+  cardPriceStyle: {
+    paddingHorizontal: 5,
+    color: '#47a337',
+    fontWeight: '100',
+    fontSize: 13.5
   },
   labelStyle: {
     color: 'white',
