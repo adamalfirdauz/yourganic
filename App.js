@@ -38,17 +38,10 @@ export default class App extends React.Component {
     fontLoaded: false,
     myProfile : false
   }
-  // async componentWillMount() {
-  //   await Expo.Font.loadAsync({
-  //     Roboto: require("native-base/Fonts/Roboto.ttf"),
-  //     Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
-  //   });
-  //   this.setState({ fontLoaded: true });
-  // }
 
   async fetchProfile(){
     try {
-      const value = await AsyncStorage.getItem('profile');
+      const value = await AsyncStorage.getItem('profile')
       let parsed  = JSON.parse(value)
       // console.error(parsed.data.nama)
       if (value !== null){

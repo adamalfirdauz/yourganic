@@ -26,7 +26,8 @@ import {
   Title,
   Left,
   Icon,
-  Right
+  Right,
+  Input
 } from "native-base";
 import { ScrollView } from 'react-native-gesture-handler';
 import { NavigationActions } from 'react-navigation'
@@ -44,11 +45,12 @@ export default class Profile extends React.Component {
 //    console.error(data)
   }
   state = {
+      id : '',
       nama : '',
       email: '',
       hp: '',
-      alamat: ''
-
+      alamat: '',
+      token :''
   }
 
   async fetchProfile(){
@@ -57,26 +59,22 @@ export default class Profile extends React.Component {
       let parsed  = JSON.parse(value)
       if (value !== null){
         // We have data!!
-        this.setState({nama : parsed.data.nama,
+        // console.error(parsed)
+        this.setState({id : parsed.data.id,
+                       nama : parsed.data.nama,
                        email : parsed.data.email,
                        hp : parsed.data.hp,
-                       alamat : parsed.data.alamat
+                       alamat : parsed.data.alamat,
+                       token : parsed.meta.token
         })
       }
     } catch (error) {
       // Error retrieving data
     }
   }
- async logOut(){
-    await AsyncStorage.clear()
-    // this.props.navigation.goBack({data:1})
-    this.props.navigation.dispatch(NavigationActions.pop(
-        // {
-        // index: 0,
-        // actions: [NavigationActions.navigate({ routeName: 'Main' })],
-        // key: null  
-        // }
-    ));
+
+  update(){
+    console.error(this.state)
   }
 
   render() {
@@ -100,13 +98,13 @@ export default class Profile extends React.Component {
         <View style={{flex:1}}>
             <Content>
                 <Icon name="person" style={styles.photoProfile} />
-                <Text style={styles.nama}>{this.state.nama}</Text>
+                <Input onChangeText={() => this.setState({ nama })} style={styles.nama}>{this.state.nama}</Input>
                 <View style={styles.hairStyle}/>
                 <View style={styles.row}>
                     <Icon name="mail" style={styles.emailIcon} />
                     <View >
                         <Text style={styles.email}>Email</Text>
-                        <Text style={styles.emails}>{this.state.email}</Text>
+                        <Input onChangeText={(email) => this.setState({ email })} style={styles.emails}>{this.state.email}</Input>
                     </View>
                 </View>
                 <View style={styles.hairStyles}/>
@@ -114,7 +112,7 @@ export default class Profile extends React.Component {
                     <Icon name="ios-call" style={styles.phoneIcon} />
                     <View >
                         <Text style={styles.email}>Nomor Telepon</Text>
-                        <Text style={styles.emails}>{this.state.hp}</Text>
+                        <Input onChangeText={(hp) => this.setState({ hp })}style={styles.emails}>{this.state.hp}</Input>
                     </View>
                 </View>
                 <View style={styles.hairStyles}/>
@@ -122,12 +120,12 @@ export default class Profile extends React.Component {
                     <Icon name="bookmark" style={styles.addressIcon} />
                     <View >
                         <Text style={styles.email}>Alamat</Text>
-                        <Text style={styles.emails}>{this.state.alamat}</Text>
+                        <Input onChangeText={(alamat) => this.setState({ alamat })} style={styles.emails}>{this.state.alamat}</Input>
                     </View>
                 </View>
                 <View style={styles.hairStyles}/>
                 <Button
-                    onPress={() => this.login()}
+                    onPress={() => this.update()}
                     block={true}
                     style={styles.buttonStyle}>
                     <Text style={styles.buttonTextStyle}>Simpan</Text>
@@ -234,34 +232,38 @@ const styles = StyleSheet.create({
   nama :{
       fontSize : 28,
       alignSelf: 'center',
-      paddingTop: 20,
+      paddingTop: 0,
+      paddingBottom: 0,
   },
   hairStyle: {
     backgroundColor: '#A2A2A2',
     height: 1,
     width: 340,
-    marginTop: 10,
-    margin:20,
+    marginTop: 0,
+    marginLeft:20,
+    marginRight: 20,
     marginBottom: 10
   },
   hairStyles: {
     backgroundColor: '#A2A2A2',
     height: 1,
     width: 260,
-    marginTop: 10,
-    margin:100,
-    marginBottom: 10
+    marginTop: 0,
+    marginLeft:100,
+    marginRight:100,
+    marginBottom: 5
   },
   email : {
     fontSize : 20,
     paddingLeft: 40,
-    paddingTop: 2,
+    paddingTop: 0,
+    paddingBottom:0
     },
   emails :{
     fontSize : 18,
     paddingLeft: 40,
     color : '#A2A2A2',
-    paddingTop: 5,
+    paddingTop: 0,
     },
   row :{
       flexDirection: 'row',
