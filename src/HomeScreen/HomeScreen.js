@@ -36,7 +36,8 @@ import {
   Row,
   Grid
 } from 'react-native-easy-grid';
-
+import HorizontalItemList from '../Components/HorizontalItemList';
+import ItemBanner from '../Components/ItemBanner';
 
 var sayur = require('../../assets/image/sayur.png');
 var resep = require('../../assets/image/resep.png');
@@ -46,11 +47,11 @@ var strawberry = require('../../assets/image/card/fruit/strawberry.jpg');
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
-    // if(this.props.navigation.state.params.data == 1){
-    //   this.props.navigation.goBack()
-    // }
-    // this.session(this.data)
-    // this.fetchProfile();
+    this.state = {
+      resep: [require('../../assets/image/resep.png')],
+      sayur: [require('../../assets/image/sayur.png')],
+      buah: [require('../../assets/image/buah.png')]
+    };
   }
   
   session(data){
@@ -113,76 +114,12 @@ export default class HomeScreen extends React.Component {
           </View>
         </View>
         <Content style={styles.content}>
-          <Card>
-            {/* <CardItem header style={{padding:0}}> */}
-              <Text style={{paddingTop:5, paddingHorizontal:12.5, fontWeight:'400', color: '#004600'}}>Organic Fruit</Text>
-            {/* </CardItem> */}
-            {/* <CardItem> */}
-              <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={[
-                  { 
-                    title: "Strawberry",
-                    price: "10.000",
-                    unit: "250 gr",
-                    image: require('../../assets/image/card/fruit/strawberry.jpg'),
-                  }, {
-                    title: "Banana",
-                    price: "15.000",
-                    unit: "500 gr",
-                    image: require('../../assets/image/card/fruit/banana.jpg'),
-                  }, {
-                    title: "Strawberry",
-                    price: "10.000",
-                    unit: "250 gr",
-                    image: require('../../assets/image/card/fruit/strawberry.jpg'),
-                  }, {
-                    title: "Banana Panjang Gimana dong",
-                    price: "15.000",
-                    unit: "500 gr",
-                    image: require('../../assets/image/card/fruit/banana.jpg'),
-                  }, {
-                    title: "Strawberry",
-                    price: "10.000",
-                    unit: "250 gr",
-                    image: require('../../assets/image/card/fruit/strawberry.jpg'),
-                  }, {
-                    title: "Banana",
-                    price: "15.000",
-                    unit: "500 gr",
-                    image: require('../../assets/image/card/fruit/banana.jpg'),
-                  },
-                ]}
-                renderItem={({ item }) => (
-                  <TouchableOpacity>
-                    <Card noShadow style={styles.carding}>
-                      <Image style={styles.cardImage}
-                        source={item.image}
-                      />
-                      <Text style={styles.cardTitleStyle}>{item.title}</Text>
-                      <Text style={styles.cardPriceStyle}>Rp {item.price}/{item.unit}</Text>
-                    </Card>
-                  </TouchableOpacity>
-                )}
-              />
-            {/* </CardItem> */}
-          </Card>
-          <Card style={styles.carding}>
-            <Image style={styles.cardImage}
-              source={sayur}
-              />
-          </Card>
-          <Card style={styles.carding}>
-            <Image style={styles.cardImage}
-              source={buah}
-              />
-          </Card>
-          <Card style={styles.carding}>
-            <Image style={styles.cardImage}
-              source={resep}
-              />
-          </Card>
+          <HorizontalItemList/>
+          <ItemBanner data={this.state.resep}/>
+          <HorizontalItemList />
+          <ItemBanner data={this.state.sayur}/>
+          <HorizontalItemList/>
+          <ItemBanner data={this.state.buah}/>
         </Content>
       </Container>
     );
@@ -221,15 +158,13 @@ const styles = StyleSheet.create({
   },
   carding: {
     margin: 0,
-    padding: 0,
-    width: 120,
-    height: 160,
+    padding: 5,
     borderWidth: 0,
     borderColor: 'white',
   },
   cardImage: {
-    height: 115,
-    width: 115,
+    resizeMode:'cover',
+    height: 130,
     padding: 0,
     margin: 0,
     resizeMode: 'contain',
@@ -254,11 +189,7 @@ const styles = StyleSheet.create({
     color: 'white' 
   },
   item: {
-    // backgroundColor: '#004600',
-    // borderRadius: 50,
-    // paddingVertical: 3,
     paddingHorizontal:16,
-    // marginTop:3,
     marginHorizontal:4,
     fontSize: 16,
     height: 32,
