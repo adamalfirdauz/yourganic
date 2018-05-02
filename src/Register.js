@@ -105,6 +105,7 @@ class Register extends React.Component{
                 <View style={{ flex: 2, alignSelf: 'stretch', flexDirection: 'column' }}>
                     <KeyboardAvoidingView style={{ flex: 2 }}>
                         <View style={{ flex: 3, paddingHorizontal: 20 }}>
+                            <ActivityIndicator style={styles.loading} size="large" animating={this.state.loading}/>
                             <Item floatingLabel>
                                 <Label style={styles.title}>Email</Label>
                                 <Input style={styles.input}
@@ -138,7 +139,7 @@ class Register extends React.Component{
                                 />
                             </Item>
                             <Button
-                                onPress={() => this.login()}
+                                onPress={() => this.register()}
                                 block={true}
                                 style={styles.buttonStyle}>
                                 <Text style={styles.buttonTextStyle}>Register</Text>
@@ -193,6 +194,12 @@ const styles = StyleSheet.create({
     },
     input: {
         color: 'white',
+    },
+    loading:{
+        position : 'absolute',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        paddingTop : 100
     }
 });
 
