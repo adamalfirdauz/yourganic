@@ -114,11 +114,11 @@ export default class HomeScreen extends React.Component {
           </View>
         </View>
         <Content style={styles.content}>
-          <HorizontalItemList/>
+          <HorizontalItemList title="Resep Sehat"/>
           <ItemBanner data={this.state.resep}/>
-          <HorizontalItemList />
+          <HorizontalItemList title="Sayuran Organik"/>
           <ItemBanner data={this.state.sayur}/>
-          <HorizontalItemList/>
+          <HorizontalItemList title="Buah Organik"/>
           <ItemBanner data={this.state.buah}/>
         </Content>
       </Container>

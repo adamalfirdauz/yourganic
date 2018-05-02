@@ -11,7 +11,7 @@ class HorizontalItemList extends Component {
     render() {
         return (
             <Card>
-                <Text style={Styles.cardTitle}>Organic Fruit</Text>
+                <Text style={Styles.cardTitle}>{this.props.title}</Text>
                 <FlatList
                     horizontal
                     showsHorizontalScrollIndicator={false}
