@@ -79,7 +79,7 @@ export default class Profile extends React.Component {
 
   editProfile(){
     this.props.navigation.navigate('editProfile')
-  }
+    }
 
   render() {
     return (

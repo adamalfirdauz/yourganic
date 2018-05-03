@@ -8,6 +8,11 @@ class HorizontalItemList extends Component {
         super(props);
         this.state = {  };
     }
+
+    redirect(page, data){
+        this.props.nav.navigation.navigate(page, data)
+      }
+
     render() {
         return (
             <Card>
@@ -20,36 +25,42 @@ class HorizontalItemList extends Component {
                             title: "Strawberry",
                             price: "10.000",
                             unit: "250 gr",
+                            key : 'strawberry',
                             image: require('../../../assets/image/card/fruit/strawberry.jpg'),
                         }, {
                             title: "Banana",
                             price: "15.000",
                             unit: "500 gr",
+                            key : 'banana',
                             image: require('../../../assets/image/card/fruit/banana.jpg'),
                         }, {
                             title: "Strawberry",
                             price: "10.000",
                             unit: "250 gr",
+                            key : 'strawberry',
                             image: require('../../../assets/image/card/fruit/strawberry.jpg'),
                         }, {
                             title: "Banana Panjang Gimana dong",
                             price: "15.000",
                             unit: "500 gr",
+                            key : 'banana',
                             image: require('../../../assets/image/card/fruit/banana.jpg'),
                         }, {
                             title: "Strawberry",
                             price: "10.000",
                             unit: "250 gr",
+                            key : 'strawberry',
                             image: require('../../../assets/image/card/fruit/strawberry.jpg'),
                         }, {
                             title: "Banana",
                             price: "15.000",
                             unit: "500 gr",
+                            key : 'banana',
                             image: require('../../../assets/image/card/fruit/banana.jpg'),
                         },
                     ]}
                     renderItem={({ item }) => (
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.redirect('Detail', item)}>
                             <Card noShadow style={Styles.itemCard}>
                                 <Image style={Styles.itemCardImage}
                                     source={item.image}

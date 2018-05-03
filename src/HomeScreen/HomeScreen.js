@@ -5,7 +5,7 @@ import Register from '../Register';
 import LogoTitle from '../LogoTitle';
 import Mains from '../Mains';
 import SideMenus from '../SideMenus'
-import SideBar from "../SideBar/SideBar.js";
+import SideBar from "../SideBar/SideBar.js"; 
 import { View,
   StyleSheet,
   ImageBackground,
@@ -114,7 +114,7 @@ export default class HomeScreen extends React.Component {
           </View>
         </View>
         <Content style={styles.content}>
-          <HorizontalItemList title="Resep Sehat"/>
+          <HorizontalItemList title="Resep Sehat" nav={this.props}/>
           <ItemBanner data={this.state.resep}/>
           <HorizontalItemList title="Sayuran Organik"/>
           <ItemBanner data={this.state.sayur}/>
