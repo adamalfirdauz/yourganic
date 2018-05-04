@@ -47,8 +47,9 @@ export default class Profile extends React.Component {
       nama : '',
       email: '',
       hp: '',
-      alamat: ''
-
+      alamat: '',
+      foto:'a',
+      icon: true
   }
 
   async fetchProfile(){
@@ -60,8 +61,12 @@ export default class Profile extends React.Component {
         this.setState({nama : parsed.data.nama,
                        email : parsed.data.email,
                        hp : parsed.data.hp,
-                       alamat : parsed.data.alamat
+                       alamat : parsed.data.alamat,
+                       foto: 'http://azizpc.codepanda.web.id/'+parsed.data.foto
         })
+        if(this.foto !== null){
+          this.setState({icon: false})
+        }
       }
     } catch (error) {
       // Error retrieving data
@@ -100,7 +105,19 @@ export default class Profile extends React.Component {
         </Header>
         <View style={{flex:1}}>
             <Content>
-                <Icon name="person" style={styles.photoProfile} />
+                <Image             
+                square
+                style={{
+                  height: 120,
+                  width: 110,
+                  alignSelf: "center",
+                  top: 20,
+                  borderRadius: 100
+                }}
+                source={{
+                  uri: this.state.foto
+                }} />
+                {/* <Icon active={this.state.icon} name="person" style={styles.photoProfile} /> */}
                 <Text style={styles.nama}>{this.state.nama}</Text>
                 <View style={styles.hairStyle}/>
                 <View style={styles.row}>

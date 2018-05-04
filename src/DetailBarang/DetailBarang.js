@@ -108,8 +108,8 @@ export default class HomeScreen extends React.Component {
           <Card style={styles.card}>
             <Text style={styles.disc}>Diskon 4%</Text>
           </Card>
-          <Text style={styles.harga}>Rp26.000 </Text>
-          <Text style={styles.item}>Brokoli Lokal</Text>
+          <Text style={styles.harga}>{this.props.navigation.state.params.price}</Text>
+          <Text style={styles.item}>{this.props.navigation.state.params.title}</Text>
           <View style={styles.hairStyles}/>
         </Content>
         <Footer style={styles.footer}>
