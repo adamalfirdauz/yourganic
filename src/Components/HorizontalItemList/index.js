@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, FlatList, TouchableOpacity, Image } from 'react-native';
-import { Card } from "native-base";
+import { Text, FlatList, TouchableOpacity, Image, View } from 'react-native';
+import { Card, Grid, Col, Row, Button } from "native-base";
 import Styles from './Styles';
+import { DrawerNavigator } from "react-navigation";
 
 class HorizontalItemList extends Component {
     constructor(props) {
@@ -11,7 +12,14 @@ class HorizontalItemList extends Component {
     render() {
         return (
             <Card>
-                <Text style={Styles.cardTitle}>{this.props.title}</Text>
+                <View style={{flexDirection:'row'}}>
+                    <Text style={Styles.cardTitle}>{this.props.title}</Text>
+                    <TouchableOpacity style={{marginLeft:'auto'}} 
+                        // onPress={() => this.props.navigation.navigate('ItemsPage') }
+                        >
+                        <Text style={Styles.cardTitleRight}>Lihat Lainnya ></Text>
+                    </TouchableOpacity>
+                </View>
                 <FlatList
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -54,7 +62,7 @@ class HorizontalItemList extends Component {
                                 <Image style={Styles.itemCardImage}
                                     source={item.image}
                                 />
-                                <Text style={Styles.itemCardTitle}>{item.title}</Text>
+                                <Text numberOfLines={1} style={Styles.itemCardTitle}>{item.title}</Text>
                                 <Text style={Styles.itemCardPrice}>Rp {item.price}/{item.unit}</Text>
                             </Card>
                         </TouchableOpacity>

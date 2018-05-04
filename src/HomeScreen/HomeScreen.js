@@ -1,5 +1,5 @@
 import React from "react";
-import { DrawerNavigator } from "react-navigation";
+import { DrawerNavigator, StackNavigator } from "react-navigation";
 import SignIn from '../SignIn';
 import Register from '../Register';
 import LogoTitle from '../LogoTitle';
@@ -114,6 +114,7 @@ export default class HomeScreen extends React.Component {
           </View>
         </View>
         <Content style={styles.content}>
+          <Button onPress={() => { this.props.navigation.navigate('ItemsPage') }}><Text>Klik Aku</Text></Button>
           <HorizontalItemList title="Resep Sehat"/>
           <ItemBanner data={this.state.resep}/>
           <HorizontalItemList title="Sayuran Organik"/>

@@ -3,9 +3,16 @@ import { StyleSheet } from 'react-native'
 
 const Styles = StyleSheet.create({
     cardTitle:{
-        paddingTop: 5, 
+        paddingTop: 7.5, 
         paddingHorizontal: 12.5, 
         fontWeight: '400', 
+        color: '#004600',
+    },
+    cardTitleRight: {
+        paddingTop: 7.5,
+        paddingRight: 15,
+        paddingHorizontal: 12.5,
+        fontWeight: '800',
         color: '#004600',
     },
     itemCard:{
