@@ -22,6 +22,7 @@ const Styles = StyleSheet.create({
         height: 160,
         borderWidth: 0,
         borderColor: 'white',
+        backgroundColor: 'yellow',
     },
     itemCardImage:{
         height: 115,

@@ -26,16 +26,11 @@ import {
   Title,
   Left,
   Icon,
-  Right
+  Right,
+  Input
 } from "native-base";
 import { ScrollView } from 'react-native-gesture-handler';
 import { NavigationActions } from 'react-navigation'
-
-
-
-var sayur = require('../../assets/image/sayur.png');
-var resep = require('../../assets/image/resep.png');
-var buah = require('../../assets/image/buah.png');
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -44,12 +39,12 @@ export default class Profile extends React.Component {
 //    console.error(data)
   }
   state = {
+      id : '',
       nama : '',
       email: '',
       hp: '',
       alamat: '',
-      foto:'a',
-      icon: true
+      token :''
   }
 
   async fetchProfile(){
@@ -58,33 +53,23 @@ export default class Profile extends React.Component {
       let parsed  = JSON.parse(value)
       if (value !== null){
         // We have data!!
-        this.setState({nama : parsed.data.nama,
+        // console.error(parsed)
+        this.setState({id : parsed.data.id,
+                       nama : parsed.data.nama,
                        email : parsed.data.email,
                        hp : parsed.data.hp,
                        alamat : parsed.data.alamat,
-                       foto: 'http://azizpc.codepanda.web.id/'+parsed.data.foto
+                       token : parsed.meta.token
         })
-        if(this.foto !== null){
-          this.setState({icon: false})
-        }
       }
     } catch (error) {
       // Error retrieving data
     }
   }
- async logOut(){
-    // this.props.navigation.goBack({data:1})
-    this.props.navigation.dispatch(NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Main' })],
-      key: null  
-    }));
-    await AsyncStorage.clear()
-  }
 
-  editProfile(){
-    this.props.navigation.navigate('editProfile')
-    }
+  update(){
+    console.error(this.state)
+  }
 
   render() {
     return (
@@ -93,9 +78,10 @@ export default class Profile extends React.Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate("DrawerOpen")}
+              onPress={() => this.props.navigation.navigate('Profile')
+            }
             > 
-              <Icon name="menu" />
+              <Icon name="ios-arrow-back" />
             </Button>
           </Left>
           <Body>
@@ -105,26 +91,14 @@ export default class Profile extends React.Component {
         </Header>
         <View style={{flex:1}}>
             <Content>
-                <Image             
-                square
-                style={{
-                  height: 120,
-                  width: 110,
-                  alignSelf: "center",
-                  top: 20,
-                  borderRadius: 100
-                }}
-                source={{
-                  uri: this.state.foto
-                }} />
-                {/* <Icon active={this.state.icon} name="person" style={styles.photoProfile} /> */}
-                <Text style={styles.nama}>{this.state.nama}</Text>
+                <Icon name="person" style={styles.photoProfile} />
+                <Input onChangeText={() => this.setState({ nama })} style={styles.nama}>{this.state.nama}</Input>
                 <View style={styles.hairStyle}/>
                 <View style={styles.row}>
                     <Icon name="mail" style={styles.emailIcon} />
                     <View >
                         <Text style={styles.email}>Email</Text>
-                        <Text style={styles.emails}>{this.state.email}</Text>
+                        <Input onChangeText={(email) => this.setState({ email })} style={styles.emails}>{this.state.email}</Input>
                     </View>
                 </View>
                 <View style={styles.hairStyles}/>
@@ -132,7 +106,7 @@ export default class Profile extends React.Component {
                     <Icon name="ios-call" style={styles.phoneIcon} />
                     <View >
                         <Text style={styles.email}>Nomor Telepon</Text>
-                        <Text style={styles.emails}>{this.state.hp}</Text>
+                        <Input onChangeText={(hp) => this.setState({ hp })}style={styles.emails}>{this.state.hp}</Input>
                     </View>
                 </View>
                 <View style={styles.hairStyles}/>
@@ -140,21 +114,15 @@ export default class Profile extends React.Component {
                     <Icon name="bookmark" style={styles.addressIcon} />
                     <View >
                         <Text style={styles.email}>Alamat</Text>
-                        <Text style={styles.emails}>{this.state.alamat}</Text>
+                        <Input onChangeText={(alamat) => this.setState({ alamat })} style={styles.emails}>{this.state.alamat}</Input>
                     </View>
                 </View>
                 <View style={styles.hairStyles}/>
                 <Button
-                    onPress={() => this.editProfile()}
+                    onPress={() => this.update()}
                     block={true}
                     style={styles.buttonStyle}>
-                    <Text style={styles.buttonTextStyle}>Update Profile</Text>
-                </Button>
-                <Button
-                    onPress={() => this.logOut()}
-                    block={true}
-                    style={styles.logoutbuttonStyle}>
-                    <Text style={styles.logoutbuttonTextStyle}>Log Out</Text>
+                    <Text style={styles.buttonTextStyle}>Simpan</Text>
                 </Button>
             </Content>
         </View>
@@ -172,20 +140,20 @@ const styles = StyleSheet.create({
       // backgroundColor: 'gray',
   },
   carding: {
-    margin: 20,
-    marginLeft: 10,
-    width : 360
+      margin: 20,
+      marginLeft: 10,
+      width : 360
   },
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center', 
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center', 
   },
   titleStyle: {
-    fontSize: 25,
-    color: 'white',
-    // alignItems: 'center',
-    alignSelf: 'center'
+      fontSize: 25,
+      color: 'white',
+      // alignItems: 'center',
+      alignSelf: 'center'
   },
   buttonStyle: {
     margin:10,
@@ -199,7 +167,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   buttonTextStyle: {
-    color: 'white'
+      color: 'white'
   },
   logoutbuttonTextStyle: {
     color: 'red'
@@ -213,14 +181,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   logo: {
-    // flex: 1,
-    justifyContent: 'center',
-    marginTop: 70,
-    marginBottom: 50,
-    width: 250,
-    height: 250,
-    resizeMode: 'contain',
-    alignSelf: 'center',
+      // flex: 1,
+      justifyContent: 'center',
+      marginTop: 70,
+      marginBottom: 50,
+      width: 250,
+      height: 250,
+      resizeMode: 'contain',
+      alignSelf: 'center',
   },
   labelStyle: {
       color: 'white',
@@ -241,7 +209,6 @@ const styles = StyleSheet.create({
     paddingLeft : 20,
     paddingTop :5
   },
-
   phoneIcon:{
     fontSize : 50,
     alignSelf: 'flex-start',
@@ -259,34 +226,38 @@ const styles = StyleSheet.create({
   nama :{
       fontSize : 28,
       alignSelf: 'center',
-      paddingTop: 20,
+      paddingTop: 0,
+      paddingBottom: 0,
   },
   hairStyle: {
     backgroundColor: '#A2A2A2',
     height: 1,
     width: 340,
-    marginTop: 10,
-    margin:20,
+    marginTop: 0,
+    marginLeft:20,
+    marginRight: 20,
     marginBottom: 10
   },
   hairStyles: {
     backgroundColor: '#A2A2A2',
     height: 1,
     width: 260,
-    marginTop: 10,
-    margin:100,
-    marginBottom: 10
+    marginTop: 0,
+    marginLeft:100,
+    marginRight:100,
+    marginBottom: 5
   },
   email : {
     fontSize : 20,
     paddingLeft: 40,
-    paddingTop: 2,
+    paddingTop: 0,
+    paddingBottom:0
     },
   emails :{
     fontSize : 18,
     paddingLeft: 40,
     color : '#A2A2A2',
-    paddingTop: 5,
+    paddingTop: 0,
     },
   row :{
       flexDirection: 'row',

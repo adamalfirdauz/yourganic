@@ -5,7 +5,7 @@ import Register from '../Register';
 import LogoTitle from '../LogoTitle';
 import Mains from '../Mains';
 import SideMenus from '../SideMenus'
-import SideBar from "../SideBar/SideBar.js";
+import SideBar from "../SideBar/SideBar.js"; 
 import { View,
   StyleSheet,
   ImageBackground,
@@ -114,8 +114,8 @@ export default class HomeScreen extends React.Component {
           </View>
         </View>
         <Content style={styles.content}>
-          <Button onPress={() => { this.props.navigation.navigate('ItemsPage') }}><Text>Klik Aku</Text></Button>
-          <HorizontalItemList title="Resep Sehat"/>
+          {/* <Button onPress={() => { this.props.navigation.navigate('ItemsPage') }}><Text>Klik Aku</Text></Button> */}
+          <HorizontalItemList title="Resep Sehat" nav={this.props}/>
           <ItemBanner data={this.state.resep}/>
           <HorizontalItemList title="Sayuran Organik"/>
           <ItemBanner data={this.state.sayur}/>
@@ -190,7 +190,11 @@ const styles = StyleSheet.create({
     color: 'white' 
   },
   item: {
-    paddingHorizontal:16,
+    // backgroundColor: '#004600',
+    // borderRadius: 50,
+    // paddingVertical: 3,
+    paddingHorizontal:32,
+    // marginTop:3,
     marginHorizontal:4,
     fontSize: 16,
     height: 32,

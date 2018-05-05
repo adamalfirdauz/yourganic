@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, StatusBar, Platform } from 'react-native';
-import { DrawerNavigator, StackNavigator } from "react-navigation";
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
 import ItemCard from '../../Components/ItemCard';
 import Styles from './Styles';
@@ -12,7 +12,9 @@ var strawberry = require('../../../assets/image/card/fruit/strawberry.jpg');
 class ItemsPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            
+        };
     }
     render() {
         return (
@@ -24,7 +26,7 @@ class ItemsPage extends Component {
                 <View>
                     <Header style={Styles.header} androidStatusBarColor='#004600' noShadow searchBar>
                         <Left>
-                            <Button transparent onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+                            <Button transparent onPress={() => this.props.navigation.goBack()}>
                                 <Icon name="arrow-back" />
                             </Button>
                         </Left>
@@ -47,41 +49,50 @@ class ItemsPage extends Component {
                                 title: "Strawberry",
                                 price: "10.000",
                                 unit: "250 gr",
+                                key: 'strawberry',
                                 image: require('../../../assets/image/card/fruit/strawberry.jpg'),
                             }, {
                                 title: "Banana",
                                 price: "15.000",
                                 unit: "500 gr",
+                                key: 'banana',
                                 image: require('../../../assets/image/card/fruit/banana.jpg'),
                             }, {
                                 title: "Strawberry",
                                 price: "10.000",
                                 unit: "250 gr",
+                                key: 'strawberry',
                                 image: require('../../../assets/image/card/fruit/strawberry.jpg'),
                             }, {
                                 title: "Banana Panjang Gimana dong",
                                 price: "15.000",
                                 unit: "500 gr",
+                                key: 'banana',
                                 image: require('../../../assets/image/card/fruit/banana.jpg'),
                             }, {
                                 title: "Strawberry",
                                 price: "10.000",
                                 unit: "250 gr",
+                                key: 'strawberry',
                                 image: require('../../../assets/image/card/fruit/strawberry.jpg'),
+                            }, {
+                                title: "Banana",
+                                price: "15.000",
+                                unit: "500 gr",
+                                key: 'banana',
+                                image: require('../../../assets/image/card/fruit/banana.jpg'),
                             },
                         ]}
                         renderItem={({ item }) => (
-                            <TouchableOpacity>
-                                <ItemCard data={item} />
-                            </TouchableOpacity>
+                            <ItemCard data={item} navigation={this.props.navigation}/>
                         )}
                     />
                 {/* </View> */}
-                <View>
+                {/* <View>
                     <Text style={{ alignSelf: 'center', margin: 'auto', paddingVertical: 20 }}>
                         ~ Tidak ada data untuk ditampilkan ~
                     </Text>
-                </View>
+                </View> */}
             </Container>
         );
     }

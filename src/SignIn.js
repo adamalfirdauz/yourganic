@@ -68,10 +68,10 @@ class SignIn extends React.Component{
                 .then((responseJSON)=> {
                     if(responseJSON.data){
                         // console.error(responseJSON)
-                        // alert("Login Berhasil")
-                        this.setState({loading: true})
+                        // this.setState({loading: true})
                         this.session(responseJSON)
                         this.redirect_Home(responseJSON)
+                        alert("Login Berhasil")
                     }
                     else{
                         // console.error(responseJSON)

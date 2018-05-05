@@ -14,19 +14,12 @@ import SideMenus from './src/SideMenus'
 import HomeScreen from './src/HomeScreen/HomeScreen.js'
 
 import StackNav from './src/Navigator/StackNav'
+import LoginStackNav from './src/Navigator/LoginStackNav'
 import DrawerNav from './src/Navigator/DrawerNav'
 
 // import ReduxNavigation from './Navigation/ReduxNavigation'
 
 
-const Apps = StackNavigator({
-  Main:{ screen: Mains },
-  SignIn: { screen: SignIn },
-  Register: { screen: Register },
-  Home : {screen: HomeScreen}
-},
-  {headerMode : "none"}
-);
 
 
 export default class App extends React.Component {
@@ -38,17 +31,10 @@ export default class App extends React.Component {
     fontLoaded: false,
     myProfile : false
   }
-  // async componentWillMount() {
-  //   await Expo.Font.loadAsync({
-  //     Roboto: require("native-base/Fonts/Roboto.ttf"),
-  //     Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
-  //   });
-  //   this.setState({ fontLoaded: true });
-  // }
 
   async fetchProfile(){
     try {
-      const value = await AsyncStorage.getItem('profile');
+      const value = await AsyncStorage.getItem('profile')
       let parsed  = JSON.parse(value)
       // console.error(parsed.data.nama)
       if (value !== null){
@@ -63,39 +49,20 @@ export default class App extends React.Component {
   }
 
   render() {
-    if(!this.state.myProfile){
-      // console.error(this.state.myProfile)
-      if(this.state.fontLoaded){
-        return (
-          <View style={styles.container}>
-            <StackNav />
-          </View>
-        );
-      }
-      else {
-        return (
-          <View style={styles.container}>
-          <StackNav />
+    if(this.state.myProfile){
+      return (
+        <View style={styles.container}>
+          <LoginStackNav />
         </View>
-        );
-      }
+      );
     }
     else{
       // console.error(this.state.myProfile)
-      if(this.state.fontLoaded){
-        return (
-          <View style={styles.container}>
-            <DrawerNav />
-          </View>
-        );
-      }
-      else {
-        return (
-          <View style={styles.container}>
-          <DrawerNav />
+      return (
+        <View style={styles.container}>
+          <StackNav />
         </View>
-        );
-      }
+      );
     }
   }
 }
