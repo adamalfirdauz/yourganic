@@ -71,7 +71,7 @@ export default class Profile extends React.Component {
         await AsyncStorage.clear()
     }
     editProfile() {
-        this.props.navigation.navigate('editProfile')
+        this.props.navigation.push('editProfile')
     }
 
     render() {

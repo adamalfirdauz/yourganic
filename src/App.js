@@ -128,6 +128,7 @@ import Register from './screens/register';
 import ItemsPage from './screens/itemsPage/';
 import ItemDetail from './screens/itemDetail';
 import Profile from './screens/profile';
+import UpdateProfile from './screens/UpdateProfile/UpdateProfile';
 
 const Drawer = DrawerNavigator(
   {
@@ -151,6 +152,7 @@ const Drawer = DrawerNavigator(
     },
     ItemsPage: { screen: ItemsPage },
     Profile: { screen: Profile},
+    // editProfile: { screen: UpdateProfile},
     Splash: { screen: Splash },
 
     Home: { screen: Home },
@@ -208,7 +210,7 @@ const AppNavigator = StackNavigator(
     Home: { screen: Home },
     ItemsPage: { screen: ItemsPage},
     ItemDetail: { screen: ItemDetail},
-    
+    editProfile: { screen: UpdateProfile},
     Drawer: { screen: Drawer },
 
     Header1: { screen: Header1 },

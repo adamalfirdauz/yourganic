@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image } from "react-native";
+import { Image, AsyncStorage } from "react-native";
 import {
   Content,
   Text,
@@ -190,10 +190,27 @@ const datas = [
 class SideBar extends Component {
   constructor(props) {
     super(props);
+    this.fetchProfile()
     this.state = {
       shadowOffsetWidth: 1,
-      shadowRadius: 4
+      shadowRadius: 4,
+      foto: 'drawerImage'
     };
+  }
+
+  async fetchProfile(){
+    try {
+      const value = await AsyncStorage.getItem('profile');
+      let parsed  = JSON.parse(value)
+      // console.error(parsed)
+      if (value !== null){
+        // We have data!!
+        this.setState({foto : 'http://azizpc.codepanda.web.id/'+parsed.data.foto})
+        return parsed
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
   }
 
   render() {
@@ -204,7 +221,7 @@ class SideBar extends Component {
           style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
         >
           <Image source={drawerCover} style={styles.drawerCover} />
-          <Image square style={styles.drawerImage} source={drawerImage} />
+          <Image square style={styles.drawerImage} source={{uri: this.state.foto}} />
 
           <List
             dataArray={datas}

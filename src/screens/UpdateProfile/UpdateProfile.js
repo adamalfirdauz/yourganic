@@ -1,11 +1,5 @@
 import React from "react";
 import { DrawerNavigator } from "react-navigation";
-import SignIn from '../SignIn';
-import Register from '../Register';
-import LogoTitle from '../LogoTitle';
-import Mains from '../Mains';
-import SideMenus from '../SideMenus'
-import SideBar from "../SideBar/SideBar.js";
 import { View,
   StyleSheet,
   ImageBackground,
@@ -13,7 +7,9 @@ import { View,
   Platform,
   KeyboardAvoidingView,
   StatusBar, 
-  AsyncStorage } from "react-native";
+  AsyncStorage,
+  TouchableOpacity
+} from "react-native";
 import {
   Button,
   Text,
@@ -31,8 +27,17 @@ import {
 } from "native-base";
 import { ScrollView } from 'react-native-gesture-handler';
 import { NavigationActions } from 'react-navigation'
+import ImagePicker from 'react-native-image-picker'
 
-export default class Profile extends React.Component {
+var options = {
+  title: 'Select Photo',
+  takePhotoButtonTitle: 'Take a Photo',
+  chooseFromLibraryButtonTitle: 'Choose from gallery',
+  quality: 1
+};
+
+
+export default class UpdateProfile extends React.Component {
   constructor(props) {
     super(props)
     var data = this.fetchProfile()
@@ -44,7 +49,8 @@ export default class Profile extends React.Component {
       email: '',
       hp: '',
       alamat: '',
-      token :''
+      token :'',
+      imageSource: null
   }
 
   async fetchProfile(){
@@ -59,7 +65,9 @@ export default class Profile extends React.Component {
                        email : parsed.data.email,
                        hp : parsed.data.hp,
                        alamat : parsed.data.alamat,
-                       token : parsed.meta.token
+                       token : parsed.meta.token,
+                       foto: 'http://azizpc.codepanda.web.id/' + parsed.data.foto
+
         })
       }
     } catch (error) {
@@ -70,6 +78,22 @@ export default class Profile extends React.Component {
   update(){
     console.error(this.state)
   }
+  selectPhoto() {
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      }
+      else if (response.error) {
+        console.error('ImagePicker Error: ', response.error);
+      }
+      else {
+        let source = { uri: response.uri }
+        this.setState({imageSource: source})
+          // console.error(gambar.uri)
+      }
+    })
+  }
 
   render() {
     return (
@@ -78,7 +102,7 @@ export default class Profile extends React.Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate('Profile')
+              onPress={() => this.props.navigation.goBack()
             }
             > 
               <Icon name="ios-arrow-back" />
@@ -91,7 +115,18 @@ export default class Profile extends React.Component {
         </Header>
         <View style={{flex:1}}>
             <Content>
-                <Icon name="person" style={styles.photoProfile} />
+            <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
+              <Image
+                square
+                style={{
+                  height: 120,
+                  width: 110,
+                  alignSelf: "center",
+                  top: 20,
+                  borderRadius: 100
+                }}
+                source={this.state.imageSource !== null ? this.state.imageSource :{uri:this.state.foto}} />
+            </TouchableOpacity>
                 <Input onChangeText={() => this.setState({ nama })} style={styles.nama}>{this.state.nama}</Input>
                 <View style={styles.hairStyle}/>
                 <View style={styles.row}>
