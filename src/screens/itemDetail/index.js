@@ -65,7 +65,12 @@ class ItemDetails extends React.Component {
         }
     }
     incrementItem() {
-        this.setState({ sum: this.state.sum + 1 })
+        if(this.state.sum <6){
+            this.setState({ sum: this.state.sum + 1 })
+        }
+        else{
+            alert("Melebihi Batas, Max 6")
+        }
     }
     decrementItem() {
         if (this.state.sum > 0)

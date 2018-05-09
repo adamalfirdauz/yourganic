@@ -51,7 +51,8 @@ export default class Profile extends React.Component {
             alamat: '',
             foto: 'default',
             icon: true,
-            token : ''
+            token: '',
+            imageSource: null
         }
         //    console.error(data)
     }
@@ -74,7 +75,7 @@ export default class Profile extends React.Component {
                 hp: parsed.phone,
                 alamat: parsed.address,
             })
-            if(parsed.foto){
+            if (parsed.foto) {
                 this.setState({
                     foto: 'http://yourganic.codepanda.web.id/' + parsed.data.foto
                 })
@@ -83,7 +84,7 @@ export default class Profile extends React.Component {
             console.log('Terjadi kesalahan : ' + error);
         });
     }
-    async getToken(){
+    async getToken() {
         this.retrieveItem('access-token')
             .then((token) => {
                 this.setState({
@@ -94,7 +95,7 @@ export default class Profile extends React.Component {
             .catch((error) => {
                 console.log('Terjadi kesalahan : ' + error);
             }
-        );
+            );
     }
     async logOut() {
         axios.post('/api/logout', {}, {
@@ -135,77 +136,80 @@ export default class Profile extends React.Component {
     render() {
         return (
             <Container style={{ backgroundColor: 'white' }}>
-        <Header style={styles.headerStyle} androidStatusBarColor='#004600'>
-            <StatusBar barStyle="light-content" />
-            <Left>
-                <Button
-                transparent
-                onPress={() => this.props.navigation.navigate("DrawerOpen")}
-                >
-                <Icon name="menu" />
-                </Button>
-            </Left>
-            <Body>
-                <Title>Profile</Title>
-            </Body>
-            <Right />
-        </Header>
-        <View style={{ flex: 1 }}>
-            <Content>
-                <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
-                <Image
-                    square
-                    style={{
-                    height: 120,
-                    width: 110,
-                    alignSelf: "center",
-                    top: 20,
-                    borderRadius: 100
-                    }}
-                    source={this.state.imageSource !== null ? this.state.imageSource :{uri:this.state.foto}} />
-                </TouchableOpacity>
-                {/* <Icon active={this.state.icon} name="person" style={styles.photoProfile} /> */}
-                <Text style={styles.nama}>{this.state.nama}</Text>
-                <View style={styles.hairStyle} />
-                <View style={styles.row}>
-                    <Icon name="mail" style={styles.emailIcon} />
-                    <View > 
-                        <Text style={styles.email}>Email</Text>
-                        <Text style={styles.emails}>{this.state.email}</Text>
-                    </View>
+                <Header style={styles.headerStyle} androidStatusBarColor='#004600'>
+                    <StatusBar barStyle="light-content" />
+                    <Left>
+                        <Button
+                            transparent
+                            onPress={() => this.props.navigation.navigate("DrawerOpen")}
+                        >
+                            <Icon name="menu" />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Profile</Title>
+                    </Body>
+                    <Right />
+                </Header>
+                <View style={{ flex: 1 }}>
+                    <Content>
+                        <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
+                            {this.state.imageSource !== null ?
+                                <Image
+                                    square
+                                    style={{
+                                        height: 120,
+                                        width: 110,
+                                        alignSelf: "center",
+                                        top: 20,
+                                        borderRadius: 100
+                                    }}
+                                    source={this.state.imageSource} />
+                                :
+                                <Icon name='person' style={{ fontSize: 120, alignSelf: 'center', paddingTop: 20, }} />}
+                        </TouchableOpacity>
+                        {/* <Icon active={this.state.icon} name="person" style={styles.photoProfile} /> */}
+                        <Text style={styles.nama}>{this.state.nama}</Text>
+                        <View style={styles.hairStyle} />
+                        <View style={styles.row}>
+                            <Icon name="mail" style={styles.emailIcon} />
+                            <View >
+                                <Text style={styles.email}>Email</Text>
+                                <Text style={styles.emails}>{this.state.email}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.hairStyles} />
+                        <View style={styles.row}>
+                            <Icon name="ios-call" style={styles.phoneIcon} />
+                            <View >
+                                <Text style={styles.email}>Nomor Telepon</Text>
+                                <Text style={styles.emails}>{this.state.hp}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.hairStyles} />
+                        <View style={styles.row}>
+                            <Icon name="bookmark" style={styles.addressIcon} />
+                            <View >
+                                <Text style={styles.email}>Alamat</Text>
+                                <Text style={styles.emails}>{this.state.alamat}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.hairStyles} />
+                        <Button
+                            onPress={() => this.editProfile()}
+                            block={true}
+                            style={styles.buttonStyle}>
+                            <Text style={styles.buttonTextStyle}>Update Profile</Text>
+                        </Button>
+                        <Button
+                            onPress={() => this.logOut()}
+                            block={true}
+                            style={styles.logoutbuttonStyle}>
+                            <Text style={styles.logoutbuttonTextStyle}>Log Out</Text>
+                        </Button>
+                    </Content>
                 </View>
-                <View style={styles.hairStyles} />
-                <View style={styles.row}>
-                    <Icon name="ios-call" style={styles.phoneIcon} />
-                    <View >
-                        <Text style={styles.email}>Nomor Telepon</Text>
-                        <Text style={styles.emails}>{this.state.hp}</Text>
-                    </View>
-                </View>
-                <View style={styles.hairStyles} />
-                <View style={styles.row}>
-                    <Icon name="bookmark" style={styles.addressIcon} />
-                    <View >
-                        <Text style={styles.email}>Alamat</Text>
-                        <Text style={styles.emails}>{this.state.alamat}</Text>
-                    </View>
-                </View>
-                <View style={styles.hairStyles} />
-                <Button
-                    onPress={() => this.editProfile()}
-                    block={true}
-                    style={styles.buttonStyle}>
-                    <Text style={styles.buttonTextStyle}>Update Profile</Text>
-                </Button>
-                <Button
-                    onPress={() => this.logOut()}
-                    block={true}
-                    style={styles.logoutbuttonStyle}>
-                    <Text style={styles.logoutbuttonTextStyle}>Log Out</Text>
-                </Button>
-            </Content>
-        </View>
-      </Container>
+            </Container>
         );
     }
 }

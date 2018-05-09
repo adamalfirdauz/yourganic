@@ -1,12 +1,13 @@
 import React from "react";
 import { DrawerNavigator } from "react-navigation";
-import { View,
+import {
+  View,
   StyleSheet,
   ImageBackground,
   Image,
   Platform,
   KeyboardAvoidingView,
-  StatusBar, 
+  StatusBar,
   AsyncStorage,
   TouchableOpacity
 } from "react-native";
@@ -42,29 +43,30 @@ export default class UpdateProfile extends React.Component {
   constructor(props) {
     super(props)
     var data = this.fetchProfile()
-//    console.error(data)
+    //    console.error(data)
   }
   state = {
-      id : '',
-      nama : '',
-      email: '',
-      hp: '',
-      alamat: '',
-      token :'',
-      imageSource: null
+    id: '',
+    nama: '',
+    email: '',
+    hp: '',
+    alamat: '',
+    token: '',
+    imageSource: null
   }
 
-  async fetchProfile(){
+  async fetchProfile() {
     try {
       const value = await AsyncStorage.getItem('user-profile');
-      let parsed  = JSON.parse(value)
-      if (value !== null){
+      let parsed = JSON.parse(value)
+      if (value !== null) {
         // We have data!!
-        this.setState({id : parsed.id,
-                       nama : parsed.name,
-                       email : parsed.email,
-                       hp : parsed.phone,
-                       alamat : parsed.address,
+        this.setState({
+          id: parsed.id,
+          nama: parsed.name,
+          email: parsed.email,
+          hp: parsed.phone,
+          alamat: parsed.address,
         })
       }
     } catch (error) {
@@ -72,7 +74,7 @@ export default class UpdateProfile extends React.Component {
     }
   }
 
-  update(){
+  update() {
     console.error(this.state)
   }
   selectPhoto() {
@@ -86,22 +88,22 @@ export default class UpdateProfile extends React.Component {
       }
       else {
         let source = { uri: response.uri }
-        this.setState({imageSource: source})
-          // console.error(gambar.uri)
+        this.setState({ imageSource: source })
+        // console.error(gambar.uri)
       }
     })
   }
 
   render() {
     return (
-      <Container style={{backgroundColor:'white'}}>
+      <Container style={{ backgroundColor: 'white' }}>
         <Header style={styles.headerStyle} androidStatusBarColor='#004600'>
           <Left>
             <Button
               transparent
               onPress={() => this.props.navigation.goBack()
-            }
-            > 
+              }
+            >
               <Icon name="ios-arrow-back" />
             </Button>
           </Left>
@@ -110,10 +112,11 @@ export default class UpdateProfile extends React.Component {
           </Body>
           <Right />
         </Header>
-        <View style={{flex:1}}>
-            <Content>
+        <View style={{ flex: 1 }}>
+          <Content>
             <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
-              <Image
+              {this.state.imageSource !== null ?  
+                <Image
                 square
                 style={{
                   height: 120,
@@ -121,42 +124,44 @@ export default class UpdateProfile extends React.Component {
                   alignSelf: "center",
                   top: 20,
                   borderRadius: 100
-              }}
-                source={this.state.imageSource !== null ? this.state.imageSource :{uri:this.state.foto}} />
+                }}
+                source={this.state.imageSource} />
+                :
+              <Icon name='person' style={{ fontSize: 120, alignSelf: 'center', paddingTop: 20, }} />}
             </TouchableOpacity>
-                <Input onChangeText={() => this.setState({ nama })} style={styles.nama}>{this.state.nama}</Input>
-                <View style={styles.hairStyle}/>
-                <View style={styles.row}>
-                    <Icon name="mail" style={styles.emailIcon} />
-                    <View >
-                        <Text style={styles.email}>Email</Text>
-                        <Text onChangeText={(email) => this.setState({ email })} style={styles.emails}>{this.state.email}</Text>
-                    </View>
-                </View>
-                <View style={styles.hairStyles}/>
-                <View style={styles.row}>
-                    <Icon name="ios-call" style={styles.phoneIcon} />
-                    <View >
-                        <Text style={styles.email}>Nomor Telepon</Text>
-                        <Input keyboardType={"numeric"} onChangeText={(hp) => this.setState({ hp })}style={styles.emails}>{this.state.hp}</Input>
-                    </View>
-                </View>
-                <View style={styles.hairStyles}/>
-                <View style={styles.row}>
-                    <Icon name="bookmark" style={styles.addressIcon} />
-                    <View >
-                        <Text style={styles.email}>Alamat</Text>
-                        <Input onChangeText={(alamat) => this.setState({ alamat })} style={styles.emails}>{this.state.alamat}</Input>
-                    </View>
-                </View>
-                <View style={styles.hairStyles}/>
-                <Button
-                    onPress={() => this.update()}
-                    block={true}
-                    style={styles.buttonStyle}>
-                    <Text style={styles.buttonTextStyle}>Simpan</Text>
-                </Button>
-            </Content>
+            <Input onChangeText={() => this.setState({ nama })} style={styles.nama}>{this.state.nama}</Input>
+            <View style={styles.hairStyle} />
+            <View style={styles.row}>
+              <Icon name="mail" style={styles.emailIcon} />
+              <View >
+                <Text style={styles.email}>Email</Text>
+                <Text onChangeText={(email) => this.setState({ email })} style={styles.emails}>{this.state.email}</Text>
+              </View>
+            </View>
+            <View style={styles.hairStyles} />
+            <View style={styles.row}>
+              <Icon name="ios-call" style={styles.phoneIcon} />
+              <View >
+                <Text style={styles.email}>Nomor Telepon</Text>
+                <Input keyboardType={"numeric"} onChangeText={(hp) => this.setState({ hp })} style={styles.emails}>{this.state.hp}</Input>
+              </View>
+            </View>
+            <View style={styles.hairStyles} />
+            <View style={styles.row}>
+              <Icon name="bookmark" style={styles.addressIcon} />
+              <View >
+                <Text style={styles.email}>Alamat</Text>
+                <Input onChangeText={(alamat) => this.setState({ alamat })} style={styles.emails}>{this.state.alamat}</Input>
+              </View>
+            </View>
+            <View style={styles.hairStyles} />
+            <Button
+              onPress={() => this.update()}
+              block={true}
+              style={styles.buttonStyle}>
+              <Text style={styles.buttonTextStyle}>Simpan</Text>
+            </Button>
+          </Content>
         </View>
       </Container>
     );
