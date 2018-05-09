@@ -28,7 +28,7 @@ class Splash extends Component {
     }
     async fetchProfile() {
         try {
-            const value = await AsyncStorage.getItem('profile')
+            const value = await AsyncStorage.getItem('user-profile')
             let parsed = JSON.parse(value)
             if (value != null) {
                 this.props.navigation.dispatch(resetActionHome);

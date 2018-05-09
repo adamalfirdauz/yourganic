@@ -44,6 +44,7 @@ export default class Profile extends React.Component {
 //    console.error(data)
   }
   state = {
+      id: '',
       nama : '',
       email: '',
       hp: '',
@@ -54,15 +55,17 @@ export default class Profile extends React.Component {
 
   async fetchProfile(){
     try {
-      const value = await AsyncStorage.getItem('profile');
+      const value = await AsyncStorage.getItem('user-profile');
       let parsed  = JSON.parse(value)
       if (value !== null){
         // We have data!!
-        this.setState({nama : parsed.data.nama,
-                       email : parsed.data.email,
-                       hp : parsed.data.hp,
-                       alamat : parsed.data.alamat,
-                       foto: 'http://azizpc.codepanda.web.id/'+parsed.data.foto
+        this.setState({
+          id: parsed.id,
+          nama : parsed.name,
+          email : parsed.email,
+          hp : parsed.phone,
+          alamat : parsed.address,
+          // foto: 'http://azizpc.codepanda.web.id/'+parsed.data.foto
         })
         if(this.foto !== null){
           this.setState({icon: false})

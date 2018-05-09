@@ -1,14 +1,16 @@
 import React from 'react'
 import {
     View, Text, StyleSheet, ImageBackground, TextInput, ScrollView, ActivityIndicator,
-    Image, KeyboardAvoidingView, StatusBar, TouchableOpacity
+    Image, KeyboardAvoidingView, StatusBar, TouchableOpacity, AsyncStorage
 } from 'react-native';
 import {
     Container, Header, Left, Body, Right, Button, Icon,
     Title, Content, FooterTab, Footer, Form, Item, Input, Label
 } from 'native-base';
+import { NavigationActions } from 'react-navigation';
 import styles from './styles'
 
+var axios = require('../../api/axios.js');
 var logo = require('../../../assets/image/Logo.png');
 
 class Register extends React.Component {
@@ -35,50 +37,60 @@ class Register extends React.Component {
         },
     }
     state = {
-        name: 'Ryan',
-        alamat: 'jalanku',
-        email: 'mailsas@mail.com',
-        password: 'azharns1653',
-        retype: 'hahaa',
-        phone: '085373318178',
-        status: '1',
+        name: '',
+        address: '',
+        email: '',
+        password: '',
+        retype: '',
+        phone: '',
         loading: false
     };
+    async storeItem(key, item) {
+        try {
+            var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
+            return jsonOfItem;
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
     registerAPI() {
         this.setState({ loading: true })
-        fetch('http://azizpc.codepanda.web.id/api/auth/register', {
-            method: 'post',
+        axios.post('/api/register',
+        {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            c_password: this.state.retype,
+            phone: this.state.phone,
+            address: this.state.address,
+        },{
             headers: {
                 Accept: 'application/json',
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({
-                name: this.state.name,
-                email: this.state.email,
-                password: this.state.password,
-                phone: this.state.phone,
-                alamat: this.state.alamat,
-                status: this.state.status
-
-            })
-        }).then((response) => response.json())
-            .then((responseJSON) => {
-                if (responseJSON.data) {
-                    // alert("Pendaftaran Berhasil")
-                    this.setState({ loading: false })
-                    this.homeNavigate(responseJSON)
-                }
-                else {
-                    alert("Pendaftaran gagal, isi data dengan benar!!")
-                    this.setState({ loading: false })
-                }
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+        }).then(response => {
+            // console.error(response)
+            try {
+                this.storeItem('user-profile', response.data.data)
+                this.storeItem('access-token', response.data.meta.token)
+            } catch (error) {
+                console.error(error);
+            }
+            this.homeNavigate()
+        }).catch( error => {
+            console.error(error);
+        });
     }
-    homeNavigate(data) {
-        this.props.navigation.navigate('Home', data)
+    homeNavigate() {
+        const resetActionHome = NavigationActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({
+                    routeName: 'Drawer',
+                })
+            ],
+        });
+        this.props.navigation.dispatch(resetActionHome);
     }
     loginNavigate(){
         this.props.navigation.navigate('Login')
@@ -98,6 +110,12 @@ class Register extends React.Component {
                         <View style={{ flex: 3, paddingHorizontal: 20 }}>
                             <ActivityIndicator style={styles.loading} size="large" animating={this.state.loading} />
                             <Item floatingLabel>
+                                <Label style={styles.title}>Nama</Label>
+                                <Input style={styles.input}
+                                    onChangeText={(name) => this.setState({ name })}
+                                />
+                            </Item>
+                            <Item floatingLabel>
                                 <Label style={styles.title}>Email</Label>
                                 <Input style={styles.input}
                                     onChangeText={(email) => this.setState({ email })}
@@ -111,7 +129,6 @@ class Register extends React.Component {
                                     onChangeText={(password) => this.setState({ password })}
                                 />
                             </Item>
-
                             <Item floatingLabel >
                                 <Label style={styles.title}>Retype Password</Label>
                                 <Input
@@ -120,13 +137,19 @@ class Register extends React.Component {
                                     onChangeText={(retype) => this.setState({ retype })}
                                 />
                             </Item>
-
+                            <Item floatingLabel >
+                                <Label style={styles.title}>Alamat</Label>
+                                <Input
+                                    style={styles.input}
+                                    onChangeText={(address) => this.setState({ address })}
+                                />
+                            </Item>
                             <Item floatingLabel >
                                 <Label style={styles.title}>Handphone</Label>
                                 <Input
                                     style={styles.input}
                                     keyboardType={"numeric"}
-                                    onChangeText={(handphone) => this.setState({ handphone })}
+                                    onChangeText={(phone) => this.setState({ phone })}
                                 />
                             </Item>
                             <Button

@@ -10,7 +10,9 @@ import {
 } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import styles from './styles';
+// import { axios } from 'axios'
 
+var axios = require('../../api/axios.js');
 var logo = require('../../../assets/image/Logo.png');
 
 class Login extends React.Component {
@@ -37,51 +39,53 @@ class Login extends React.Component {
         },
     }
     state = {
-        email: '',
-        password: '',
+        email: 'adam@gmail.com',
+        password: '123456',
         loading: false
     };
+    async storeItem(key, item) {
+        try {
+            var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
+            return jsonOfItem;
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
     session(data) {
         try {
-            AsyncStorage.setItem('profile', JSON.stringify(data));
+            AsyncStorage.setItem('user-profile', JSON.stringify(data));
         } catch (error) {
             console.error(error);
         }
     }
     loginAPI() {
         this.setState({ loading: true })
-        fetch('http://azizpc.codepanda.web.id/api/auth/login', {
-            method: 'post',
+        axios.post('/api/login',
+        {
+            email: this.state.email,
+            password: this.state.password
+        },{
             headers: {
                 Accept: 'application/json',
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password,
-            })
-        }).then((response) => response.json())
-            .then((responseJSON) => {
-                if (responseJSON.data) {
-                    // console.error(responseJSON)
-                    // this.setState({loading: true})
-                    this.session(responseJSON)
-                    this.homeNavigate(responseJSON)
-                }
-                else {
-                    // console.error(responseJSON)
-                    alert("Login gagal, periksa email dan password anda")
-                    this.setState({ loading: false })
-                }
-            })
-            .catch((error) => {
-                console.error(error)
-            })
+        }).then(response => {
+            if(response.data){
+                this.storeItem('user-profile',response.data.data)
+                this.storeItem('access-token', response.data.meta.token)
+                this.homeNavigate()
+            }
+            else{
+                alert("Login gagal, periksa email dan password anda")
+            }
+        }).catch( error => {
+            console.error(error);
+        });
     }
     registerNavigate() {
         this.props.navigation.navigate('Register')
     }
-    homeNavigate(data) {
+    homeNavigate() {
         const resetActionHome = NavigationActions.reset({
             index: 0,
             actions: [

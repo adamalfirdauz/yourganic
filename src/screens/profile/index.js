@@ -27,42 +27,73 @@ import {
 import styles from './styles';
 import { NavigationActions } from 'react-navigation'
 
+var axios = require('../../api/axios.js');
+var man = require('./man.png');
+
 export default class Profile extends React.Component {
     constructor(props) {
         super(props)
+        this.getToken();
         var data = this.fetchProfile()
         this.state = {
             nama: '',
             email: '',
             hp: '',
             alamat: '',
-            foto: 'a',
-            icon: true
+            foto: 'default',
+            icon: true,
+            token : ''
         }
         //    console.error(data)
     }
-    async fetchProfile() {
+    async retrieveItem(key) {
         try {
-            const value = await AsyncStorage.getItem('profile');
-            let parsed = JSON.parse(value)
-            if (value !== null) {
-                this.setState({
-                    nama: parsed.data.nama,
-                    email: parsed.data.email,
-                    hp: parsed.data.hp,
-                    alamat: parsed.data.alamat,
-                    foto: 'http://azizpc.codepanda.web.id/' + parsed.data.foto
-                })
-                if (this.foto !== null) {
-                    this.setState({ icon: false })
-                }
-            }
+            const retrievedItem = await AsyncStorage.getItem(key);
+            const item = JSON.parse(retrievedItem);
+            return item;
         } catch (error) {
-            // Error retrieving data
+            console.log(error.message);
         }
+        return
+    }
+    async fetchProfile() {
+        this.retrieveItem('user-profile').then((parsed) => {
+            //this callback is executed when your Promise is resolved
+            this.setState({
+                nama: parsed.name,
+                email: parsed.email,
+                hp: parsed.phone,
+                alamat: parsed.address,
+            })
+            if(parsed.foto){
+                this.setState({
+                    foto: 'http://yourganic.codepanda.web.id/' + parsed.data.foto
+                })
+            }
+        }).catch((error) => {
+            console.log('Terjadi kesalahan : ' + error);
+        });
+    }
+    async getToken(){
+        this.retrieveItem('access-token')
+            .then((token) => {
+                this.setState({
+                    token: token
+                });
+                // console.error(this.state.token)
+            })
+            .catch((error) => {
+                console.log('Terjadi kesalahan : ' + error);
+            }
+        );
     }
     async logOut() {
-        // this.props.navigation.goBack({data:1})
+        axios.post('/api/logout', {}, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + this.state.token
+            },
+        })
         this.props.navigation.dispatch(NavigationActions.reset({
             index: 0,
             actions: [NavigationActions.navigate({ routeName: 'Prelogin' })],
