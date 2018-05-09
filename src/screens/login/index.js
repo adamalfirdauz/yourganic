@@ -64,6 +64,7 @@ class Login extends React.Component {
             },
         }).then(response => {
             if(response.data){
+                this.alert("Login Berhasil")
                 this.storeItem('user-profile',response.data.data)
                 this.storeItem('access-token', response.data.meta.token)
                 this.homeNavigate()
@@ -73,7 +74,9 @@ class Login extends React.Component {
                 this.setState({ loading: false })
             }
         }).catch( error => {
-            console.error(error);
+            alert("Login Gagal, periksa email dan password anda")
+            this.setState({loading: false})
+            // console.error(error)
         });
     }
     registerNavigate() {

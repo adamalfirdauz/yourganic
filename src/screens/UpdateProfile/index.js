@@ -56,19 +56,15 @@ export default class UpdateProfile extends React.Component {
 
   async fetchProfile(){
     try {
-      const value = await AsyncStorage.getItem('profile');
+      const value = await AsyncStorage.getItem('user-profile');
       let parsed  = JSON.parse(value)
       if (value !== null){
         // We have data!!
-        // console.error(parsed)
-        this.setState({id : parsed.data.id,
-                       nama : parsed.data.nama,
-                       email : parsed.data.email,
-                       hp : parsed.data.hp,
-                       alamat : parsed.data.alamat,
-                       token : parsed.meta.token,
-                       foto: 'http://azizpc.codepanda.web.id/' + parsed.data.foto
-
+        this.setState({id : parsed.id,
+                       nama : parsed.name,
+                       email : parsed.email,
+                       hp : parsed.phone,
+                       alamat : parsed.address,
         })
       }
     } catch (error) {
