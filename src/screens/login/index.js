@@ -66,7 +66,9 @@ class Login extends React.Component {
                     // console.error(responseJSON)
                     // this.setState({loading: true})
                     this.session(responseJSON)
+                    alert("Login Berhasil")
                     this.homeNavigate(responseJSON)
+
                 }
                 else {
                     // console.error(responseJSON)

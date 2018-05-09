@@ -125,7 +125,7 @@ export default class UpdateProfile extends React.Component {
                   alignSelf: "center",
                   top: 20,
                   borderRadius: 100
-                }}
+              }}
                 source={this.state.imageSource !== null ? this.state.imageSource :{uri:this.state.foto}} />
             </TouchableOpacity>
                 <Input onChangeText={() => this.setState({ nama })} style={styles.nama}>{this.state.nama}</Input>
