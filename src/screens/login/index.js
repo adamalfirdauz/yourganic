@@ -104,7 +104,12 @@ class Login extends React.Component {
                 />
                 <View style={{ flex: 2, alignSelf: 'center' }}>
                     <Image source={logo} style={styles.logo} />
-                    <ActivityIndicator size="large" animating={this.state.loading} />
+                    {
+                        this.state.loading ?
+                    <ActivityIndicator size="large"/>
+                    :
+                    <View><Text> </Text></View>
+                    }
                 </View>
                 <View style={{ flex: 2, alignSelf: 'stretch', flexDirection: 'column' }}>
                     <KeyboardAvoidingView style={{ flex: 2 }}>
