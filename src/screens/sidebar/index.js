@@ -194,7 +194,8 @@ class SideBar extends Component {
     this.state = {
       shadowOffsetWidth: 1,
       shadowRadius: 4,
-      foto: 'drawerImage'
+      foto: 'drawerImage',
+      nama : ''
     };
   }
 
@@ -205,7 +206,7 @@ class SideBar extends Component {
       // console.error(parsed)
       if (value !== null){
         // We have data!!
-        this.setState({foto : 'http://azizpc.codepanda.web.id/'+parsed.data.foto})
+        this.setState({nama:parsed.data.nama, foto : 'http://azizpc.codepanda.web.id/'+parsed.data.foto})
         return parsed
       }
     } catch (error) {
@@ -222,6 +223,7 @@ class SideBar extends Component {
         >
           <Image source={drawerCover} style={styles.drawerCover} />
           <Image square style={styles.drawerImage} source={{uri: this.state.foto}} />
+          <Text style={styles.nama}>{this.state.nama}</Text>
 
           <List
             dataArray={datas}

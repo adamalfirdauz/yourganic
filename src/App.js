@@ -128,7 +128,7 @@ import Register from './screens/register';
 import ItemsPage from './screens/itemsPage/';
 import ItemDetail from './screens/itemDetail';
 import Profile from './screens/profile';
-import UpdateProfile from './screens/UpdateProfile/UpdateProfile';
+import UpdateProfile from './screens/UpdateProfile/';
 
 const Drawer = DrawerNavigator(
   {
