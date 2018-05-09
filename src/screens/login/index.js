@@ -51,13 +51,6 @@ class Login extends React.Component {
             console.log(error.message);
         }
     }
-    session(data) {
-        try {
-            AsyncStorage.setItem('user-profile', JSON.stringify(data));
-        } catch (error) {
-            console.error(error);
-        }
-    }
     loginAPI() {
         this.setState({ loading: true })
         axios.post('/api/login',
@@ -77,6 +70,7 @@ class Login extends React.Component {
             }
             else{
                 alert("Login gagal, periksa email dan password anda")
+                this.setState({ loading: false })
             }
         }).catch( error => {
             console.error(error);
@@ -106,7 +100,7 @@ class Login extends React.Component {
                 />
                 <View style={{ flex: 2, alignSelf: 'center' }}>
                     <Image source={logo} style={styles.logo} />
-                    <ActivityIndicator size="large" animating={this.state.loading} />
+                    { this.state.loading ? <ActivityIndicator size="large"/> : <View><Text> </Text></View>}
                 </View>
                 <View style={{ flex: 2, alignSelf: 'stretch', flexDirection: 'column' }}>
                     <KeyboardAvoidingView style={{ flex: 2 }}>
