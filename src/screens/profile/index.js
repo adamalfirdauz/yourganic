@@ -9,7 +9,8 @@ import {
     StatusBar,
     AsyncStorage,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from "react-native";
 import {
     Button,
@@ -23,8 +24,7 @@ import {
     Title,
     Left,
     Icon,
-    Right,
-    ActionSheet
+    Right
 } from "native-base";
 import styles from './styles';
 import { NavigationActions } from 'react-navigation';
@@ -121,20 +121,16 @@ export default class Profile extends React.Component {
     }
 
     confirm() {
-        ActionSheet.show(
-            {
-                options: BUTTONS,
-                cancelButtonIndex: CANCEL_INDEX,
-                // destructiveButtonIndex: DESTRUCTIVE_INDEX,
-                title: "LogOut Confirmation"
-            },
-            buttonIndex => {
-                this.setState({ clicked: BUTTONS[buttonIndex] });
-                if(buttonIndex == 1){
-                    this.logOut()
-                }
-            }
-        )
+        Alert.alert(
+            'Apakah anda yakin ingin keluar?',
+            'Semua data anda saat ini akan dihapus',
+            [
+            //   {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              {text: 'Tidak', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: 'Ya', onPress: () => this.logOut()},
+            ],
+            { cancelable: false }
+          )
     }
 
     editProfile() {
