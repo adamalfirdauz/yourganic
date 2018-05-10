@@ -23,7 +23,8 @@ import {
     Title,
     Left,
     Icon,
-    Right
+    Right,
+    ActionSheet
 } from "native-base";
 import styles from './styles';
 import { NavigationActions } from 'react-navigation';
@@ -38,6 +39,13 @@ var options = {
 var axios = require('../../api/axios.js');
 var man = require('./man.png');
 var gambar = null
+
+var BUTTONS = [
+    { text: "Cancel", icon: "close", iconColor: "#25de5b" },
+    { text: "LogOut", icon: "trash", iconColor: "#fa213b" },
+];
+// var DESTRUCTIVE_INDEX = 3;
+var CANCEL_INDEX = 0;
 
 export default class Profile extends React.Component {
     constructor(props) {
@@ -110,6 +118,23 @@ export default class Profile extends React.Component {
             key: null
         }));
         await AsyncStorage.clear()
+    }
+
+    confirm() {
+        ActionSheet.show(
+            {
+                options: BUTTONS,
+                cancelButtonIndex: CANCEL_INDEX,
+                // destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                title: "LogOut Confirmation"
+            },
+            buttonIndex => {
+                this.setState({ clicked: BUTTONS[buttonIndex] });
+                if(buttonIndex == 1){
+                    this.logOut()
+                }
+            }
+        )
     }
 
     editProfile() {
@@ -202,7 +227,7 @@ export default class Profile extends React.Component {
                             <Text style={styles.buttonTextStyle}>Update Profile</Text>
                         </Button>
                         <Button
-                            onPress={() => this.logOut()}
+                            onPress={() => this.confirm()}
                             block={true}
                             style={styles.logoutbuttonStyle}>
                             <Text style={styles.logoutbuttonTextStyle}>Log Out</Text>
