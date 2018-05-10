@@ -37,13 +37,12 @@ import styles from './styles';
 
 var resep = require('../../../assets/image/resep.png');
 
-class ItemDetails extends React.Component {
+class CheckOut extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             sum: 0
         };
-        // var data = this.props.navigation.state.params.data
     }
     session(data) {
         try {
@@ -66,10 +65,10 @@ class ItemDetails extends React.Component {
         }
     }
     incrementItem() {
-        if(this.state.sum <6){
+        if (this.state.sum < 6) {
             this.setState({ sum: this.state.sum + 1 })
         }
-        else{
+        else {
             alert("Melebihi Batas, Max 6")
         }
     }
@@ -93,13 +92,8 @@ class ItemDetails extends React.Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Title>{this.props.navigation.state.params.data.title}</Title>
+                            <Title>{this.props.navigation.state.params.title}</Title>
                         </Body>
-                        <Right>
-                            <Button transparent>
-                                <Icon name="cart" onPress={() => this.props.navigation.push('CheckOut', this.props.navigation.state.params.data)}/>
-                            </Button>
-                        </Right>
                     </Header>
                     {/* <Header style={styles.headerStyle} androidStatusBarColor='#004600' noShadow>
                         <StatusBar barStyle="light-content" />
@@ -116,34 +110,10 @@ class ItemDetails extends React.Component {
                     </Header> */}
                 </View>
                 <Content style={styles.content}>
-                    <Image source={resep} style={styles.images} />
-                    <Card style={styles.card}>
-                        <Text style={styles.disc}>Diskon 4%</Text>
-                    </Card>
-                    <Text style={styles.harga}>{this.props.navigation.state.params.data.price}</Text>
-                    <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
-                    <View style={styles.hairStyles} />
                 </Content>
-                <Footer style={styles.footer}>
-                    <TouchableOpacity style={{ paddingLeft: 3 }} onPress={() => this.decrementItem()}>
-                        <Icon name="close" style={styles.minuss} />
-                    </TouchableOpacity>
-                    <Left>
-                        <Body>
-                            <Text style={styles.jumlah}>{this.state.sum}</Text>
-                            <Text style={styles.troli}>Di Troli</Text>
-                        </Body>
-                    </Left>
-                    <Right >
-                        <Button style={styles.tambah} onPress={() => this.incrementItem()}>
-                            <Icon name="add" />
-                            <Text>Tambahkan</Text>
-                        </Button>
-                    </Right>
-                </Footer>
             </Container>
         );
     }
 }
 
-export default ItemDetails;
+export default CheckOut;

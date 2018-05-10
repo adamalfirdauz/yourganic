@@ -129,6 +129,7 @@ import ItemsPage from './screens/itemsPage/';
 import ItemDetail from './screens/itemDetail';
 import Profile from './screens/profile';
 import UpdateProfile from './screens/UpdateProfile/';
+import CheckOut from './screens/checkout/'
 
 const Drawer = DrawerNavigator(
   {
@@ -211,6 +212,7 @@ const AppNavigator = StackNavigator(
     ItemsPage: { screen: ItemsPage},
     ItemDetail: { screen: ItemDetail},
     editProfile: { screen: UpdateProfile},
+    CheckOut: {screen: CheckOut},
     Drawer: { screen: Drawer },
 
     Header1: { screen: Header1 },
