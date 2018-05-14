@@ -77,10 +77,51 @@ const styles = StyleSheet.create({
         paddingLeft: 0,
         marginLeft: 0
     },
-    minuss: {
-        paddingLeft: 10,
-        paddingTop: 15
+    shoppingBag :{
+        alignItems: 'center',
+        alignSelf: 'center',
+        paddingTop: 40,
+        fontSize : 20,
+        fontWeight :'bold'
+    },
+    reviews:{
+        alignSelf: 'center',
+    },
+    itemCardImage :{
+        height : 60,
+        width :60
+    },
+    itemCardTitle : {
+        fontSize: 18,
+        fontWeight : 'bold', 
+    },
+    itemCardPrice :{
+        color : '#26ef62',
+        fontSize : 16
+    },
+    closeIcon :{
+        paddingLeft : 20
+    },
+    hairStyles: {
+        backgroundColor: '#A2A2A2',
+        height: 1,
+        width: 360,
+        marginTop: 10,
+        margin: 20,
+        marginBottom: 10
+    },
+    shipping :{
+        marginLeft : 20,
+        color : '#636568'
+    },
+    priceShipping : {
+        paddingLeft: 200,
+        color : '#636568'
+    },
+    priceTotal :{
+        paddingLeft: 228,
     }
+
 });
 
 export default styles;
