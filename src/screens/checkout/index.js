@@ -60,6 +60,16 @@ class CheckOut extends React.Component {
         }
     }
 
+    async retrieveItem(key) {
+        try {
+            const retrievedItem = await AsyncStorage.getItem(key);
+            const item = JSON.parse(retrievedItem);
+            return item;
+        } catch (error) {
+            console.log(error.message);
+        }
+        return
+    }
     render() {
         return (
             <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>

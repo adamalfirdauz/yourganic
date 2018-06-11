@@ -41,16 +41,19 @@ class ItemDetails extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            id: 1,
             sum: 0,
             barang: this.props.navigation.state.params.data.title
         };
         // var data = this.props.navigation.state.params.data
     }
-    session(data) {
+    
+    async storeItem(key, item) {
         try {
-            AsyncStorage.setItem('profile', JSON.stringify(data));
+            var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
+            return jsonOfItem;
         } catch (error) {
-            // Error saving data
+            console.log(error.message);
         }
     }
 
@@ -80,9 +83,10 @@ class ItemDetails extends React.Component {
     }
 
     checkOut(){
-        console.error(this.state)
+        this.storeItem('Barang'+this.state.id, this.state)
+        this.props.navigation.push('CheckOut', this.props.navigation.state.params.data) 
     }
-
+    
     render() {
         return (
             <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
