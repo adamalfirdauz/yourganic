@@ -84,25 +84,6 @@ export default class HomeScreen extends React.Component {
             </Body>
             <Right />
           </Header>
-          <View style={styles.FlatList}>
-            <FlatList
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              data={[
-                { key: 'SAYURAN' },
-                { key: 'BUAH' },
-                { key: 'MENU SEHAT' },
-                { key: 'SAYURAN' },
-                { key: 'BUAH' },
-                { key: 'MENU SEHAT' },
-              ]}
-              renderItem={({ item }) => (
-                <TouchableOpacity >
-                  <Text style={styles.item}>{item.key}</Text>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
         </View>
         <Content style={styles.content}>
           <ItemBanner data={this.state.buah} />

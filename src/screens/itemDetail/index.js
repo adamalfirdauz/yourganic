@@ -41,7 +41,8 @@ class ItemDetails extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            sum: 0
+            sum: 0,
+            barang: this.props.navigation.state.params.data.title
         };
         // var data = this.props.navigation.state.params.data
     }
@@ -78,6 +79,10 @@ class ItemDetails extends React.Component {
             this.setState({ sum: this.state.sum - 1 })
     }
 
+    checkOut(){
+        console.error(this.state)
+    }
+
     render() {
         return (
             <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
@@ -97,23 +102,12 @@ class ItemDetails extends React.Component {
                         </Body>
                         <Right>
                             <Button transparent>
-                                <Icon name="cart" onPress={() => this.props.navigation.push('CheckOut', this.props.navigation.state.params.data)}/>
+                                {/* <Icon name="cart" onPress={() => this.props.navigation.push('CheckOut', this.props.navigation.state.params.data)}/> */}
+                                <Icon name="cart" onPress={() => this.checkOut()}/>
                             </Button>
                         </Right>
                     </Header>
-                    {/* <Header style={styles.headerStyle} androidStatusBarColor='#004600' noShadow>
-                        <StatusBar barStyle="light-content" />
-                        <Left>
-                            <Button
-                                transparent
-                                onPress={() => this.props.navigation.pop()}>
-                                <Icon name="arrow-back" style={{ color: 'green', fontSize: 40 }} />
-                            </Button>
-                        </Left>
-                        <Body>
-                        </Body>
-                        <Right />
-                    </Header> */}
+
                 </View>
                 <Content style={styles.content}>
                     <Image source={resep} style={styles.images} />
