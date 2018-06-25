@@ -32,10 +32,11 @@ import {
     Grid
 } from 'react-native-easy-grid';
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
-import ItemBanner from '../../theme/components/ItemBanner';
+import IconDetail from '../../theme/components/IconDetail';
 import styles from './styles';
 
 var resep = require('../../../assets/image/resep.png');
+
 
 class ItemDetails extends React.Component {
     constructor(props) {
@@ -43,7 +44,8 @@ class ItemDetails extends React.Component {
         this.state = {
             id: 1,
             sum: 0,
-            barang: this.props.navigation.state.params.data.title
+            barang: this.props.navigation.state.params.data.title,
+            // veg: [require('../../../assets/details/veg.png')]
         };
         // var data = this.props.navigation.state.params.data
     }
@@ -114,8 +116,9 @@ class ItemDetails extends React.Component {
 
                 </View>
                 <Content style={styles.content}>
-                <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
-                    <IconDetail></IconDetail>
+                    <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
+                    <Text style={styles.harga}>{this.props.navigation.state.params.data.category}</Text>
+                    {/* <IconDetail data={this.state.veg}></IconDetail> */}
                     <Image source={resep} style={styles.images} />
                     <Card style={styles.card}>
                         <Text style={styles.disc}>Diskon 4%</Text>
