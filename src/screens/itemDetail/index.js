@@ -43,7 +43,7 @@ class ItemDetails extends React.Component {
         this.state = {
             id: 1,
             sum: 0,
-            barang: this.props.navigation.state.params.data.title
+            barang: this.props.navigation.state.params.data
         };
         // var data = this.props.navigation.state.params.data
     }
@@ -83,8 +83,8 @@ class ItemDetails extends React.Component {
     }
 
     checkOut(){
-        this.storeItem('Barang'+0, this.state)
-        this.props.navigation.push('CheckOut', this.props.navigation.state.params.data) 
+        this.storeItem('Barang'+0, this.state.barang)
+        this.props.navigation.push('CheckOut', this.props.navigation.state.barang) 
     }
     
     render() {
@@ -115,7 +115,6 @@ class ItemDetails extends React.Component {
                 </View>
                 <Content style={styles.content}>
                 <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
-                    <IconDetail></IconDetail>
                     <Image source={resep} style={styles.images} />
                     <Card style={styles.card}>
                         <Text style={styles.disc}>Diskon 4%</Text>

@@ -43,7 +43,9 @@ class CheckOut extends React.Component {
         super(props)
         this.state = {
             barang: [],
-            isReady :false
+            isReady :false,
+            jumlah : 0,
+            sum : 0
            }
            this.fetchData()
     }
@@ -52,7 +54,7 @@ class CheckOut extends React.Component {
         const items  = []
         for(var i = 0; i < 3; i++){
             try {
-                const retrievedItem = await AsyncStorage.getItem('Barang');
+                const retrievedItem = await AsyncStorage.getItem('Barang'+i);
                 items[i] = JSON.parse(retrievedItem);
             } catch (error) {
                 console.log(error.message);
@@ -66,7 +68,7 @@ class CheckOut extends React.Component {
             //this callback is executed when your Promise is resolved
             this.setState({
                 barang : parsed,
-                isReady : true
+                isReady : true,
             })
             
         }).catch((error) => {
@@ -114,14 +116,14 @@ class CheckOut extends React.Component {
                                         source={item.image}
                                     />
                                     <View style={{ flexDirection: 'column', }}>
-                                        <Text style={styles.itemCardTitle}>{item.barang}</Text>
+                                        <Text style={styles.itemCardTitle}>{item.title}</Text>
                                         <Text style={styles.itemCardPrice}>Rp {item.price}</Text>
                                     </View>
-                                    <View style={{ flexDirection: 'column', }}>
+                                    <View style={{ flexDirection: 'column', position: 'absolute'}}>
                                         <TouchableOpacity>
-                                            <Icon name='close' style={{ marginLeft: 180 }} />
+                                            <Icon name='close' style={{ marginLeft: 340}} />
                                         </TouchableOpacity>
-                                        <Picker
+                                        {/* <Picker
                                             selectedValue={this.state.sum}
                                             style={{ height: 20, width: 73, marginLeft: 140, paddingLeft: 20}}
                                             onValueChange={(itemValue, itemIndex) => this.setState({jumlah : itemValue})}
@@ -133,7 +135,8 @@ class CheckOut extends React.Component {
                                             <Picker.Item label="4" value="4" />
                                             <Picker.Item label="5" value="5" />
                                             <Picker.Item label="6" value="6" />
-                                        </Picker>
+                                        </Picker> */}
+                                        <Text style={{marginLeft: 340}}>{item.jumlah}</Text>
                                     </View>
                                 </CardItem>
                             )}
