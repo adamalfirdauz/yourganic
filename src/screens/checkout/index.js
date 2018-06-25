@@ -42,23 +42,10 @@ class CheckOut extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            sum: 0,
-            jumlah :1
-           };
+            barang: [],
+            isReady :false
+           }
            this.fetchData()
-    }
-
-    async fetchProfile() {
-        try {
-            const value = await AsyncStorage.getItem('profile');
-            let parsed = JSON.parse(value)
-            if (value !== null) {
-                // We have data!!
-                // console.error(parsed.nama);
-            }
-        } catch (error) {
-            // Error retrieving data
-        }
     }
 
     async retrieveItem() {
@@ -77,10 +64,17 @@ class CheckOut extends React.Component {
     fetchData(){
         this.retrieveItem().then((parsed) => {
             //this callback is executed when your Promise is resolved
-            console.error(parsed    )
+            this.setState({
+                barang : parsed,
+                isReady : true
+            })
+            
         }).catch((error) => {
             console.log('Terjadi kesalahan : ' + error);
         });
+
+        // var datas = this.retrieveItem()
+        // console.error(datas)
     }
     render() {
         return (
@@ -111,30 +105,16 @@ class CheckOut extends React.Component {
                     <Card style={{padding:0, margin:0}}>
 
                         <FlatList
-                            data={[
-                                {
-                                    title: "Strawberry",
-                                    price: "10.000",
-                                    unit: "250 gr",
-                                    jumlah: 2,
-                                    key: 'strawberry',
-                                    image: require('../../../assets/image/card/fruit/strawberry.jpg'),
-                                }, {
-                                    title: "Banana",
-                                    price: "15.000",
-                                    unit: "500 gr",
-                                    jumlah: 2,
-                                    key: 'banana',
-                                    image: require('../../../assets/image/card/fruit/banana.jpg'),
+                            data={
+                                this.state.barang
                                 }
-                            ]}
                             renderItem={({ item }) => (
                                 <CardItem transparent>
                                     <Image style={styles.itemCardImage}
                                         source={item.image}
                                     />
                                     <View style={{ flexDirection: 'column', }}>
-                                        <Text style={styles.itemCardTitle}>{item.title}</Text>
+                                        <Text style={styles.itemCardTitle}>{item.barang}</Text>
                                         <Text style={styles.itemCardPrice}>Rp {item.price}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'column', }}>
@@ -142,7 +122,7 @@ class CheckOut extends React.Component {
                                             <Icon name='close' style={{ marginLeft: 180 }} />
                                         </TouchableOpacity>
                                         <Picker
-                                            selectedValue={this.state.jumlah}
+                                            selectedValue={this.state.sum}
                                             style={{ height: 20, width: 73, marginLeft: 140, paddingLeft: 20}}
                                             onValueChange={(itemValue, itemIndex) => this.setState({jumlah : itemValue})}
                                             >
@@ -188,6 +168,7 @@ class CheckOut extends React.Component {
             </Container>
         );
     }
+    
 }
 
 export default CheckOut;
