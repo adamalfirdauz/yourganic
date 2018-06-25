@@ -102,7 +102,7 @@ class ItemDetails extends React.Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Title>{this.props.navigation.state.params.data.title}</Title>
+                            <Title>Detail</Title>
                         </Body>
                         <Right>
                             <Button transparent>
@@ -114,12 +114,13 @@ class ItemDetails extends React.Component {
 
                 </View>
                 <Content style={styles.content}>
+                <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
+                    <IconDetail></IconDetail>
                     <Image source={resep} style={styles.images} />
                     <Card style={styles.card}>
                         <Text style={styles.disc}>Diskon 4%</Text>
                     </Card>
                     <Text style={styles.harga}>{this.props.navigation.state.params.data.price}</Text>
-                    <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
                     <View style={styles.hairStyles} />
                 </Content>
                 <Footer style={styles.footer}>

@@ -16,11 +16,23 @@ const styles = StyleSheet.create({
     content: {
         // flex: 10
     },
+    item: {
+        padding: 10,
+        paddingBottom: 5,
+        fontSize: 20,
+        color: '#47525E',
+        fontWeight: "bold",
+    },
+    icons: {
+        height: 25,
+        // position: 'relative',
+        resizeMode: 'contain',
+        padding: 10,
+    },
     images: {
         height: 200,
         alignSelf: 'center',
         resizeMode: 'contain',
-        // position : 'absolute',
     },
     disc: {
         color: 'white',
@@ -40,11 +52,6 @@ const styles = StyleSheet.create({
         paddingTop: 2,
         color: '#e54d20',
         fontSize: 20
-    },
-    item: {
-        paddingLeft: 5,
-        fontSize: 25,
-        color: '#211e1e'
     },
     hairStyles: {
         backgroundColor: '#bababa',
