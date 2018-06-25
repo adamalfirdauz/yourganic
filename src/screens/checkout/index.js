@@ -45,6 +45,7 @@ class CheckOut extends React.Component {
             sum: 0,
             jumlah :1
            };
+           this.fetchData()
     }
 
     async fetchProfile() {
@@ -60,15 +61,26 @@ class CheckOut extends React.Component {
         }
     }
 
-    async retrieveItem(key) {
-        try {
-            const retrievedItem = await AsyncStorage.getItem(key);
-            const item = JSON.parse(retrievedItem);
-            return item;
-        } catch (error) {
-            console.log(error.message);
+    async retrieveItem() {
+        const items  = []
+        for(var i = 0; i < 3; i++){
+            try {
+                const retrievedItem = await AsyncStorage.getItem('Barang');
+                items[i] = JSON.parse(retrievedItem);
+            } catch (error) {
+                console.log(error.message);
+            }
         }
-        return
+        return items
+    }
+
+    fetchData(){
+        this.retrieveItem().then((parsed) => {
+            //this callback is executed when your Promise is resolved
+            console.error(parsed    )
+        }).catch((error) => {
+            console.log('Terjadi kesalahan : ' + error);
+        });
     }
     render() {
         return (
