@@ -130,6 +130,7 @@ import ItemDetail from './screens/itemDetail';
 import Profile from './screens/profile';
 import UpdateProfile from './screens/UpdateProfile/';
 import CheckOut from './screens/checkout/'
+import Transaksi from './screens/transaksi/'
 
 const Drawer = DrawerNavigator(
   {
@@ -153,6 +154,7 @@ const Drawer = DrawerNavigator(
     },
     ItemsPage: { screen: ItemsPage },
     Profile: { screen: Profile},
+    Transaksi: { screen: Transaksi},
     // editProfile: { screen: UpdateProfile},
     Splash: { screen: Splash },
 

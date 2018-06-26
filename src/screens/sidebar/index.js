@@ -26,6 +26,11 @@ const datas = [
     route: "Profile",
     icon: "person",
   },
+  {
+    name: "Transaksi",
+    route: "Transaksi",
+    icon: "person",
+  },
   // {
   //   name: "Anatomy",
   //   route: "Anatomy",

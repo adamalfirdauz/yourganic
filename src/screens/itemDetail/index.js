@@ -79,7 +79,7 @@ class ItemDetails extends React.Component {
 
     checkOut(){
         // this.storeItem('Barang'+0, this.state.barang)
-        this.props.navigation.push('CheckOut', this.props.navigation.state.barang) 
+        this.props.navigation.push('CheckOut') 
     }
 
     tambahCart(){

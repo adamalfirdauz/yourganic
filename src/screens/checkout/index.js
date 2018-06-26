@@ -206,7 +206,7 @@ class CheckOut extends React.Component {
                         </View>
                         <View style={{ flexDirection: 'row'}}>
                             <Text style={styles.shipping} >Total</Text>
-                            <Text style={styles.priceTotal} >R{this.state.total}</Text>
+                            <Text style={styles.priceTotal} >Rp{this.state.total}</Text>
                         </View>
                         <View style={styles.hairStyles}/>
                         <View style={{ flexDirection: 'row'}}>
