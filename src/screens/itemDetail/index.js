@@ -63,18 +63,6 @@ class ItemDetails extends React.Component {
         }
     }
 
-    async fetchProfile() {
-        try {
-            const value = await AsyncStorage.getItem('profile');
-            let parsed = JSON.parse(value)
-            if (value !== null) {
-                // We have data!!
-                // console.error(parsed.nama);
-            }
-        } catch (error) {
-            // Error retrieving data
-        }
-    }
     incrementItem() {
         if(this.state.sum <6){
             this.setState({ sum: this.state.sum + 1 })
@@ -89,8 +77,12 @@ class ItemDetails extends React.Component {
     }
 
     checkOut(){
-        this.storeItem('Barang'+0, this.state.barang)
+        // this.storeItem('Barang'+0, this.state.barang)
         this.props.navigation.push('CheckOut', this.props.navigation.state.barang) 
+    }
+
+    tambahCart(){
+        this.storeItem('Barang'+this.state.barang.id, this.state.barang)
     }
     
     render() {
@@ -141,7 +133,7 @@ class ItemDetails extends React.Component {
                     />
                 </Content>
                 <Footer style={styles.footer}>
-                    <Button style={styles.tambahButton} onPress={() => this.incrementItem()}>
+                    <Button style={styles.tambahButton} onPress={() => this.tambahCart()}>
                         <Text style={styles.ButtonWord}>+ Tambahkan</Text>
                     </Button>
                 </Footer>

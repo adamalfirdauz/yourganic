@@ -56,17 +56,20 @@ class CheckOut extends React.Component {
     async retrieveItem() {
         const items  = []
         var total = 0
-        for(var i = 0; i < 3; i++){
+        var j = 0
+        for(var i = 0; i < 100; i++){
             try {
                 const retrievedItem = await AsyncStorage.getItem('Barang'+i);
-                items[i] = JSON.parse(retrievedItem)
-                total = total + parseInt(items[i].price)
+                if(retrievedItem != null){
+                    items[j] = JSON.parse(retrievedItem)
+                    total = total + parseInt(items[j].price)
+                    j = j +1
+                }
             } catch (error) {
                 console.log(error.message);
             }
         }
         this.setState({total : total})
-        // console.error(items[0])
         return items
     }
 
@@ -77,8 +80,7 @@ class CheckOut extends React.Component {
                 barang : parsed,
                 isReady : true,
                 panjang : parsed.length
-            })
-            
+            })            
         }).catch((error) => {
             console.log('Terjadi kesalahan : ' + error);
         });
@@ -91,6 +93,18 @@ class CheckOut extends React.Component {
         } catch (error) {
             console.log(error.message);
         }
+    }
+
+    remove(index){
+        console.error(index)
+        try{
+            var jsonOfItem =  AsyncStorage.removeItem('Barang'+index)
+            return jsonOfItem
+        }catch (error){
+            console.log(error.message)
+        }
+
+        this.fetchData()
     }
 
 
@@ -140,7 +154,6 @@ class CheckOut extends React.Component {
 
                         <FlatList
                             data={ this.state.barang }
-                            extraData={this.state}
                             renderItem={({ item, index }) => (
                                 <CardItem transparent>
                                     <Image style={styles.itemCardImage}
@@ -151,7 +164,8 @@ class CheckOut extends React.Component {
                                         <Text style={styles.itemCardPrice}>Rp {item.price}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'column', position: 'absolute'}}>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.remove({ index })}
+>
                                             <Icon name='close' style={{ marginLeft: 340}} />
                                         </TouchableOpacity>
                                         {/* <Picker
@@ -182,7 +196,7 @@ class CheckOut extends React.Component {
                         <View style={styles.hairStyles}/>
                         <View style={{ flexDirection: 'row'}}>
                             <Text style={styles.shipping} >Shipping</Text>
-                            <Text style={styles.priceShipping} >Rp46.000</Text>
+                            <Text style={styles.priceShipping} >FREE</Text>
                         </View>
                         <View style={{ flexDirection: 'row'}}>
                             <Text style={styles.shipping} >SubTotal</Text>
@@ -190,7 +204,7 @@ class CheckOut extends React.Component {
                         </View>
                         <View style={{ flexDirection: 'row'}}>
                             <Text style={styles.shipping} >Total</Text>
-                            <Text style={styles.priceTotal} >Rp46.000</Text>
+                            <Text style={styles.priceTotal} >R{this.state.total}</Text>
                         </View>
                         <View style={styles.hairStyles}/>
                         <View style={{ flexDirection: 'row'}}>
