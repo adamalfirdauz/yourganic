@@ -22,10 +22,7 @@ const Styles = StyleSheet.create({
         // borderColor: '#000000'
     },
     cardName:{
-        flex: 0.5,
-        textAlign: 'left',
-        textAlignVertical: 'top'
-        
+        flex: 0.5,        
     },
     cardNameTop: {
         fontSize: 15,

@@ -83,7 +83,7 @@ class DetailTransaksi extends React.Component {
                         circleSize={25}
                         circleColor='#B2BEC3'
                         lineColor='#B2BEC3'
-                        detailContainerStyle={{marginBottom: 20, marginRight: 10, paddingLeft: 5, paddingRight: 5, backgroundColor: 'color', borderRadius: 10}}
+                        detailContainerStyle={{marginBottom: 20, marginRight: 10, paddingLeft: 5, paddingRight: 5, backgroundColor: '#FFFFFF', borderRadius: 10}}
                         descriptionStyle={{paddingLeft: 8, color:'#B2BEC3', alignContent: 'space-around'}}
                         options={{
                           style:{paddingTop:5},
