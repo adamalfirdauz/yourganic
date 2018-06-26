@@ -11,7 +11,8 @@ import {
     AsyncStorage,
     FlatList,
     TouchableOpacity,
-    Alert
+    Alert,
+    ActivityIndicator
 } from "react-native";
 import {
     Button,
@@ -43,13 +44,14 @@ var resep = require('../../../assets/image/resep.png');
 class ItemDetails extends React.Component {
     constructor(props) {
         super(props)
+        this.parse()
         this.state = {
             id: 1,
             sum: 0,
             barang: this.props.navigation.state.params.data,
-            exist : false
+            exist : false,
+            finished : false
         };
-        this.parse();
         this.data = [
             {time: '', title: 'Harga', description: 'Rp. '+this.props.navigation.state.params.data.price+' / '+this.props.navigation.state.params.data.unit, icon: require('../../../assets/details/money.png')},
             {time: '', title: 'Deskripsi', description: this.props.navigation.state.params.data.description, icon: require('../../../assets/details/desc.png')},
@@ -89,6 +91,7 @@ class ItemDetails extends React.Component {
         targetPost.jumlah = 1
         // console.error(targetPost)
         this.storeItem('Barang'+this.state.barang.id, targetPost)
+        this.props.navigation.push('CheckOut')
     }
 
     confirm() {
@@ -108,7 +111,6 @@ class ItemDetails extends React.Component {
         let items = null
         var total = 0
         var j = 0
-        var exist = false
         for(var i = 0; i < 15; i++){
             try {
                 const retrievedItem = await AsyncStorage.getItem('Barang'+i);
@@ -118,6 +120,7 @@ class ItemDetails extends React.Component {
                         this.setState({exist: true})
                     }
                 }
+                this.setState({finished :true})
             } catch (error) {
                 console.log(error.message);
             }
@@ -125,61 +128,74 @@ class ItemDetails extends React.Component {
     }
     
     render() {
-        return (
-            <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
-                <View>
-                    <Header style={styles.header} noShadow>
-                        <StatusBar
-                            backgroundColor="#004600"
-                            barStyle="light-content"
-                        />
-                        <Left>
-                            <Button transparent onPress={() => this.props.navigation.goBack()}>
-                                <Icon name="arrow-back" />
-                            </Button>
-                        </Left>
-                        <Body>
-                            <Title>Detail</Title>
-                        </Body>
-                        <Right>
-                            <Button transparent>
-                                {/* <Icon name="cart" onPress={() => this.props.navigation.push('CheckOut', this.props.navigation.state.params.data)}/> */}
-                                <Icon name="cart" onPress={() => this.checkOut()}/>
-                            </Button>
-                        </Right>
-                    </Header>
-
-                </View>
-                <Content style={styles.content}>
-                    <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
-                    <View style={styles.IconDetailFlex}>
-                        <Icon style={styles.icons} name="nutrition"/>
-                        <Text style={styles.category}>{this.props.navigation.state.params.data.category}</Text>
-                        <Icon style={styles.icons} name="heart"/>
-                        <Text style={styles.category}>{this.props.navigation.state.params.data.nutrition}</Text>
+        if(this.state.finished){
+            return (
+                <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
+                    <View>
+                        <Header style={styles.header} noShadow>
+                            <StatusBar
+                                backgroundColor="#004600"
+                                barStyle="light-content"
+                            />
+                            <Left>
+                                <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                    <Icon name="arrow-back" />
+                                </Button>
+                            </Left>
+                            <Body>
+                                <Title>Detail</Title>
+                            </Body>
+                            <Right>
+                                <Button transparent>
+                                    {/* <Icon name="cart" onPress={() => this.props.navigation.push('CheckOut', this.props.navigation.state.params.data)}/> */}
+                                    <Icon name="cart" onPress={() => this.checkOut()}/>
+                                </Button>
+                            </Right>
+                        </Header>
+    
                     </View>
-                    <Image style={styles.images} source={this.props.navigation.state.params.data.image}/>
-                    <Timeline
-                        innerCircle={'icon'}
-                        circleSize={25}
-                        circleColor='#B2BEC3'
-                        lineColor='#B2BEC3'
-                        detailContainerStyle={{marginBottom: 20, marginRight: 10, paddingLeft: 5, paddingRight: 5, backgroundColor: "#FFFFFF", borderRadius: 10}}
-                        descriptionStyle={{paddingLeft: 8, color:'#B2BEC3', alignContent: 'space-around'}}
-                        options={{
-                          style:{paddingTop:5},
-                          marginLeft: -37,
-                        }} 
-                        data={this.data}
-                    />
-                </Content>
-                <Footer style={styles.footer}>
-                    <Button style={styles.tambahButton} onPress={() => this.confirm()}>
-                        <Text style={styles.ButtonWord}>+ Tambahkan</Text>
-                    </Button>
-                </Footer>
-            </Container>
-        );
+                    <Content style={styles.content}>
+                        <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
+                        <View style={styles.IconDetailFlex}>
+                            <Icon style={styles.icons} name="nutrition"/>
+                            <Text style={styles.category}>{this.props.navigation.state.params.data.category}</Text>
+                            <Icon style={styles.icons} name="heart"/>
+                            <Text style={styles.category}>{this.props.navigation.state.params.data.nutrition}</Text>
+                        </View>
+                        <Image style={styles.images} source={this.props.navigation.state.params.data.image}/>
+                        <Timeline
+                            innerCircle={'icon'}
+                            circleSize={25}
+                            circleColor='#B2BEC3'
+                            lineColor='#B2BEC3'
+                            detailContainerStyle={{marginBottom: 20, marginRight: 10, paddingLeft: 5, paddingRight: 5, backgroundColor: "#FFFFFF", borderRadius: 10}}
+                            descriptionStyle={{paddingLeft: 8, color:'#B2BEC3', alignContent: 'space-around'}}
+                            options={{
+                                style:{paddingTop:5},
+                                marginLeft: -37,
+                            }} 
+                            data={this.data}
+                        />
+                    </Content>
+                    {
+                        this.state.exist ? 
+                        <View />
+                        :  <Footer style={styles.footer}>
+                        <Button style={styles.tambahButton} onPress={() => this.confirm()}>
+                            <Text style={styles.ButtonWord}>+ Tambahkan</Text>
+                        </Button>
+                    </Footer>
+                        }
+                </Container>
+            );
+        }
+        else{
+            return (
+                <View style={{paddingTop:250 ,justifyContent: 'center'}}>
+                    <ActivityIndicator size="large"/>
+                </View>
+            )
+        }
     }
 }
 
