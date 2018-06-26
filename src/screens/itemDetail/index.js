@@ -97,7 +97,7 @@ class ItemDetails extends React.Component {
     confirm() {
         Alert.alert(
             'Apakah anda yakin ingin membeli barang ini?',
-            'a',
+            '',
             [
             //   {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
               {text: 'Tidak', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},

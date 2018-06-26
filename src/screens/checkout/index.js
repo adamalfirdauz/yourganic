@@ -63,7 +63,7 @@ class CheckOut extends React.Component {
                 const retrievedItem = await AsyncStorage.getItem('Barang'+i);
                 if(retrievedItem != null){
                     items[j] = JSON.parse(retrievedItem)
-                    total = total + parseInt(items[j].price)
+                    total = total + (parseInt(items[j].price)*parseInt(items[j].jumlah))
                     j = j +1
                 }
             } catch (error) {
@@ -112,17 +112,18 @@ class CheckOut extends React.Component {
 
     jumlah({jumlah, index}){
         let { barang } = this.state;
-        let targetPost = barang[index];
+        let targetPost = barang[index]
     
         // Flip the 'liked' property of the targetPost
         targetPost.jumlah = jumlah
     
         // Then update targetPost in 'posts'
         // You probably don't need the following line.
-         barang[index] = targetPost;
+         barang[index] = targetPost
     
         // Then reset the 'state.posts' property
-        this.setState({ barang });
+        this.setState({ barang })
+        this.fetchData()
         // console.error(this.state.barang[index])
         this.storeItem('Barang'+this.state.barang[index].id, this.state.barang[index])
     }
@@ -187,6 +188,7 @@ class CheckOut extends React.Component {
                                         <Input
                                             style={{marginLeft: 340}}
                                             keyboardType={"numeric"}
+                                            maxLength={1}
                                             onChangeText={(jumlah) => this.jumlah({ jumlah, index })}
                                         >
                                             {item.jumlah}
