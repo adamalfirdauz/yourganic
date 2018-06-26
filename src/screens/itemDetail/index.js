@@ -1,4 +1,5 @@
 import React from "react";
+import Timeline from 'react-native-timeline-listview'
 import {
     View,
     StyleSheet,
@@ -32,7 +33,7 @@ import {
     Grid
 } from 'react-native-easy-grid';
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
-import IconDetail from '../../theme/components/IconDetail';
+import ItemBanner from '../../theme/components/ItemBanner';
 import styles from './styles';
 
 var resep = require('../../../assets/image/resep.png');
@@ -46,6 +47,10 @@ class ItemDetails extends React.Component {
             sum: 0,
             barang: this.props.navigation.state.params.data
         };
+        this.data = [
+            {time: '', title: 'Harga', description: this.props.navigation.state.params.data.price},
+            {time: '', title: 'Deskripsi', description: this.props.navigation.state.params.data.description},
+        ]
         // var data = this.props.navigation.state.params.data
     }
     
@@ -115,30 +120,30 @@ class ItemDetails extends React.Component {
 
                 </View>
                 <Content style={styles.content}>
-                <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
-                    <Image source={resep} style={styles.images} />
-                    <Card style={styles.card}>
-                        <Text style={styles.disc}>Diskon 4%</Text>
-                    </Card>
-                    <Text style={styles.harga}>{this.props.navigation.state.params.data.price}</Text>
-                    <View style={styles.hairStyles} />
+                    <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
+                    <View style={styles.IconDetailFlex}>
+                        <Icon style={styles.icons} name="nutrition"/>
+                        <Text style={styles.category}>{this.props.navigation.state.params.data.category}</Text>
+                        <Icon style={styles.icons} name="heart"/>
+                        <Text style={styles.category}>Vitamin C</Text>
+                    </View>
+                    <Image style={styles.images} source={this.props.navigation.state.params.data.image}/>
+                    <Timeline
+                        circleSize={20}
+                        circleColor='#B2BEC3'
+                        lineColor='#B2BEC3'
+                        detailContainerStyle={{marginBottom: 20, marginRight: 10, paddingLeft: 5, paddingRight: 5, backgroundColor: "#FFFFFF", borderRadius: 10}}
+                        descriptionStyle={{color:'gray'}}
+                        options={{
+                          style:{paddingTop:5}
+                        }} 
+                        data={this.data}
+                    />
                 </Content>
                 <Footer style={styles.footer}>
-                    <TouchableOpacity style={{ paddingLeft: 3 }} onPress={() => this.decrementItem()}>
-                        <Icon name="close" style={styles.minuss} />
-                    </TouchableOpacity>
-                    <Left>
-                        <Body>
-                            <Text style={styles.jumlah}>{this.state.sum}</Text>
-                            <Text style={styles.troli}>Di Troli</Text>
-                        </Body>
-                    </Left>
-                    <Right >
-                        <Button style={styles.tambah} onPress={() => this.incrementItem()}>
-                            <Icon name="add" />
-                            <Text>Tambahkan</Text>
-                        </Button>
-                    </Right>
+                    <Button style={styles.tambahButton} onPress={() => this.incrementItem()}>
+                        <Text style={styles.ButtonWord}>+ Tambahkan</Text>
+                    </Button>
                 </Footer>
             </Container>
         );

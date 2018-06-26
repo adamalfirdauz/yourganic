@@ -16,23 +16,40 @@ const styles = StyleSheet.create({
     content: {
         // flex: 10
     },
+    IconDetailFlex: {
+        // padding : 8,
+        padding: 5,
+        paddingLeft: 15,
+        paddingBottom: 12,
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
     item: {
         padding: 10,
-        paddingBottom: 5,
+        paddingBottom: 0,
         fontSize: 20,
         color: '#47525E',
         fontWeight: "bold",
     },
+    category:{
+      color: '#B2BEC3',
+      fontSize: 16,
+      paddingRight: 10,
+    },
     icons: {
-        height: 25,
-        // position: 'relative',
-        resizeMode: 'contain',
-        padding: 10,
+        paddingRight: 5,
+        color: '#B2BEC3',
+        fontSize: 20,
+        // resizeMode: 'contain',
+        // padding: 10,
     },
     images: {
         height: 200,
         alignSelf: 'center',
         resizeMode: 'contain',
+        backgroundColor: 'white',
+        marginBottom: 10,
     },
     disc: {
         color: 'white',
@@ -62,11 +79,17 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     footer: {
-        backgroundColor: 'white'
+        
     },
-    tambah: {
-        marginRight: 5,
-        width: 180
+    tambahButton: {
+        height : 60,
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: '#007300',
+        justifyContent: 'center',
+    },
+    ButtonWord: {
+        fontSize: 17,
+        fontWeight: 'bold'
     },
     jumlah: {
         paddingLeft: 30,
