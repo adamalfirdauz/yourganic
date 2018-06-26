@@ -44,12 +44,7 @@ class ItemDetails extends React.Component {
         this.state = {
             id: 1,
             sum: 0,
-<<<<<<< HEAD
-            barang: this.props.navigation.state.params.data.title,
-            // veg: [require('../../../assets/details/veg.png')]
-=======
             barang: this.props.navigation.state.params.data
->>>>>>> f063c36934872bc889255cd1c427fda49054c717
         };
         // var data = this.props.navigation.state.params.data
     }
@@ -120,13 +115,7 @@ class ItemDetails extends React.Component {
 
                 </View>
                 <Content style={styles.content}>
-<<<<<<< HEAD
-                    <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
-                    <Text style={styles.harga}>{this.props.navigation.state.params.data.category}</Text>
-                    {/* <IconDetail data={this.state.veg}></IconDetail> */}
-=======
                 <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
->>>>>>> f063c36934872bc889255cd1c427fda49054c717
                     <Image source={resep} style={styles.images} />
                     <Card style={styles.card}>
                         <Text style={styles.disc}>Diskon 4%</Text>
