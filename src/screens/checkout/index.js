@@ -218,7 +218,7 @@ class CheckOut extends React.Component {
                                     <Text style={{marginLeft: 10, marginTop: 10, color:'#636568'}}>Continue Shipping</Text>
                                 </View>
                             </TouchableOpacity>
-                            <Button transparent style={{borderRadius:80, borderColor:'black', borderWidth:2,  marginLeft: 100, marginBottom: 10}}>
+                            <Button onPress={() => this.props.navigation.push('KonfirmasiPembayaran')} transparent style={{borderRadius:80, borderColor:'black', borderWidth:2,  marginLeft: 100, marginBottom: 10}}>
                                 <Text style={{color:'black'}}>CHECKOUT</Text> 
                             </Button>
                         </View>

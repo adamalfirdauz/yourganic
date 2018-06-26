@@ -132,6 +132,7 @@ import UpdateProfile from './screens/UpdateProfile/';
 import CheckOut from './screens/checkout/'
 import Transaksi from './screens/transaksi/'
 import DetailTransaksi from './screens/detailTransaksi/'
+import KonfirmasiPembayaran from './screens/konfirmasiPembayaran/'
 
 const Drawer = DrawerNavigator(
   {
@@ -218,6 +219,7 @@ const AppNavigator = StackNavigator(
     CheckOut: {screen: CheckOut},
     Drawer: { screen: Drawer },
     DetailTransaksi: { screen: DetailTransaksi },
+    KonfirmasiPembayaran : { screen: KonfirmasiPembayaran },
 
     Header1: { screen: Header1 },
     Header2: { screen: Header2 },
