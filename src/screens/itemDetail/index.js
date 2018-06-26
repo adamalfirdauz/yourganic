@@ -10,7 +10,8 @@ import {
     StatusBar,
     AsyncStorage,
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from "react-native";
 import {
     Button,
@@ -82,7 +83,23 @@ class ItemDetails extends React.Component {
     }
 
     tambahCart(){
-        this.storeItem('Barang'+this.state.barang.id, this.state.barang)
+        let targetPost = this.state.barang
+        targetPost.jumlah = 1
+        // console.error(targetPost)
+        this.storeItem('Barang'+this.state.barang.id, targetPost)
+    }
+
+    confirm() {
+        Alert.alert(
+            'Apakah anda yakin ingin membeli barang ini?',
+            'a',
+            [
+            //   {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+              {text: 'Tidak', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: 'Ya', onPress: () => this.tambahCart()},
+            ],
+            { cancelable: false }
+          )
     }
     
     render() {
@@ -135,7 +152,7 @@ class ItemDetails extends React.Component {
                     />
                 </Content>
                 <Footer style={styles.footer}>
-                    <Button style={styles.tambahButton} onPress={() => this.tambahCart()}>
+                    <Button style={styles.tambahButton} onPress={() => this.confirm()}>
                         <Text style={styles.ButtonWord}>+ Tambahkan</Text>
                     </Button>
                 </Footer>

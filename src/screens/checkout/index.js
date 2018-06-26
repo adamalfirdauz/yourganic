@@ -10,7 +10,8 @@ import {
     AsyncStorage,
     FlatList,
     TouchableOpacity,
-    Picker
+    Picker,
+    Alert
 } from "react-native";
 import {
     Button,
@@ -57,7 +58,7 @@ class CheckOut extends React.Component {
         const items  = []
         var total = 0
         var j = 0
-        for(var i = 0; i < 100; i++){
+        for(var i = 0; i < 15; i++){
             try {
                 const retrievedItem = await AsyncStorage.getItem('Barang'+i);
                 if(retrievedItem != null){
@@ -80,7 +81,7 @@ class CheckOut extends React.Component {
                 barang : parsed,
                 isReady : true,
                 panjang : parsed.length
-            })            
+            })
         }).catch((error) => {
             console.log('Terjadi kesalahan : ' + error);
         });
@@ -96,16 +97,17 @@ class CheckOut extends React.Component {
     }
 
     remove(index){
-        console.error(index)
         try{
             var jsonOfItem =  AsyncStorage.removeItem('Barang'+index)
+            this.fetchData()
             return jsonOfItem
+            
         }catch (error){
             console.log(error.message)
         }
-
-        this.fetchData()
+        this.setState({ barang });
     }
+    
 
 
     jumlah({jumlah, index}){
@@ -122,7 +124,7 @@ class CheckOut extends React.Component {
         // Then reset the 'state.posts' property
         this.setState({ barang });
         // console.error(this.state.barang[index])
-        this.storeItem('Barang'+0, this.state.barang[index])
+        this.storeItem('Barang'+this.state.barang[index].id, this.state.barang[index])
     }
     render() {
         return (
@@ -164,7 +166,7 @@ class CheckOut extends React.Component {
                                         <Text style={styles.itemCardPrice}>Rp {item.price}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'column', position: 'absolute'}}>
-                                        <TouchableOpacity onPress={() => this.remove({ index })}
+                                        <TouchableOpacity onPress={() => this.remove( item.id )}
 >
                                             <Icon name='close' style={{ marginLeft: 340}} />
                                         </TouchableOpacity>
