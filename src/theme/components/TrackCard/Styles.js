@@ -14,8 +14,7 @@ const Styles = StyleSheet.create({
         margin: 10,
     },
     cardImage:{
-        flex: 0.2,
-        
+        flex: 0.2, 
         height: 80,
         alignSelf: 'center',
         resizeMode: 'contain',
@@ -24,12 +23,20 @@ const Styles = StyleSheet.create({
     },
     cardName:{
         flex: 0.5,
-        fontSize: 15,
         textAlign: 'left',
         textAlignVertical: 'top'
         
     },
+    cardNameTop: {
+        fontSize: 15,
+        paddingTop: 5,
+    },
+    cardNameBottom: {
+        paddingTop: 5,
+        fontSize: 12,
+    },
     cardTrack: {
+        paddingTop: 5,
         flex: 0.3,
         fontSize: 15,
         fontWeight: 'bold',
