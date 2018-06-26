@@ -25,7 +25,8 @@ import {
     Left,
     Icon,
     Right,
-    Footer
+    Footer, 
+    Input
 } from "native-base";
 import {
     Col,
@@ -45,21 +46,27 @@ class CheckOut extends React.Component {
             barang: [],
             isReady :false,
             jumlah : 0,
-            sum : 0
+            sum : 0,
+            panjang: 0,
+            total : 0
            }
            this.fetchData()
     }
 
     async retrieveItem() {
         const items  = []
+        var total = 0
         for(var i = 0; i < 3; i++){
             try {
                 const retrievedItem = await AsyncStorage.getItem('Barang'+i);
-                items[i] = JSON.parse(retrievedItem);
+                items[i] = JSON.parse(retrievedItem)
+                total = total + parseInt(items[i].price)
             } catch (error) {
                 console.log(error.message);
             }
         }
+        this.setState({total : total})
+        // console.error(items[0])
         return items
     }
 
@@ -69,14 +76,39 @@ class CheckOut extends React.Component {
             this.setState({
                 barang : parsed,
                 isReady : true,
+                panjang : parsed.length
             })
             
         }).catch((error) => {
             console.log('Terjadi kesalahan : ' + error);
         });
+    }
 
-        // var datas = this.retrieveItem()
-        // console.error(datas)
+    async storeItem(key, item) {
+        try {
+            var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
+            return jsonOfItem;
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+
+    jumlah({jumlah, index}){
+        let { barang } = this.state;
+        let targetPost = barang[index];
+    
+        // Flip the 'liked' property of the targetPost
+        targetPost.jumlah = jumlah
+    
+        // Then update targetPost in 'posts'
+        // You probably don't need the following line.
+         barang[index] = targetPost;
+    
+        // Then reset the 'state.posts' property
+        this.setState({ barang });
+        // console.error(this.state.barang[index])
+        this.storeItem('Barang'+0, this.state.barang[index])
     }
     render() {
         return (
@@ -102,15 +134,14 @@ class CheckOut extends React.Component {
                         YOUR SHOPPING BAG
                     </Text>
                     <Text style={styles.reviews}>
-                        Review 2 items Rp2.0000
+                        Review {this.state.panjang} items Rp{this.state.total}
                     </Text>
                     <Card style={{padding:0, margin:0}}>
 
                         <FlatList
-                            data={
-                                this.state.barang
-                                }
-                            renderItem={({ item }) => (
+                            data={ this.state.barang }
+                            extraData={this.state}
+                            renderItem={({ item, index }) => (
                                 <CardItem transparent>
                                     <Image style={styles.itemCardImage}
                                         source={item.image}
@@ -136,7 +167,14 @@ class CheckOut extends React.Component {
                                             <Picker.Item label="5" value="5" />
                                             <Picker.Item label="6" value="6" />
                                         </Picker> */}
-                                        <Text style={{marginLeft: 340}}>{item.jumlah}</Text>
+                                        {/* <Text style={{marginLeft: 340}}>{item.jumlah}</Text> */}
+                                        <Input
+                                            style={{marginLeft: 340}}
+                                            keyboardType={"numeric"}
+                                            onChangeText={(jumlah) => this.jumlah({ jumlah, index })}
+                                        >
+                                            {item.jumlah}
+                                        </Input>
                                     </View>
                                 </CardItem>
                             )}
@@ -148,7 +186,7 @@ class CheckOut extends React.Component {
                         </View>
                         <View style={{ flexDirection: 'row'}}>
                             <Text style={styles.shipping} >SubTotal</Text>
-                            <Text style={styles.priceShipping} >Rp46.000</Text>
+                            <Text style={styles.priceShipping} >Rp{this.state.total}</Text>
                         </View>
                         <View style={{ flexDirection: 'row'}}>
                             <Text style={styles.shipping} >Total</Text>
@@ -156,7 +194,7 @@ class CheckOut extends React.Component {
                         </View>
                         <View style={styles.hairStyles}/>
                         <View style={{ flexDirection: 'row'}}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress = {() => this.props.navigation.push('Home')}>
                                 <View style={{ flexDirection: 'row'}}>
                                     <Icon name="arrow-dropleft" style={{marginLeft: 10, fontSize: 24, marginTop:10, color:'#636568'}}/>
                                     <Text style={{marginLeft: 10, marginTop: 10, color:'#636568'}}>Continue Shipping</Text>
