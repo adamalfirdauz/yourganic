@@ -48,8 +48,8 @@ class ItemDetails extends React.Component {
             barang: this.props.navigation.state.params.data
         };
         this.data = [
-            {time: '', title: 'Harga', description: this.props.navigation.state.params.data.price},
-            {time: '', title: 'Deskripsi', description: this.props.navigation.state.params.data.description},
+            {time: '', title: 'Harga', description: 'Rp. '+this.props.navigation.state.params.data.price+' / '+this.props.navigation.state.params.data.unit, icon: require('../../../assets/details/money.png')},
+            {time: '', title: 'Deskripsi', description: this.props.navigation.state.params.data.description, icon: require('../../../assets/details/desc.png')},
         ]
         // var data = this.props.navigation.state.params.data
     }
@@ -117,17 +117,19 @@ class ItemDetails extends React.Component {
                         <Icon style={styles.icons} name="nutrition"/>
                         <Text style={styles.category}>{this.props.navigation.state.params.data.category}</Text>
                         <Icon style={styles.icons} name="heart"/>
-                        <Text style={styles.category}>Vitamin C</Text>
+                        <Text style={styles.category}>{this.props.navigation.state.params.data.nutrition}</Text>
                     </View>
                     <Image style={styles.images} source={this.props.navigation.state.params.data.image}/>
                     <Timeline
-                        circleSize={20}
+                        innerCircle={'icon'}
+                        circleSize={25}
                         circleColor='#B2BEC3'
                         lineColor='#B2BEC3'
                         detailContainerStyle={{marginBottom: 20, marginRight: 10, paddingLeft: 5, paddingRight: 5, backgroundColor: "#FFFFFF", borderRadius: 10}}
-                        descriptionStyle={{color:'gray'}}
+                        descriptionStyle={{paddingLeft: 8, color:'#B2BEC3', alignContent: 'space-around'}}
                         options={{
-                          style:{paddingTop:5}
+                          style:{paddingTop:5},
+                          marginLeft: -37,
                         }} 
                         data={this.data}
                     />
