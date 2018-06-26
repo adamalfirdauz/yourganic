@@ -32,10 +32,11 @@ import {
     Grid
 } from 'react-native-easy-grid';
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
-import ItemBanner from '../../theme/components/ItemBanner';
+import IconDetail from '../../theme/components/IconDetail';
 import styles from './styles';
 
 var resep = require('../../../assets/image/resep.png');
+
 
 class ItemDetails extends React.Component {
     constructor(props) {

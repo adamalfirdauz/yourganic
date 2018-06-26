@@ -3,7 +3,7 @@ import { Image, Text } from 'react-native';
 import { Card } from 'native-base';
 import Styles from './Styles';
 
-var category = require('../../../assets/details/veg.png')
+
 
 class ItemBanner extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class ItemBanner extends Component {
     render() {
         return (
         <View style={Styles.mainBack}>
-            <Image source={category} style={styles.icons} />
+            <Image source={this.props.data[0]} style={styles.icons} />
             <Text style={styles.name}>Sayur</Text>
         </View>
         );
