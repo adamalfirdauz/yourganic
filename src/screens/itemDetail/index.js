@@ -46,8 +46,10 @@ class ItemDetails extends React.Component {
         this.state = {
             id: 1,
             sum: 0,
-            barang: this.props.navigation.state.params.data
+            barang: this.props.navigation.state.params.data,
+            exist : false
         };
+        this.parse();
         this.data = [
             {time: '', title: 'Harga', description: 'Rp. '+this.props.navigation.state.params.data.price+' / '+this.props.navigation.state.params.data.unit, icon: require('../../../assets/details/money.png')},
             {time: '', title: 'Deskripsi', description: this.props.navigation.state.params.data.description, icon: require('../../../assets/details/desc.png')},
@@ -100,6 +102,26 @@ class ItemDetails extends React.Component {
             ],
             { cancelable: false }
           )
+    }
+
+    async parse() {
+        let items = null
+        var total = 0
+        var j = 0
+        var exist = false
+        for(var i = 0; i < 15; i++){
+            try {
+                const retrievedItem = await AsyncStorage.getItem('Barang'+i);
+                if(retrievedItem != null){
+                    items = JSON.parse(retrievedItem)
+                    if(this.state.barang.id === items.id){
+                        this.setState({exist: true})
+                    }
+                }
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
     }
     
     render() {

@@ -79,6 +79,11 @@ export default class Transaksi extends React.Component {
           )
     }
 
+    anotherPage(page){
+        // this.storeItem('Barang'+0, this.state.barang)
+        this.props.navigation.push(page) 
+    }
+
     render() {
         return (
             <Container style={{ backgroundColor: 'white' }}>
@@ -97,11 +102,14 @@ export default class Transaksi extends React.Component {
                     </Body>
                     <Right />
                 </Header>
-                <View style={{ flex: 1 }}>
-                    <Content>
-                        <TrackCard style={styles.TrackCard} data={this.state.buah} />
-                    </Content>
-                </View>
+                
+                    <View style={{ flex: 1 }}>
+                        <Content>
+                            <TouchableOpacity onPress = {()=> this.anotherPage('DetailTransaksi')}>
+                                <TrackCard style={styles.TrackCard} data={this.state.buah} />
+                            </TouchableOpacity>
+                        </Content>
+                    </View>
             </Container>
         );
     }

@@ -185,7 +185,7 @@ class CheckOut extends React.Component {
                                         </Picker> */}
                                         {/* <Text style={{marginLeft: 340}}>{item.jumlah}</Text> */}
                                         <Input
-                                            style={{marginLeft: 340}}
+                                            style={{marginLeft: 320}}
                                             keyboardType={"numeric"}
                                             onChangeText={(jumlah) => this.jumlah({ jumlah, index })}
                                         >

@@ -131,6 +131,7 @@ import Profile from './screens/profile';
 import UpdateProfile from './screens/UpdateProfile/';
 import CheckOut from './screens/checkout/'
 import Transaksi from './screens/transaksi/'
+import DetailTransaksi from './screens/detailTransaksi/'
 
 const Drawer = DrawerNavigator(
   {
@@ -216,6 +217,7 @@ const AppNavigator = StackNavigator(
     editProfile: { screen: UpdateProfile},
     CheckOut: {screen: CheckOut},
     Drawer: { screen: Drawer },
+    DetailTransaksi: { screen: DetailTransaksi },
 
     Header1: { screen: Header1 },
     Header2: { screen: Header2 },
