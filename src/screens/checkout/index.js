@@ -148,19 +148,18 @@ class CheckOut extends React.Component {
         const checkOuts = []
         var hasil = null
 
-         for(var i = 0 ; i< this.state.barang.length; i++){
-                let checkOut = {
-                    item_id : 1,
-                    qty : 5,
-                    msg : "Testing kuy"
-                }
-                checkOuts.push(checkOut)
+        for(var i = 0 ; i< this.state.barang.length; i++){
+            let checkOut = {
+                item_id : 1,
+                qty : 5,
+                msg : "Testing kuy"
+            }
+            checkOuts.push(checkOut)
          }
-
-        axios.post('/api/transaction/create',
-        {
-            checkOuts
-        },{
+        let test = checkOuts[1]
+        console.error(test)
+        axios.post('/api/transaction/create', test
+        ,{
             headers: {
                 Accept: 'application/json',
                 'Authorization' : 'Bearer ' + this.state.token
