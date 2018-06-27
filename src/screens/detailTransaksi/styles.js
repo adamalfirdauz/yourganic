@@ -27,21 +27,20 @@ const styles = StyleSheet.create({
         color: 'grey', 
         borderRadius: 25, 
         borderWidth: 4,
-        borderColor: 'grey'
+        borderColor: 'grey',
+        marginBottom: 20,
     },
     confirmButton: {
-        // width: 100%,
+        width: "100%",
         borderRadius:80, 
         borderColor:'white', 
         borderWidth:2,
         marginBottom: 10, 
-        backgroundColor: '#007300'
+        backgroundColor: '#007300',
     },
     confirmButtonSection: {
-        width: '100%',
-        height: '30%',
-        justifyContent: 'center',
-        alignItems: 'center'
+        width:"100%",
+        paddingBottom: 20,
      }
 
 });

@@ -139,7 +139,7 @@ class DetailTransaksi extends React.Component {
                         </TouchableOpacity>
                         <View tyle={styles.confirmButtonSection}>
                             <Button style={styles.confirmButton}>
-                                <Text style={{ color: 'white'}}>CHECKOUT</Text> 
+                                <Text style={{ color: 'white', textAlign: 'center', width:"100%"}}>Konfirmasi</Text> 
                             </Button>
                         </View>
                     </Card>
