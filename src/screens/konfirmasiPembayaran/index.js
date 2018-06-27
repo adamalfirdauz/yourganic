@@ -143,11 +143,6 @@ class KonfirmasiPembayaran extends React.Component {
                             <Text note>a.n PT Yourganic Sejahtera</Text>
                         </Body>
                     </ListItem>
-                    <View style={{ flexDirection: 'column'}}>
-                        <Button transparent style={styles.uploadButton}>
-                            <Text style={{ color: 'white'}}>Upload Bukti Transfer</Text> 
-                        </Button>
-                    </View>
                 </List>
                 </Content>
                 <Footer style={styles.footer}>
