@@ -15,13 +15,16 @@ import {
     Alert
 } from "react-native";
 import {
+    Container,
+    Thumbnail,
+    Content, 
+    List, 
+    ListItem, 
     Button,
     Text,
-    Container,
     Card,
     CardItem,
     Body,
-    Content,
     Header,
     Title,
     Left,
@@ -39,7 +42,11 @@ import HorizontalItemList from '../../theme/components/HorizontalItemList';
 import ItemBanner from '../../theme/components/ItemBanner';
 import styles from './styles';
 
-var resep = require('../../../assets/image/resep.png');
+var bni = require('../../../assets/bank/bni.png')
+var mandiri = require('../../../assets/bank/mandiri.jpg')
+var bri = require('../../../assets/bank/bri.png')
+var bca = require('../../../assets/bank/bca.png')
+var sc = require('../../../assets/bank/sc.jpg')
 
 class KonfirmasiPembayaran extends React.Component {
     constructor(props) {
@@ -53,7 +60,7 @@ class KonfirmasiPembayaran extends React.Component {
     }
     render() {
         return(
-            <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
+            <Container style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <View>
                     <Header style={styles.header} noShadow>
                         <StatusBar
@@ -66,7 +73,7 @@ class KonfirmasiPembayaran extends React.Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Title>Konfirmasi Pembayaran</Title>
+                            <Title>Pembayaran</Title>
                         </Body>
                         <Right>
                             <Button transparent>
@@ -78,7 +85,76 @@ class KonfirmasiPembayaran extends React.Component {
 
                 </View>
                 <Content style={styles.content}>
+                <List>
+                    <Text style={styles.bayarDesc}>Jumlah Tagihan</Text>
+                    <Text style={styles.bayarNum}>Rp. 55000</Text>
+                    <ListItem avatar>
+                        <Left>
+                            <Thumbnail style={styles.images} source={bni} />
+                        </Left>
+                        <Body>
+                            <Text>Bank Negara Indonesia,</Text>
+                            <Text>Jakarta</Text>
+                            <Text note>023 827 2088</Text>
+                            <Text note>a.n PT Yourganic Sejahtera</Text>
+                        </Body>
+                    </ListItem>
+                    <ListItem avatar>
+                        <Left>
+                            <Thumbnail style={styles.images} source={mandiri} />
+                        </Left>
+                        <Body>
+                            <Text>Bank Mandiri,</Text>
+                            <Text>Jakarta</Text>
+                            <Text note>0700 000 899 992</Text>
+                            <Text note>a.n PT Yourganic Sejahtera</Text>
+                        </Body>
+                    </ListItem>
+                    <ListItem avatar>
+                        <Left>
+                            <Thumbnail style={styles.images} source={bri} />
+                        </Left>
+                        <Body>
+                            <Text>Bank Rakyat Indonesia,</Text>
+                            <Text>Jakarta</Text>
+                            <Text note>034 101 000 743 303</Text>
+                            <Text note>a.n PT Yourganic Sejahtera</Text>
+                        </Body>
+                    </ListItem>
+                    <ListItem avatar>
+                        <Left>
+                            <Thumbnail style={styles.images} source={bca} />
+                        </Left>
+                        <Body>
+                            <Text>Bank Central Asia,</Text>
+                            <Text>Jakarta</Text>
+                            <Text note>731 025 2527</Text>
+                            <Text note>a.n PT Yourganic Sejahtera</Text>
+                        </Body>
+                    </ListItem>
+                    <ListItem avatar>
+                        <Left>
+                            <Thumbnail style={styles.images} source={sc} />
+                        </Left>
+                        <Body>
+                            <Text>Standard Chartered Bank,</Text>
+                            <Text>Jakarta</Text>
+                            <Text note>024 113 1023</Text>
+                            <Text note>a.n PT Yourganic Sejahtera</Text>
+                        </Body>
+                    </ListItem>
+                    <View style={{ flexDirection: 'column'}}>
+                        <Button transparent style={styles.uploadButton}>
+                            <Text style={{ color: 'white'}}>Upload Bukti Transfer</Text> 
+                        </Button>
+                    </View>
+                </List>
                 </Content>
+                <Footer style={styles.footer}>
+                    <Button style={styles.confirmButton}>
+                        <Text style={styles.ButtonWord}>Konfirmasi</Text>
+                    </Button>
+                </Footer>
             </Container>
         );
 
