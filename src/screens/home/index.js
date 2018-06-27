@@ -86,13 +86,13 @@ export default class HomeScreen extends React.Component {
           </Header>
         </View>
         <Content style={styles.content}>
-          <ItemBanner data={this.state.buah} />
-          <HorizontalItemList title="Resep Sehat" navigation={this.props.navigation} />
           <ItemBanner data={this.state.resep} />
+          <HorizontalItemList title="Resep Sehat" navigation={this.props.navigation} />
+          <ItemBanner data={this.state.buah} />
           <HorizontalItemList title="Sayuran Organik" navigation={this.props.navigation} />
           <ItemBanner data={this.state.sayur} />
           <HorizontalItemList title="Buah Organik" navigation={this.props.navigation} />
-          <ItemBanner data={this.state.buah} />
+          <ItemBanner data={this.state.resep} />
         </Content>
       </Container>
     );

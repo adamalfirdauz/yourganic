@@ -147,14 +147,13 @@ class CheckOut extends React.Component {
                     </Header>
                 </View>
                 <Content style={styles.content}>
-                    <Text style={styles.shoppingBag}>
-                        YOUR SHOPPING BAG
-                    </Text>
-                    <Text style={styles.reviews}>
-                        Review {this.state.panjang} items Rp{this.state.total}
-                    </Text>
                     <Card style={{padding:0, margin:0}}>
-
+                        <Text style={styles.shoppingBag}>
+                            YOUR SHOPPING BAG
+                        </Text>
+                        <Text style={styles.reviews}>
+                            Review {this.state.panjang} items Rp{this.state.total}
+                        </Text>
                         <FlatList
                             data={ this.state.barang }
                             renderItem={({ item, index }) => (
@@ -166,10 +165,16 @@ class CheckOut extends React.Component {
                                         <Text style={styles.itemCardTitle}>{item.title}</Text>
                                         <Text style={styles.itemCardPrice}>Rp {item.price}</Text>
                                     </View>
-                                    <View style={{ flexDirection: 'column', position: 'absolute'}}>
-                                        <TouchableOpacity onPress={() => this.remove( item.id )}
->
-                                            <Icon name='close' style={{ marginLeft: 340}} />
+                                    <View style={{ flex: 1, flexDirection: 'row', position: 'absolute', marginLeft: 280}}>
+                                        <Input
+                                            style={{flex: 0.5, margin: 7, paddingBottom: 3, borderBottomWidth: 0.7}}
+                                            keyboardType={"numeric"}
+                                            maxLength={2}
+                                            onChangeText={(jumlah) => this.jumlah({ jumlah, index })}>
+                                            {item.jumlah}
+                                        </Input>   
+                                        <TouchableOpacity onPress={() => this.remove( item.id )}>    
+                                            <Icon name='close' style={{flex: 0.5, textAlignVertical: 'center'}} />
                                         </TouchableOpacity>
                                         {/* <Picker
                                             selectedValue={this.state.sum}
@@ -185,14 +190,6 @@ class CheckOut extends React.Component {
                                             <Picker.Item label="6" value="6" />
                                         </Picker> */}
                                         {/* <Text style={{marginLeft: 340}}>{item.jumlah}</Text> */}
-                                        <Input
-                                            style={{marginLeft: 340}}
-                                            keyboardType={"numeric"}
-                                            maxLength={1}
-                                            onChangeText={(jumlah) => this.jumlah({ jumlah, index })}
-                                        >
-                                            {item.jumlah}
-                                        </Input>
                                     </View>
                                 </CardItem>
                             )}
@@ -218,8 +215,8 @@ class CheckOut extends React.Component {
                                     <Text style={{marginLeft: 10, marginTop: 10, color:'#636568'}}>Continue Shipping</Text>
                                 </View>
                             </TouchableOpacity>
-                            <Button onPress={() => this.props.navigation.push('KonfirmasiPembayaran')} transparent style={{borderRadius:80, borderColor:'black', borderWidth:2,  marginLeft: 100, marginBottom: 10}}>
-                                <Text style={{color:'black'}}>CHECKOUT</Text> 
+                            <Button onPress={() => this.props.navigation.push('KonfirmasiPembayaran')} transparent style={{borderRadius:80, borderColor:'black', borderWidth:2,  marginLeft: 80, marginBottom: 10, backgroundColor: '#007300'}}>
+                                <Text style={{ color: 'white'}}>CHECKOUT</Text> 
                             </Button>
                         </View>
                     </Card>

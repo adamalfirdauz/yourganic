@@ -16,6 +16,18 @@ const styles = StyleSheet.create({
     content: {
         // flex: 10
     },
+    shoppingBag :{
+        alignItems: 'center',
+        alignSelf: 'center',
+        paddingTop: 10,
+        fontSize : 20,
+        fontWeight :'bold'
+    },
+    reviews:{
+        alignSelf: 'center',
+        paddingBottom: 10,
+        borderBottomWidth: 0.7,
+    },
     images: {
         height: 200,
         alignSelf: 'center',
@@ -76,16 +88,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         paddingLeft: 0,
         marginLeft: 0
-    },
-    shoppingBag :{
-        alignItems: 'center',
-        alignSelf: 'center',
-        paddingTop: 40,
-        fontSize : 20,
-        fontWeight :'bold'
-    },
-    reviews:{
-        alignSelf: 'center',
     },
     itemCardImage :{
         height : 60,
