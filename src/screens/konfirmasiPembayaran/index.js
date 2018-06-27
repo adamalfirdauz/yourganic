@@ -51,6 +51,7 @@ var sc = require('../../../assets/bank/sc.jpg')
 class KonfirmasiPembayaran extends React.Component {
     constructor(props) {
         super(props)
+        // console.error(this.props.navigation.state.params)
         this.data = [
             {time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: require('../../../assets/details/yes.png')},
             {time: '', title: 'Dibayar', description: 'Pesanan telah dibayar, kami akan segera mengirim produk segar kerumah anda', color: 'green', icon: require('../../../assets/details/yes.png')},
@@ -58,6 +59,11 @@ class KonfirmasiPembayaran extends React.Component {
             {time: '', title: 'Selesai', description: 'Pesanan telah sampai, kami menanti pesanan anda selanjutnya.' , color: 'red', icon: require('../../../assets/details/no.png')},
         ]
     }
+
+    toAnother(page, data){
+        this.props.navigation.push(page, data)
+    }
+
     render() {
         return(
             <Container style={{ flex: 1, backgroundColor: '#ffffff' }}>
@@ -67,11 +73,11 @@ class KonfirmasiPembayaran extends React.Component {
                             backgroundColor="#004600"
                             barStyle="light-content"
                         />
-                        <Left>
+                        {/* <Left>
                             <Button transparent onPress={() => this.props.navigation.goBack()}>
                                 <Icon name="arrow-back" />
                             </Button>
-                        </Left>
+                        </Left> */}
                         <Body>
                             <Title>Pembayaran</Title>
                         </Body>
@@ -146,7 +152,7 @@ class KonfirmasiPembayaran extends React.Component {
                 </List>
                 </Content>
                 <Footer style={styles.footer}>
-                    <Button style={styles.confirmButton}>
+                    <Button style={styles.confirmButton} onPress={() => this.toAnother("DetailTransaksi", this.props.navigation.state.params)}>
                         <Text style={styles.ButtonWord}>Konfirmasi</Text>
                     </Button>
                 </Footer>

@@ -10,45 +10,13 @@ class HorizontalItemList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading : true,
-            barang : [],
             image : 'http://yourganic.codepanda.web.id/'
           }
-          this.fetchStuff()
     }
       
 
     pushNavigate(page, data){
         this.props.navigation.push(page,{data: data});
-    }
-
-    fetchStuff(){
-        // this.setState({ loading: true })
-        axios.get('/api/product/getAll',{
-            headers: {
-                Accept: 'application/json',
-                // 'Authorization' : 'Bearer ' + this.state.token
-            },
-        }).then(response => {
-            if(response.data){
-                this.setState({barang : response.data.data})
-                // console.error(this.state.barang)
-                // console.error(this.state.barang)
-                }
-            else{
-                alert("Login gagal, periksa email dan password anda")
-                // this.setState({ loading: false })
-            }
-        }).catch( error => {
-            alert("Login Gagal, periksa email dan password anda")
-            // this.setState({loading: false})
-            console.error(error)    
-            
-        });
-    }
-
-    loader(){
-        return this.state.loading
     }
 
     render() {
@@ -69,7 +37,8 @@ class HorizontalItemList extends Component {
                 <FlatList
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    data={this.state.barang}
+                    // data={this.state.barang}
+                    data = {this.props.data}
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => this.pushNavigate('ItemDetail', item)} style={{paddingHorizontal:2.5}}>
                             <Card noShadow style={Styles.itemCard}>

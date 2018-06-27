@@ -148,38 +148,47 @@ class CheckOut extends React.Component {
         const checkOuts = []
         var hasil = null
 
-         for(var i = 0 ; i< this.state.barang.length; i++){
+        if(this.state.barang.length != 0){
+            for(var i = 0 ; i< this.state.barang.length; i++){
                 let checkOut = {
                     item_id : this.state.barang[i].id,
                     qty : this.state.barang[i].jumlah,
                     msg : "Testing kuy"
                 }
-                 checkOuts.push(checkOut)
-         }
-
-        axios.post('/api/transaction/create', checkOuts ,{
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization' : 'Bearer ' + this.state.token  
-            },
-        }).then(response => {
-            if(response.data){
-                // console.error(response.data)
-                // this.storeItem('user-profile',response.data.data)
-                // alert("Update Berhasil")
-                // this.props.navigation.pop()
-                // console.error(response.data)
-              }
-            else{
-                alert("Login gagal, periksa email dan password anda")
-                this.setState({ loading: false })
+                checkOuts.push(checkOut)
             }
-        }).catch( error => {
-            alert("Login Gagal, periksa email dan password anda")
-            this.setState({loading: false})
-            console.error(error)    
-        });
+            axios.post('/api/transaction/create', checkOuts ,{
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization' : 'Bearer ' + this.state.token  
+                },
+            }).then(response => {
+                if(response.data){
+                    // console.error(response.data)
+                    // this.storeItem('user-profile',response.data.data)
+                    // alert("Update Berhasil")
+                    // this.props.navigation.pop()
+                    // console.error(response.data)
+                    // console.error(response.data.data[0].code)
+                    for(var i = 0; i<15; i++){
+                        AsyncStorage.removeItem('Barang'+i)
+                    }
+                    this.props.navigation.push("KonfirmasiPembayaran", response.data.data[0])
+                }
+                else{
+                    alert("Pembelian Gagal Periksa Koneksi anda")
+                    this.setState({ loading: false })
+                }
+            }).catch( error => {
+                alert("Login Gagal, periksa email dan password anda")
+                this.setState({loading: false})
+                console.error(error)    
+            });
+        }
+        else{
+            alert("Cart Kosong, silahkan beli barang terlebih dahulu")
+        }
      }
     
     render() {

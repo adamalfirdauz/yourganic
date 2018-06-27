@@ -39,6 +39,9 @@ import {
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
 import ItemBanner from '../../theme/components/ItemBanner';
 import styles from './styles';
+import Provider from '../../provider/setup.js'
+
+var axios = require('../../api/axios.js');
 
 var resep = require('../../../assets/image/resep.png');
 var options = {
@@ -51,16 +54,19 @@ var options = {
 class DetailTransaksi extends React.Component {
     constructor(props) {
         super(props)
+        provider = new Provider()
         this.state = {
             imageSource: null
         }
         this.data = [
-            {time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: require('../../../assets/details/yes.png')},
-            {time: '', title: 'Dibayar', description: 'Pesanan telah dibayar, kami akan segera mengirim produk segar kerumah anda', color: 'green', icon: require('../../../assets/details/yes.png')},
-            {time: '', title: 'Pending', description: 'Pembayaran sedang dikonfirmasi oleh sistem', color: 'green', icon: require('../../../assets/details/yes.png')},
-            {time: '', title: 'Pengiriman', description: 'Pesanan dalam proses pengiriman melalui jasa ekspedisi terbaik kerumah anda', color: 'red', icon: require('../../../assets/details/no.png')},
-            {time: '', title: 'Selesai', description: 'Pesanan telah sampai, kami menanti pesanan anda selanjutnya.' , color: 'red', icon: require('../../../assets/details/no.png')},
+            {time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: this.props.navigation.state.params.status>=1 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Dibayar', description: 'Pesanan telah dibayar, kami akan segera mengirim produk segar kerumah anda', color: 'green', icon: this.props.navigation.state.params.status>=2 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Pending', description: 'Pembayaran sedang dikonfirmasi oleh sistem', color: 'green', icon: this.props.navigation.state.params.status>=2 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Pengiriman', description: 'Pesanan dalam proses pengiriman melalui jasa ekspedisi terbaik kerumah anda', color: 'red', icon: this.props.navigation.state.params.status>=3 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Selesai', description: 'Pesanan telah sampai, kami menanti pesanan anda selanjutnya.' , color: 'red', icon: this.props.navigation.state.params.status>=4 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
         ]
+        // console.error(this.props.navigation.state.params)
+        this.fetchStuff()
     }
     selectPhoto() {
         ImagePicker.showImagePicker(options, (response) => {
@@ -79,6 +85,48 @@ class DetailTransaksi extends React.Component {
             }
         })
     }
+
+    fetchStuff(){
+        provider.getToken().then((value) => {
+            //this callback is executed when your Promise is resolved
+            this.setState({loading :true})
+            let parsed = JSON.parse(value)
+            this.setState({
+              token : parsed
+            })
+            axios.get('/api/transaction/get/'+ this.props.navigation.state.params.code,{
+                headers: {
+                    Accept: 'application/json',
+                    'Authorization' : 'Bearer ' + parsed
+                },
+            }).then(response => {
+                if(response.data){
+                    // console.error(response.data.data)
+                    // this.setState({barang : response.data.data})
+                    // console.error(this.state.barang)
+                    // console.error(this.state.barang)
+                    console.error(response.data)
+                    this.setState({
+                        data : response.data.data,
+                        loading: false
+                    })
+                    }
+                else{
+                    alert("Koneksi gagal, muat ulang halaman ini")
+                    this.setState({ loading: false })
+
+                }
+            }).catch( error => {
+                alert("Koneksi gagal, muat ulang halaman ini")
+                // this.setState({loading: false})
+                console.error(error)    
+                
+            });
+        }).catch((error) => {
+            console.log('Terjadi kesalahan : ' + error);
+            console.error('kososng')
+        });
+    }
     render() {
         return(
             <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
@@ -94,7 +142,7 @@ class DetailTransaksi extends React.Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Title>No. XXXXXXX</Title>
+                            <Title>No. {this.props.navigation.state.params.code}</Title>
                         </Body>
                         <Right>
                             <Button transparent>
@@ -121,28 +169,32 @@ class DetailTransaksi extends React.Component {
                             data={this.data}
                         />
                     </Card>
+                    {this.props.navigation.state.params.status==1 ? 
                     <Card>
-                        <Text style={styles.trackHeader}>Unggah Bukti Bayar</Text>
-                        <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
-                            {this.state.imageSource !== null ?
-                                <Image
-                                    square
-                                    style={{
-                                        height: 200,
-                                        width: 200,
-                                        alignSelf: "center",
-                                        top: 20,
-                                    }}
-                                    source={this.state.imageSource} />
-                                :
-                                <Icon name='camera' style={styles.uploadIcon} />}
-                        </TouchableOpacity>
-                        <View tyle={styles.confirmButtonSection}>
-                            <Button style={styles.confirmButton}>
-                                <Text style={{ color: 'white', textAlign: 'center', width:"100%"}}>Konfirmasi</Text> 
-                            </Button>
-                        </View>
-                    </Card>
+                    <Text style={styles.trackHeader}>Unggah Bukti Bayar</Text>
+                    <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
+                        {this.state.imageSource !== null ?
+                            <Image
+                                square
+                                style={{
+                                    height: 200,
+                                    width: 200,
+                                    alignSelf: "center",
+                                    top: 20,
+                                }}
+                                source={this.state.imageSource} />
+                            :
+                            <Icon name='camera' style={styles.uploadIcon} />}
+                    </TouchableOpacity>
+                    <View tyle={styles.confirmButtonSection}>
+                        <Button style={styles.confirmButton}>
+                            <Text style={{ color: 'white', textAlign: 'center', width:"100%"}}>Konfirmasi</Text> 
+                        </Button>
+                    </View>
+                </Card>
+                    :
+                <View /> 
+                    }
                 </Content>
             </Container>
         );
