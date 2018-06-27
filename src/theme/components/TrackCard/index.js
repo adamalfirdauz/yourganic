@@ -13,10 +13,13 @@ class ItemBanner extends Component {
             <Card style={Styles.cardBody}>
                 <Image style={Styles.cardImage} source={this.props.data[0]}/>
                 <View style={Styles.cardName}>
-                    <Text style={Styles.cardNameTop}>Pisang Arum Manis</Text>
+                    <Text style={Styles.cardNameTop}>30 Maret 2018</Text>
                     <Text style={Styles.cardNameBottom}>No. XXXXXXX</Text>
+                </View >
+                <View style={Styles.cardTrack}>
+                    <Text style={Styles.cardTrackTop}>Pembayaran</Text>
+                    <Text style={Styles.cardTrackBottom}>Rp. 50.000</Text>
                 </View>
-                <Text style={Styles.cardTrack}>Pembayaran</Text>
             </Card>
         );
     }
