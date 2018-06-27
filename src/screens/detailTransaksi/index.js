@@ -39,6 +39,7 @@ import {
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
 import ItemBanner from '../../theme/components/ItemBanner';
 import styles from './styles';
+import RNFetchBlob from 'rn-fetch-blob'
 import Provider from '../../provider/setup.js'
 
 var axios = require('../../api/axios.js');
@@ -55,8 +56,13 @@ class DetailTransaksi extends React.Component {
     constructor(props) {
         super(props)
         provider = new Provider()
+        this.getToken()
         this.state = {
-            imageSource: null
+            id_transaction: '',
+            imageSource: null,
+            loading: false,
+            gambar : false,
+            img : null
         }
         this.data = [
             {time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: this.props.navigation.state.params.status>=1 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
@@ -70,20 +76,85 @@ class DetailTransaksi extends React.Component {
     }
     selectPhoto() {
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.error('ImagePicker Error: ', response.error);
-            } else {
-                let source = {
-                    uri: response.uri
-                }
-                this.setState({
-                    imageSource: source
-                })
-            }
+          console.log('Response = ', response);
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          }
+          else if (response.error) {
+            console.error('ImagePicker Error: ', response.error);
+          }
+          else {
+            let source = { uri: response.uri }
+            this.setState({ imageSource: source , gambar : true })
+            // console.error(gambar.uri)
+          }
         })
+      }
+
+    getToken(){
+        provider.getToken().then((value) => {
+          //this callback is executed when your Promise is resolved
+          let parsed = JSON.parse(value)
+          this.setState({
+            token : parsed
+          })
+      }).catch((error) => {
+          console.log('Terjadi kesalahan : ' + error);
+      });
+      // console.error(this.props.navigation.state.params)
+    }
+
+    uploadPhoto() {
+        if(this.state.gambar){
+        this.setState({
+          loading: true
+        })
+        RNFetchBlob.fetch('POST', 'http://yourganic.codepanda.web.id/api/transaction/update', {
+            Accept: 'application/json',
+            'Authorization' : 'Bearer ' + this.state.token,
+          // 'Content-Type': 'multipart/form-data',
+        }, [
+            { name: 'payment_proof', filename: 'image.jpg', type: 'image/png', data: RNFetchBlob.wrap(this.state.imageSource.uri) },
+          ]).then((resp) => {
+            let dataku = JSON.parse(resp.data)
+            provider.storeItem('user-profile', dataku.data)
+          }).catch((err) => {
+            console.error(err)
+          })
+        }
+    }
+
+    updateTransaction() {
+        this.setState({ loading: true })
+        this.uploadPhoto()
+        axios.post('/api/transaction/update', 
+        {
+            id: this.props.navigation.state.params.id,
+            //status: 'done',
+        },{
+            headers: {
+                Accept: 'application/json',
+                'Authorization' : 'Bearer ' + this.state.token
+            },
+        }).then(response => {
+            console.error(this.props.navigation.state.params.id)
+            if(response.data){
+                // console.error(response.data)
+                // this.storeItem('user-profile',response.data.data)
+                provider.storeItem('user-profile', response.data.data)
+                alert("Update Berhasil")
+                this.props.navigation.pop()
+              }
+            else{
+                alert("Login gagal, periksa email dan password anda")
+                this.setState({ loading: false })
+            }
+        }).catch( error => {
+            alert("Login Gagal, periksa email dan password anda")
+            this.setState({loading: false})
+            console.error(error)    
+            
+        });
     }
 
     fetchStuff(){
@@ -105,7 +176,7 @@ class DetailTransaksi extends React.Component {
                     // this.setState({barang : response.data.data})
                     // console.error(this.state.barang)
                     // console.error(this.state.barang)
-                    console.error(response.data)
+                    // console.error(response.data)
                     this.setState({
                         data : response.data.data,
                         loading: false
@@ -187,7 +258,7 @@ class DetailTransaksi extends React.Component {
                             <Icon name='camera' style={styles.uploadIcon} />}
                     </TouchableOpacity>
                     <View tyle={styles.confirmButtonSection}>
-                        <Button style={styles.confirmButton}>
+                        <Button style={styles.confirmButton} onPress={() => this.updateTransaction()}>
                             <Text style={{ color: 'white', textAlign: 'center', width:"100%"}}>Konfirmasi</Text> 
                         </Button>
                     </View>
