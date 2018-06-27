@@ -169,7 +169,7 @@ class CheckOut extends React.Component {
                                         <Input
                                             style={{flex: 0.5, margin: 7, paddingBottom: 3, borderBottomWidth: 0.7}}
                                             keyboardType={"numeric"}
-                                            maxLength={2}
+                                            maxLength={1}
                                             onChangeText={(jumlah) => this.jumlah({ jumlah, index })}>
                                             {item.jumlah}
                                         </Input>   
