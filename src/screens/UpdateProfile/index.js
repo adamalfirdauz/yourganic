@@ -9,7 +9,8 @@ import {
   KeyboardAvoidingView,
   StatusBar,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import {
   Button,
@@ -38,6 +39,8 @@ var options = {
   quality: 1
 };
 
+var axios = require('../../api/axios.js');
+
 
 export default class UpdateProfile extends React.Component {
   constructor(props) {
@@ -52,7 +55,8 @@ export default class UpdateProfile extends React.Component {
     hp: '',
     alamat: '',
     token: '',
-    imageSource: null
+    imageSource: null,
+    loading: false
   }
 
   async fetchProfile() {
@@ -69,10 +73,25 @@ export default class UpdateProfile extends React.Component {
           alamat: parsed.address,
         })
       }
+      const tokens = await AsyncStorage.getItem('access-token');
+      if(tokens){
+        this.setState({
+          token : JSON.parse(tokens)
+        })
+      }
     } catch (error) {
       // Error retrieving data
     }
   }
+
+  async storeItem(key, item) {
+    try {
+        var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
+        return jsonOfItem;
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
   update() {
     console.error(this.state)
@@ -94,6 +113,37 @@ export default class UpdateProfile extends React.Component {
     })
   }
 
+  updateProfile() {
+    this.setState({ loading: true })
+    axios.post('/api/profile/update',
+    {
+        name: this.state.nama,
+        phone: this.state.hp,
+        address: this.state.alamat
+    },{
+        headers: {
+            Accept: 'application/json',
+            'Authorization' : 'Bearer ' + this.state.token
+        },
+    }).then(response => {
+        if(response.data){
+            // console.error(response.data)
+            this.storeItem('user-profile',response.data.data)
+            alert("Update Berhasil")
+            this.props.navigation.pop()
+          }
+        else{
+            alert("Login gagal, periksa email dan password anda")
+            this.setState({ loading: false })
+        }
+    }).catch( error => {
+        alert("Login Gagal, periksa email dan password anda")
+        this.setState({loading: false})
+        console.error(error)    
+        
+    });
+}
+
   render() {
     return (
       <Container style={{ backgroundColor: 'white' }}>
@@ -114,6 +164,13 @@ export default class UpdateProfile extends React.Component {
         </Header>
         <View style={{ flex: 1 }}>
           <Content>
+          { this.state.loading ?
+          <View style={{paddingTop:250 ,alignSelf: 'center',justifyContent: 'center', position: 'absolute'}}>
+                    <ActivityIndicator size="large"/>
+          </View>
+          :
+          <View />
+          }
             <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
               {this.state.imageSource !== null ?  
                 <Image
@@ -129,7 +186,7 @@ export default class UpdateProfile extends React.Component {
                 :
               <Icon name='person' style={{ fontSize: 120, alignSelf: 'center', paddingTop: 20, }} />}
             </TouchableOpacity>
-            <Input onChangeText={() => this.setState({ nama })} style={styles.nama}>{this.state.nama}</Input>
+            <Input onChangeText={(nama) => this.setState( {nama} )} style={styles.nama}>{this.state.nama}</Input>
             <View style={styles.hairStyle} />
             <View style={styles.row}>
               <Icon name="mail" style={styles.emailIcon} />
@@ -156,7 +213,7 @@ export default class UpdateProfile extends React.Component {
             </View>
             <View style={styles.hairStyles} />
             <Button
-              onPress={() => this.update()}
+              onPress={() => this.updateProfile()}
               block={true}
               style={styles.buttonStyle}>
               <Text style={styles.buttonTextStyle}>Simpan</Text>

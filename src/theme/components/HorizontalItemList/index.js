@@ -4,14 +4,47 @@ import { Card, Button, Icon } from 'native-base';
 import Styles from './Styles';
 import { DrawerNavigator } from "react-navigation";
 
+var axios = require('../../../api/axios.js');
+
 class HorizontalItemList extends Component {
     constructor(props) {
         super(props);
-        this.state = {  };
+        this.state = {
+            loading : false,
+            barang : [],
+            image : 'http://yourganic.codepanda.web.id/'
+          }
+          this.fetchStuff()
     }
+      
 
     pushNavigate(page, data){
         this.props.navigation.push(page,{data: data});
+    }
+
+    fetchStuff(){
+        // this.setState({ loading: true })
+        axios.get('/api/product/getAll',{
+            headers: {
+                Accept: 'application/json',
+                // 'Authorization' : 'Bearer ' + this.state.token
+            },
+        }).then(response => {
+            if(response.data){
+                this.setState({barang : response.data.data})
+                // console.error(this.state.barang)
+                // console.error(this.state.barang)
+                }
+            else{
+                alert("Login gagal, periksa email dan password anda")
+                // this.setState({ loading: false })
+            }
+        }).catch( error => {
+            alert("Login Gagal, periksa email dan password anda")
+            // this.setState({loading: false})
+            console.error(error)    
+            
+        });
     }
 
     render() {
@@ -32,87 +65,19 @@ class HorizontalItemList extends Component {
                 <FlatList
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    data={[
-                        {
-                            id : '1',
-                            title: "Strawberry",
-                            price: "10.000",
-                            unit: "250 gr",
-                            key : 'strawberry',
-                            image: require('../../../../assets/image/card/fruit/strawberry.jpg'),
-                            category: 'fruit',
-                            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-                            nutrition: 'Vitamin C',
-                            unit: '200gr',
-                        }, {
-                            id : '2',
-                            title: "Banana",
-                            price: "15.000",
-                            unit: "500 gr",
-                            key : 'banana',
-                            image: require('../../../../assets/image/card/fruit/banana.jpg'),
-                            category: 'fruit',
-                            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-                            nutrition: 'Vitamin C',
-                            unit: '200gr',
-                        }, {
-                            id : '3',
-                            title: "Strawberry",
-                            price: "10.000",
-                            unit: "250 gr",
-                            key : 'strawberry',
-                            image: require('../../../../assets/image/card/fruit/strawberry.jpg'),
-                            category: 'fruit',
-                            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-                            nutrition: 'Vitamin C',
-                            unit: '200gr',
-                        }, {
-                            id : '4',
-                            title: "Banana Panjang Gimana dong",
-                            price: "15.000",
-                            jumlah: '1',
-                            unit: "500 gr",
-                            key : 'banana',
-                            image: require('../../../../assets/image/card/fruit/banana.jpg'),
-                            category: 'fruit',
-                            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-                            nutrition: 'Vitamin C',
-                            unit: '200gr',
-                        }, {
-                            id : '5',
-                            title: "Strawberry",
-                            price: "10.000",
-                            unit: "250 gr",
-                            key : 'strawberry',
-                            image: require('../../../../assets/image/card/fruit/strawberry.jpg'),
-                            category: 'fruit',
-                            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-                            nutrition: 'Vitamin C',
-                            unit: '200gr',
-                        }, {
-                            id : '6',
-                            title: "Banana",
-                            price: "15.000",
-                            unit: "500 gr",
-                            key : 'banana',
-                            image: require('../../../../assets/image/card/fruit/banana.jpg'),
-                            category: 'fruit',
-                            description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-                            nutrition: 'Vitamin C',
-                            unit: '200gr',
-                        },
-                    ]}
+                    data={this.state.barang}
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => this.pushNavigate('ItemDetail', item)} style={{paddingHorizontal:2.5}}>
                             <Card noShadow style={Styles.itemCard}>
                                 <Image style={Styles.itemCardImage}
-                                    source={item.image}
+                                    source={{ uri : this.state.image + item.img}}
                                 />
-                                <Text numberOfLines={1} style={Styles.itemCardTitle}>{item.title}</Text>
+                                <Text numberOfLines={1} style={Styles.itemCardTitle}>{item.name}</Text>
                                 <Text style={Styles.itemCardPrice}>Rp {item.price}/{item.unit}</Text>
                             </Card>
                         </TouchableOpacity>
                     )}
+                      keyExtractor={(item, index) => index.toString()}
                 />
             </Card>
         );

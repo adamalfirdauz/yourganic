@@ -50,7 +50,8 @@ class ItemDetails extends React.Component {
             sum: 0,
             barang: this.props.navigation.state.params.data,
             exist : false,
-            finished : false
+            finished : false,
+            image : 'http://yourganic.codepanda.web.id/'
         };
         this.data = [
             {time: '', title: 'Harga', description: 'Rp. '+this.props.navigation.state.params.data.price+' / '+this.props.navigation.state.params.data.unit, icon: require('../../../assets/details/money.png')},
@@ -155,14 +156,14 @@ class ItemDetails extends React.Component {
     
                     </View>
                     <Content style={styles.content}>
-                        <Text style={styles.item}>{this.props.navigation.state.params.data.title}</Text>
+                        <Text style={styles.item}>{this.props.navigation.state.params.data.name}</Text>
                         <View style={styles.IconDetailFlex}>
                             <Icon style={styles.icons} name="nutrition"/>
                             <Text style={styles.category}>{this.props.navigation.state.params.data.category}</Text>
                             <Icon style={styles.icons} name="heart"/>
                             <Text style={styles.category}>{this.props.navigation.state.params.data.nutrition}</Text>
                         </View>
-                        <Image style={styles.images} source={this.props.navigation.state.params.data.image}/>
+                        <Image style={styles.images} source={{ uri: this.state.image + this.state.barang.img }}/>
                         <Timeline
                             innerCircle={'icon'}
                             circleSize={25}
