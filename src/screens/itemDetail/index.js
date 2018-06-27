@@ -157,7 +157,6 @@ class ItemDetails extends React.Component {
                     </View>
                     <Content style={styles.content}>
                         <Text style={styles.item}>{this.props.navigation.state.params.data.name}</Text>
-                        <Text style={styles.item}>{ this.state.image + this.props.navigation.state.params.data.img}</Text>
                         <View style={styles.IconDetailFlex}>
                             <Icon style={styles.icons} name="nutrition"/>
                             <Text style={styles.category}>{this.props.navigation.state.params.data.category}</Text>
