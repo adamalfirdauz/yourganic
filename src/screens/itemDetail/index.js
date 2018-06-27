@@ -164,16 +164,10 @@ class ItemDetails extends React.Component {
                             <Icon style={styles.icons} name="heart"/>
                             <Text style={styles.category}>{this.props.navigation.state.params.data.nutrition}</Text>
                         </View>
-<<<<<<< HEAD
-                        <Card>
-                            <Image style={styles.images} source={{ uri: this.state.image + this.props.navigation.state.params.data.img }}/>
-                        </Card>
-=======
                         <Image style={styles.images} 
                                source={{ uri: this.state.image + this.state.barang.img }}
                                onLoadEnd={this.onLoaded}
                                />
->>>>>>> ad0df49f207626342a4d769a3cd669cf455ad4f8
                         <Timeline
                             innerCircle={'icon'}
                             circleSize={25}
