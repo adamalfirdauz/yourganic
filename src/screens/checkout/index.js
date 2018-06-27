@@ -39,6 +39,7 @@ import ItemBanner from '../../theme/components/ItemBanner';
 import styles from './styles';
 
 var resep = require('../../../assets/image/resep.png');
+var axios = require('../../api/axios.js');
 
 class CheckOut extends React.Component {
     constructor(props) {
@@ -46,13 +47,17 @@ class CheckOut extends React.Component {
         this.state = {
             barang: [],
             isReady :false,
+            checkOut : [],
             jumlah : 0,
             sum : 0,
             panjang: 0,
             total : 0,
-            image : 'http://yourganic.codepanda.web.id/'
+            image : 'http://yourganic.codepanda.web.id/',
+            loading : false,
+            token : null
            }
            this.fetchData()
+           this.retrieveToken()
     }
 
     async retrieveItem() {
@@ -128,6 +133,58 @@ class CheckOut extends React.Component {
         // console.error(this.state.barang[index])
         this.storeItem('Barang'+this.state.barang[index].id, this.state.barang[index])
     }
+
+   async retrieveToken(){
+        const tokens = await AsyncStorage.getItem('access-token');
+        if(tokens){
+            this.setState({
+                token : JSON.parse(tokens)
+            })
+        }
+    }
+
+    checkOut(){
+        this.setState({ loading: true })
+        const checkOuts = []
+        var hasil = null
+
+         for(var i = 0 ; i< this.state.barang.length; i++){
+                let checkOut = {
+                    item_id : 1,
+                    qty : 5,
+                    msg : "Testing kuy"
+                }
+                checkOuts.push(checkOut)
+         }
+
+        axios.post('/api/transaction/create',
+        {
+            checkOuts
+        },{
+            headers: {
+                Accept: 'application/json',
+                'Authorization' : 'Bearer ' + this.state.token
+            },
+        }).then(response => {
+            if(response.data){
+                // console.error(response.data)
+                // this.storeItem('user-profile',response.data.data)
+                // alert("Update Berhasil")
+                // this.props.navigation.pop()
+                console.error(response.data)
+              }
+            else{
+                alert("Login gagal, periksa email dan password anda")
+                this.setState({ loading: false })
+            }
+        }).catch( error => {
+            alert("Login Gagal, periksa email dan password anda")
+            this.setState({loading: false})
+            console.error(error)    
+            
+        });
+     }
+    
     render() {
         return (
             <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
@@ -217,7 +274,10 @@ class CheckOut extends React.Component {
                                     <Text style={{marginLeft: 10, marginTop: 10, color:'#636568'}}>Continue Shipping</Text>
                                 </View>
                             </TouchableOpacity>
-                            <Button onPress={() => this.props.navigation.push('KonfirmasiPembayaran')} transparent style={{borderRadius:80, borderColor:'white', borderWidth:2,  marginLeft: 80, marginBottom: 10, backgroundColor: '#007300'}}>
+                            {/* <Button onPress={() => this.props.navigation.push('KonfirmasiPembayaran')} transparent style={{borderRadius:80, borderColor:'white', borderWidth:2,  marginLeft: 80, marginBottom: 10, backgroundColor: '#007300'}}>
+                                <Text style={{ color: 'white'}}>CHECKOUT</Text> 
+                            </Button> */}
+                                <Button onPress={() => this.checkOut()} transparent style={{borderRadius:80, borderColor:'white', borderWidth:2,  marginLeft: 80, marginBottom: 10, backgroundColor: '#007300'}}>
                                 <Text style={{ color: 'white'}}>CHECKOUT</Text> 
                             </Button>
                         </View>

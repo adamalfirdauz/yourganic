@@ -29,6 +29,7 @@ import {
 import styles from './styles';
 import { NavigationActions } from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
+import Provider from '../../provider/setup.js'
 
 var options = {
     title: 'Select Photo',
@@ -50,8 +51,7 @@ var CANCEL_INDEX = 0;
 export default class Profile extends React.Component {
     constructor(props) {
         super(props)
-        this.getToken();
-        var data = this.fetchProfile()
+        provider = new Provider()
         this.state = {
             nama: '',
             email: '',
@@ -63,6 +63,7 @@ export default class Profile extends React.Component {
             imageSource: null
         }
         //    console.error(data)
+        this.getProfile()
     }
     async retrieveItem(key) {
         try {
@@ -74,37 +75,25 @@ export default class Profile extends React.Component {
         }
         return
     }
-    async fetchProfile() {
-        this.retrieveItem('user-profile').then((parsed) => {
-            //this callback is executed when your Promise is resolved
+
+    getProfile(){
+        provider.fetchProfile().then((value)=>{
+          let parsed = JSON.parse(value)
+          if (value !== null) {
+            // We have data!!
             this.setState({
-                nama: parsed.name,
-                email: parsed.email,
-                hp: parsed.phone,
-                alamat: parsed.address,
+              id: parsed.id,
+              nama: parsed.name,
+              email: parsed.email,
+              hp: parsed.phone,
+              alamat: parsed.address,
             })
-            if (parsed.foto) {
-                this.setState({
-                    foto: 'http://yourganic.codepanda.web.id/' + parsed.data.foto
-                })
-            }
-        }).catch((error) => {
-            console.log('Terjadi kesalahan : ' + error);
-        });
-    }
-    async getToken() {
-        this.retrieveItem('access-token')
-            .then((token) => {
-                this.setState({
-                    token: token
-                });
-                // console.error(this.state.token)
-            })
-            .catch((error) => {
-                console.log('Terjadi kesalahan : ' + error);
-            }
-            );
-    }
+          }
+        }).catch((error)=>{
+          console.error(error)
+        })
+      }
+
     async logOut() {
         axios.post('/api/logout', {}, {
             headers: {
@@ -217,6 +206,7 @@ export default class Profile extends React.Component {
                         </View>
                         <View style={styles.hairStyles} />
                         <Button
+                            // onPress={() => this.editProfile()}
                             onPress={() => this.editProfile()}
                             block={true}
                             style={styles.buttonStyle}>

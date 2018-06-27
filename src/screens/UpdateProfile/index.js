@@ -31,6 +31,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { NavigationActions } from 'react-navigation'
 import ImagePicker from 'react-native-image-picker'
 import styles from './styles';
+import Provider from '../../provider/setup.js'
 
 var options = {
   title: 'Select Photo',
@@ -41,12 +42,13 @@ var options = {
 
 var axios = require('../../api/axios.js');
 
-
 export default class UpdateProfile extends React.Component {
   constructor(props) {
     super(props)
-    var data = this.fetchProfile()
+    provider = new Provider()
     //    console.error(data)
+    this.getProfile()
+    this.getToken()
   }
   state = {
     id: '',
@@ -59,9 +61,20 @@ export default class UpdateProfile extends React.Component {
     loading: false
   }
 
-  async fetchProfile() {
-    try {
-      const value = await AsyncStorage.getItem('user-profile');
+  getToken(){
+    provider.getToken().then((value) => {
+      //this callback is executed when your Promise is resolved
+      let parsed = JSON.parse(value)
+      this.setState({
+        token : parsed
+      })
+  }).catch((error) => {
+      console.log('Terjadi kesalahan : ' + error);
+  });
+  }
+
+  getProfile(){
+    provider.fetchProfile().then((value)=>{
       let parsed = JSON.parse(value)
       if (value !== null) {
         // We have data!!
@@ -73,29 +86,11 @@ export default class UpdateProfile extends React.Component {
           alamat: parsed.address,
         })
       }
-      const tokens = await AsyncStorage.getItem('access-token');
-      if(tokens){
-        this.setState({
-          token : JSON.parse(tokens)
-        })
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
+    }).catch((error)=>{
+      console.error(error)
+    })
   }
-
-  async storeItem(key, item) {
-    try {
-        var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
-        return jsonOfItem;
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
-  update() {
-    console.error(this.state)
-  }
+  
   selectPhoto() {
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
@@ -128,7 +123,8 @@ export default class UpdateProfile extends React.Component {
     }).then(response => {
         if(response.data){
             // console.error(response.data)
-            this.storeItem('user-profile',response.data.data)
+            // this.storeItem('user-profile',response.data.data)
+            provider.storeItem('user-profile', response.data.data)
             alert("Update Berhasil")
             this.props.navigation.pop()
           }

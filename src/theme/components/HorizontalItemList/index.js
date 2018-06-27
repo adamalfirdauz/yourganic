@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, FlatList, TouchableOpacity, Image, View } from 'react-native';
+import { Text, FlatList, TouchableOpacity, Image, View, ActivityIndicator } from 'react-native';
 import { Card, Button, Icon } from 'native-base';
 import Styles from './Styles';
 import { DrawerNavigator } from "react-navigation";
@@ -10,7 +10,7 @@ class HorizontalItemList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading : false,
+            loading : true,
             barang : [],
             image : 'http://yourganic.codepanda.web.id/'
           }
@@ -45,6 +45,10 @@ class HorizontalItemList extends Component {
             console.error(error)    
             
         });
+    }
+
+    loader(){
+        return this.state.loading
     }
 
     render() {

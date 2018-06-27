@@ -29,7 +29,6 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import { NavigationActions } from 'react-navigation'
 import ImagePicker from 'react-native-image-picker'
-import styles from './styles';
 
 var options = {
   title: 'Select Photo',
@@ -38,36 +37,18 @@ var options = {
   quality: 1
 };
 
-var axios = require('../../api/axios.js');
+var axios = require('../api/axios.js');
 
 
-export default class UpdateProfile extends React.Component {
+export default class Provider extends React.Component {
   constructor(props) {
     super(props)
     //    console.error(data)
   }
 
   async fetchProfile() {
-    try {
       const value = await AsyncStorage.getItem('user-profile');
-      let parsed = JSON.parse(value)
-      if (value !== null) {
-        // We have data!!
-        this.setState({
-          id: parsed.id,
-          nama: parsed.name,
-          email: parsed.email,
-          hp: parsed.phone,
-          alamat: parsed.address,
-        })
-      }
-      const tokens = await AsyncStorage.getItem('access-token');
-      if(tokens){
-        const token = JSON.stringify(tokens)
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
+      return value
   }
 
   async storeItem(key, item) {
@@ -79,11 +60,12 @@ export default class UpdateProfile extends React.Component {
     }
 }
 
-  update() {
-    console.error(this.state)
-  }
+    async getToken(){
+        const tokens = await AsyncStorage.getItem('access-token')
+        return tokens
+    }
 
   push(page, data){
-      this.props.navigate.push(page, data)
-  }
+    this.props.navigation.push(page, data)
+    }
 }
