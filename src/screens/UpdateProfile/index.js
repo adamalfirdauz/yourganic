@@ -32,6 +32,7 @@ import { NavigationActions } from 'react-navigation'
 import ImagePicker from 'react-native-image-picker'
 import styles from './styles';
 import Provider from '../../provider/setup.js'
+import RNFetchBlob from 'rn-fetch-blob'
 
 var options = {
   title: 'Select Photo',
@@ -58,7 +59,9 @@ export default class UpdateProfile extends React.Component {
     alamat: '',
     token: '',
     imageSource: null,
-    loading: false
+    loading: false,
+    gambar : false,
+    img : null
   }
 
   getToken(){
@@ -84,6 +87,7 @@ export default class UpdateProfile extends React.Component {
           email: parsed.email,
           hp: parsed.phone,
           alamat: parsed.address,
+          imageSource : parsed.img,
         })
       }
     }).catch((error)=>{
@@ -102,7 +106,7 @@ export default class UpdateProfile extends React.Component {
       }
       else {
         let source = { uri: response.uri }
-        this.setState({ imageSource: source })
+        this.setState({ imageSource: source , gambar : true })
         // console.error(gambar.uri)
       }
     })
@@ -110,6 +114,7 @@ export default class UpdateProfile extends React.Component {
 
   updateProfile() {
     this.setState({ loading: true })
+    this.uploadPhoto()
     axios.post('/api/profile/update',
     {
         name: this.state.nama,
@@ -138,6 +143,25 @@ export default class UpdateProfile extends React.Component {
         console.error(error)    
         
     });
+}
+
+uploadPhoto() {
+  if(this.state.gambar){
+  this.setState({
+    loading: true
+  })
+  RNFetchBlob.fetch('POST', 'http://yourganic.codepanda.web.id/api/profile/update', {
+    'Authorization' : 'Bearer ' + this.state.token,
+    // 'Content-Type': 'multipart/form-data',
+  }, [
+      { name: 'img', filename: 'image.jpg', type: 'image/png', data: RNFetchBlob.wrap(this.state.imageSource.uri) },
+    ]).then((resp) => {
+      let dataku = JSON.parse(resp.data)
+      provider.storeItem('user-profile', dataku.data)
+    }).catch((err) => {
+      console.error(err)
+    })
+  }
 }
 
   render() {
@@ -178,7 +202,7 @@ export default class UpdateProfile extends React.Component {
                   top: 20,
                   borderRadius: 100
                 }}
-                source={this.state.imageSource} />
+                source={!this.state.gambar ? {uri : "http://yourganic.codepanda.web.id/"+ this.state.imageSource} : this.state.imageSource } /> 
                 :
               <Icon name='person' style={{ fontSize: 120, alignSelf: 'center', paddingTop: 20, }} />}
             </TouchableOpacity>

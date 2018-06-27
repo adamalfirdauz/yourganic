@@ -87,6 +87,7 @@ export default class Profile extends React.Component {
               email: parsed.email,
               hp: parsed.phone,
               alamat: parsed.address,
+              imageSource: parsed.img
             })
           }
         }).catch((error)=>{
@@ -163,7 +164,6 @@ export default class Profile extends React.Component {
                 </Header>
                 <View style={{ flex: 1 }}>
                     <Content>
-                        <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
                             {this.state.imageSource !== null ?
                                 <Image
                                     square
@@ -174,10 +174,9 @@ export default class Profile extends React.Component {
                                         top: 20,
                                         borderRadius: 100
                                     }}
-                                    source={this.state.imageSource} />
+                                    source={{uri :'http://yourganic.codepanda.web.id/'+this.state.imageSource}} />
                                 :
                                 <Icon name='person' style={{ fontSize: 120, alignSelf: 'center', paddingTop: 20, }} />}
-                        </TouchableOpacity>
                         {/* <Icon active={this.state.icon} name="person" style={styles.photoProfile} /> */}
                         <Text style={styles.nama}>{this.state.nama}</Text>
                         <View style={styles.hairStyle} />
