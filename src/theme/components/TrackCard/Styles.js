@@ -35,10 +35,17 @@ const Styles = StyleSheet.create({
     cardTrack: {
         paddingTop: 5,
         flex: 0.3,
+    },
+    cardTrackTop: {
         fontSize: 15,
         fontWeight: 'bold',
         textAlign: 'right',
         textAlignVertical: 'top'
+    },
+    cardTrackBottom: {
+        paddingTop: 5,
+        fontSize: 12,
+        textAlign: 'right',
     }
 });
 
