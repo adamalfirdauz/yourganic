@@ -157,13 +157,16 @@ class ItemDetails extends React.Component {
                     </View>
                     <Content style={styles.content}>
                         <Text style={styles.item}>{this.props.navigation.state.params.data.name}</Text>
+                        <Text style={styles.item}>{ this.state.image + this.props.navigation.state.params.data.img}</Text>
                         <View style={styles.IconDetailFlex}>
                             <Icon style={styles.icons} name="nutrition"/>
                             <Text style={styles.category}>{this.props.navigation.state.params.data.category}</Text>
                             <Icon style={styles.icons} name="heart"/>
                             <Text style={styles.category}>{this.props.navigation.state.params.data.nutrition}</Text>
                         </View>
-                        <Image style={styles.images} source={{ uri: this.state.image + this.state.barang.img }}/>
+                        <Card>
+                            <Image style={styles.images} source={{ uri: this.state.image + this.props.navigation.state.params.data.img }}/>
+                        </Card>
                         <Timeline
                             innerCircle={'icon'}
                             circleSize={25}
