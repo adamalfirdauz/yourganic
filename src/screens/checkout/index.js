@@ -150,20 +150,18 @@ class CheckOut extends React.Component {
 
          for(var i = 0 ; i< this.state.barang.length; i++){
                 let checkOut = {
-                    item_id : 1,
-                    qty : 5,
+                    item_id : this.state.barang[i].id,
+                    qty : this.state.barang[i].jumlah,
                     msg : "Testing kuy"
                 }
-                checkOuts.push(checkOut)
+                 checkOuts.push(checkOut)
          }
 
-        axios.post('/api/transaction/create',
-        {
-            checkOuts
-        },{
+        axios.post('/api/transaction/create', checkOuts ,{
             headers: {
                 Accept: 'application/json',
-                'Authorization' : 'Bearer ' + this.state.token
+                'Content-Type': 'application/json',
+                'Authorization' : 'Bearer ' + this.state.token  
             },
         }).then(response => {
             if(response.data){
@@ -171,7 +169,7 @@ class CheckOut extends React.Component {
                 // this.storeItem('user-profile',response.data.data)
                 // alert("Update Berhasil")
                 // this.props.navigation.pop()
-                console.error(response.data)
+                // console.error(response.data)
               }
             else{
                 alert("Login gagal, periksa email dan password anda")
@@ -181,7 +179,6 @@ class CheckOut extends React.Component {
             alert("Login Gagal, periksa email dan password anda")
             this.setState({loading: false})
             console.error(error)    
-            
         });
      }
     
@@ -286,7 +283,6 @@ class CheckOut extends React.Component {
             </Container>
         );
     }
-    
 }
 
 export default CheckOut;
