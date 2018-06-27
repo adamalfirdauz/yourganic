@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     },
     images: {
         height: 200,
+        width : 200, 
         alignSelf: 'center',
         resizeMode: 'contain',
         backgroundColor: 'white',

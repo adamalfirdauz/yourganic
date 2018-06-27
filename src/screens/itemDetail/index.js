@@ -163,7 +163,10 @@ class ItemDetails extends React.Component {
                             <Icon style={styles.icons} name="heart"/>
                             <Text style={styles.category}>{this.props.navigation.state.params.data.nutrition}</Text>
                         </View>
-                        <Image style={styles.images} source={{ uri: this.state.image + this.state.barang.img }}/>
+                        <Image style={styles.images} 
+                               source={{ uri: this.state.image + this.state.barang.img }}
+                               onLoadEnd={this.onLoaded}
+                               />
                         <Timeline
                             innerCircle={'icon'}
                             circleSize={25}
@@ -187,6 +190,7 @@ class ItemDetails extends React.Component {
                         </Button>
                     </Footer>
                         }
+                        {/* <Image  source={{ uri: this.state.image + this.props.navigation.state.params.data.img }}/> */}
                 </Container>
             );
         }

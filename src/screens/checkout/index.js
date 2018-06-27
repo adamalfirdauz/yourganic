@@ -49,7 +49,8 @@ class CheckOut extends React.Component {
             jumlah : 0,
             sum : 0,
             panjang: 0,
-            total : 0
+            total : 0,
+            image : 'http://yourganic.codepanda.web.id/'
            }
            this.fetchData()
     }
@@ -159,7 +160,7 @@ class CheckOut extends React.Component {
                             renderItem={({ item, index }) => (
                                 <CardItem transparent>
                                     <Image style={styles.itemCardImage}
-                                        source={item.image}
+                                        source={{uri : this.state.image + item.img}}
                                     />
                                     <View style={{ flexDirection: 'column', }}>
                                         <Text style={styles.itemCardTitle}>{item.title}</Text>
@@ -193,6 +194,7 @@ class CheckOut extends React.Component {
                                     </View>
                                 </CardItem>
                             )}
+                            keyExtractor={(item, index) => index.toString()}
                         />
                         <View style={styles.hairStyles}/>
                         <View style={{ flexDirection: 'row'}}>
