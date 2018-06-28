@@ -62,17 +62,28 @@ class DetailTransaksi extends React.Component {
             imageSource: null,
             loading: false,
             gambar : false,
-            img : null
+            img : null,
+            status : this.props.navigation.state.params.status
         }
         this.data = [
-            {time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: this.props.navigation.state.params.status>=1 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
-            {time: '', title: 'Dibayar', description: 'Pesanan telah dibayar, kami akan segera mengirim produk segar kerumah anda', color: 'green', icon: this.props.navigation.state.params.status>=2 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
-            {time: '', title: 'Pending', description: 'Pembayaran sedang dikonfirmasi oleh sistem', color: 'green', icon: this.props.navigation.state.params.status>=2 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
-            {time: '', title: 'Pengiriman', description: 'Pesanan dalam proses pengiriman melalui jasa ekspedisi terbaik kerumah anda', color: 'red', icon: this.props.navigation.state.params.status>=3 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
-            {time: '', title: 'Selesai', description: 'Pesanan telah sampai, kami menanti pesanan anda selanjutnya.' , color: 'red', icon: this.props.navigation.state.params.status>=4 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: this.state.status>=1 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Dibayar', description: 'Pesanan telah dibayar, kami akan segera mengirim produk segar kerumah anda', color: 'green', icon: this.state.status>=2 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Pending', description: 'Pembayaran sedang dikonfirmasi oleh sistem', color: 'green', icon: this.state.status>=3 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Pengiriman', description: 'Pesanan dalam proses pengiriman melalui jasa ekspedisi terbaik kerumah anda', color: 'red', icon: this.state.status>=4 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Selesai', description: 'Pesanan telah sampai, kami menanti pesanan anda selanjutnya.' , color: 'red', icon: this.state.status>=5 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
         ]
         // console.error(this.props.navigation.state.params)
         this.fetchStuff()
+    }
+
+    panggilData(){
+        this.data = [
+            {time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: this.state.status>=1 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Dibayar', description: 'Pesanan telah dibayar, kami akan segera mengirim produk segar kerumah anda', color: 'green', icon: this.state.status>=2 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Pending', description: 'Pembayaran sedang dikonfirmasi oleh sistem', color: 'green', icon: this.state.status>=3 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Pengiriman', description: 'Pesanan dalam proses pengiriman melalui jasa ekspedisi terbaik kerumah anda', color: 'red', icon: this.state.status>=4 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+            {time: '', title: 'Selesai', description: 'Pesanan telah sampai, kami menanti pesanan anda selanjutnya.' , color: 'red', icon: this.state.status>=5 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
+        ]
     }
     selectPhoto() {
         ImagePicker.showImagePicker(options, (response) => {
@@ -112,50 +123,56 @@ class DetailTransaksi extends React.Component {
         RNFetchBlob.fetch('POST', 'http://yourganic.codepanda.web.id/api/transaction/update', {
             Accept: 'application/json',
             'Authorization' : 'Bearer ' + this.state.token,
-          // 'Content-Type': 'multipart/form-data',
+            'Content-Type': 'multipart/form-data',
         }, [
             { name: 'payment_proof', filename: 'image.jpg', type: 'image/png', data: RNFetchBlob.wrap(this.state.imageSource.uri) },
+            { name: 'id', data : JSON.stringify(this.props.navigation.state.params.id)},
           ]).then((resp) => {
             let dataku = JSON.parse(resp.data)
-            provider.storeItem('user-profile', dataku.data)
+            console.error(dataku)
+            this.setState({
+                status : dataku.data.status
+            })
+            this.panggilData()
+            // provider.storeItem('user-profile', dataku.data)
           }).catch((err) => {
             console.error(err)
           })
         }
     }
 
-    updateTransaction() {
-        this.setState({ loading: true })
-        this.uploadPhoto()
-        axios.post('/api/transaction/update', 
-        {
-            id: this.props.navigation.state.params.id,
-            //status: 'done',
-        },{
-            headers: {
-                Accept: 'application/json',
-                'Authorization' : 'Bearer ' + this.state.token
-            },
-        }).then(response => {
-            console.error(this.props.navigation.state.params.id)
-            if(response.data){
-                // console.error(response.data)
-                // this.storeItem('user-profile',response.data.data)
-                provider.storeItem('user-profile', response.data.data)
-                alert("Update Berhasil")
-                this.props.navigation.pop()
-              }
-            else{
-                alert("Login gagal, periksa email dan password anda")
-                this.setState({ loading: false })
-            }
-        }).catch( error => {
-            alert("Login Gagal, periksa email dan password anda")
-            this.setState({loading: false})
-            console.error(error)    
+    // updateTransaction() {
+    //     this.setState({ loading: true })
+    //     this.uploadPhoto()
+    //     axios.post('/api/transaction/update', 
+    //     {
+    //         id: this.props.navigation.state.params.id,
+    //         //status: 'done',
+    //     },{
+    //         headers: {
+    //             Accept: 'application/json',
+    //             'Authorization' : 'Bearer ' + this.state.token
+    //         },
+    //     }).then(response => {
+    //         // console.error(this.props.navigation.state.params.id)
+    //         if(response.data){
+    //             // console.error(response.data)
+    //             // this.storeItem('user-profile',response.data.data)
+    //             // provider.storeItem('user-profile', response.data.data)
+    //             alert("Upload bukti bayar berhasil, silahkan tunggu konfirmasi dari admin")
+    //             this.props.navigation.pop()
+    //           }
+    //         else{
+    //             alert("Login gagal, periksa email dan password anda")
+    //             this.setState({ loading: false })
+    //         }
+    //     }).catch( error => {
+    //         alert("Login Gagal, periksa email dan password anda")
+    //         this.setState({loading: false})
+    //         console.error(error)    
             
-        });
-    }
+    //     });
+    // }
 
     fetchStuff(){
         provider.getToken().then((value) => {
@@ -258,7 +275,7 @@ class DetailTransaksi extends React.Component {
                             <Icon name='camera' style={styles.uploadIcon} />}
                     </TouchableOpacity>
                     <View tyle={styles.confirmButtonSection}>
-                        <Button style={styles.confirmButton} onPress={() => this.updateTransaction()}>
+                        <Button style={styles.confirmButton} onPress={() => this.uploadPhoto()}>
                             <Text style={{ color: 'white', textAlign: 'center', width:"100%"}}>Konfirmasi</Text> 
                         </Button>
                     </View>
