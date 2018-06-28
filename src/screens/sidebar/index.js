@@ -12,6 +12,7 @@ import {
   Badge
 } from "native-base";
 import styles from "./style";
+import Provider from '../../provider/setup.js'
 
 const drawerCover = require("../../../assets/drawer-cover.png");
 const drawerImage = require("../../../assets/logo-kitchen-sink.png");
@@ -195,13 +196,14 @@ const datas = [
 class SideBar extends Component {
   constructor(props) {
     super(props);
-    this.fetchProfile()
+    provider = new Provider()
     this.state = {
       shadowOffsetWidth: 1,
       shadowRadius: 4,
       foto: 'drawerImage',
       nama : ''
     };
+    this.getProfile()
   }
 
   async fetchProfile(){
@@ -219,6 +221,25 @@ class SideBar extends Component {
     }
   }
 
+  getProfile(){
+    provider.fetchProfile().then((value)=>{
+      let parsed = JSON.parse(value)
+      if (value !== null) {
+        // We have data!!
+        this.setState({
+          id: parsed.id,
+          nama: parsed.name,
+          email: parsed.email,
+          hp: parsed.phone,
+          alamat: parsed.address,
+          imageSource: parsed.img
+        })
+      }
+    }).catch((error)=>{
+      console.error(error)
+    })
+  }
+
   render() {
     return (
       <Container>
@@ -227,7 +248,7 @@ class SideBar extends Component {
           style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
         >
           <Image source={drawerCover} style={styles.drawerCover} />
-          <Image square style={styles.drawerImage} source={{uri: 'http://yourganic.codepanda.web.id/items/3/NhHdm7dlnabeRF4LGTHWMJ8PSqgp4xpgKR5b3c8q.jpeg' }} />
+          <Image square style={styles.drawerImage} source={{uri: 'http://yourganic.codepanda.web.id/'+ this.state.imageSource }} />
           <Text style={styles.nama}>{this.state.nama}</Text>
 
           <List
