@@ -23,7 +23,11 @@ class ItemBanner extends Component {
                             <Text style={Styles.cardNameBottom}>No. {item.item.code}</Text>
                         </View >
                         <View style={Styles.cardTrack}>
-                            <Text style={Styles.cardTrackTop}>Pembayaran</Text>
+                            {item.item.status == 1 ? <Text style={Styles.cardTrackTop}>Check-Out</Text> : 
+                             item.item.status == 2 ? <Text style={Styles.cardTrackTop}>Dibayar</Text> :
+                             item.item.status == 3 ? <Text style={Styles.cardTrackTop}>Pending</Text> : 
+                             item.item.status == 4 ? <Text style={Styles.cardTrackTop}>Pengiriman</Text> :
+                             <Text style={Styles.cardTrackTop}>Selesai</Text>}
                             <Text style={Styles.cardTrackBottom}>Rp. {item.item.total}</Text>
                         </View>
                     </Card>
