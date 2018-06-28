@@ -63,7 +63,8 @@ class DetailTransaksi extends React.Component {
             loading: false,
             gambar : false,
             img : null,
-            status : this.props.navigation.state.params.status
+            status : this.props.navigation.state.params.status,
+            test_status : 4,
         }
         this.data = [
             {time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: this.state.status>=1 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png' )},
@@ -134,6 +135,17 @@ class DetailTransaksi extends React.Component {
                 status : dataku.data.status
             })
             this.panggilData()
+            if(dataku){
+                // console.error(response.data)
+                // this.storeItem('user-profile',response.data.data)
+                // provider.storeItem('user-profile', response.data.data)
+                alert("Upload bukti bayar berhasil, silahkan tunggu konfirmasi dari admin")
+                this.props.navigation.pop()
+              }
+            else{
+                alert("Login gagal, periksa email dan password anda")
+                this.setState({ loading: false })
+            }
             // provider.storeItem('user-profile', dataku.data)
           }).catch((err) => {
             console.error(err)
@@ -141,38 +153,37 @@ class DetailTransaksi extends React.Component {
         }
     }
 
-    // updateTransaction() {
-    //     this.setState({ loading: true })
-    //     this.uploadPhoto()
-    //     axios.post('/api/transaction/update', 
-    //     {
-    //         id: this.props.navigation.state.params.id,
-    //         //status: 'done',
-    //     },{
-    //         headers: {
-    //             Accept: 'application/json',
-    //             'Authorization' : 'Bearer ' + this.state.token
-    //         },
-    //     }).then(response => {
-    //         // console.error(this.props.navigation.state.params.id)
-    //         if(response.data){
-    //             // console.error(response.data)
-    //             // this.storeItem('user-profile',response.data.data)
-    //             // provider.storeItem('user-profile', response.data.data)
-    //             alert("Upload bukti bayar berhasil, silahkan tunggu konfirmasi dari admin")
-    //             this.props.navigation.pop()
-    //           }
-    //         else{
-    //             alert("Login gagal, periksa email dan password anda")
-    //             this.setState({ loading: false })
-    //         }
-    //     }).catch( error => {
-    //         alert("Login Gagal, periksa email dan password anda")
-    //         this.setState({loading: false})
-    //         console.error(error)    
+    updateTransaction() {
+        this.setState({ loading: true })
+        axios.post('/api/transaction/update', 
+        {
+            id: this.props.navigation.state.params.id,
+            status: 'done',
+        },{
+            headers: {
+                Accept: 'application/json',
+                'Authorization' : 'Bearer ' + this.state.token
+            },
+        }).then(response => {
+            // console.error(this.props.navigation.state.params.id)
+            if(response.data){
+                // console.error(response.data)
+                // this.storeItem('user-profile',response.data.data)
+                // provider.storeItem('user-profile', response.data.data)
+                alert("Upload bukti bayar berhasil, silahkan tunggu konfirmasi dari admin")
+                this.props.navigation.pop()
+              }
+            else{
+                alert("Login gagal, periksa email dan password anda")
+                this.setState({ loading: false })
+            }
+        }).catch( error => {
+            alert("Login Gagal, periksa email dan password anda")
+            this.setState({loading: false})
+            console.error(error)    
             
-    //     });
-    // }
+        });
+    }
 
     fetchStuff(){
         provider.getToken().then((value) => {
@@ -259,31 +270,40 @@ class DetailTransaksi extends React.Component {
                     </Card>
                     {this.props.navigation.state.params.status==1 ? 
                     <Card>
-                    <Text style={styles.trackHeader}>Unggah Bukti Bayar</Text>
-                    <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
-                        {this.state.imageSource !== null ?
-                            <Image
-                                square
-                                style={{
-                                    height: 200,
-                                    width: 200,
-                                    alignSelf: "center",
-                                    top: 20,
-                                }}
-                                source={this.state.imageSource} />
-                            :
-                            <Icon name='camera' style={styles.uploadIcon} />}
-                    </TouchableOpacity>
-                    <View tyle={styles.confirmButtonSection}>
-                        <Button style={styles.confirmButton} onPress={() => this.uploadPhoto()}>
-                            <Text style={{ color: 'white', textAlign: 'center', width:"100%"}}>Konfirmasi</Text> 
-                        </Button>
-                    </View>
-                </Card>
+                        <Text style={styles.trackHeader}>Unggah Bukti Bayar</Text>
+                        <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
+                            {this.state.imageSource !== null ?
+                                <Image
+                                    square
+                                    style={{
+                                        height: 200,
+                                        width: 200,
+                                        alignSelf: "center",
+                                        top: 20,
+                                    }}
+                                    source={this.state.imageSource} />
+                                :
+                                <Icon name='camera' style={styles.uploadIcon} />}
+                        </TouchableOpacity> 
+                        <View tyle={styles.confirmButtonSection}>
+                            <Button style={styles.confirmButton} onPress={() => this.uploadPhoto()}>
+                                <Text style={{ color: 'white', textAlign: 'center', width:"100%"}}>Konfirmasi</Text> 
+                            </Button>
+                        </View>
+                    </Card>
                     :
                 <View /> 
                     }
                 </Content>
+                { this.props.navigation.state.params.status != 4 ? 
+                <View />
+                :  
+                <Footer style={styles.footer}>
+                    <Button style={styles.doneButton} onPress={() => this.updateTransaction()}>
+                        <Text style={styles.doneButtonWord}>Barang Sudah Sampai</Text>
+                    </Button>
+                </Footer>
+                }
             </Container>
         );
 

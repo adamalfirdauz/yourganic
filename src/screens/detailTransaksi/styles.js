@@ -41,7 +41,17 @@ const styles = StyleSheet.create({
     confirmButtonSection: {
         width:"100%",
         paddingBottom: 20,
-     }
+    },
+    doneButton: {
+        height : 60,
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: '#007300',
+        justifyContent: 'center',
+    },
+    doneButtonWord: {
+        fontSize: 17,
+        fontWeight: 'bold'
+    },
 
 });
 

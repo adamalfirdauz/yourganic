@@ -124,7 +124,11 @@ export default class Transaksi extends React.Component {
                     <Body>
                         <Title>Transaksi</Title>
                     </Body>
-                    <Right />
+                    <Right>
+                        <Button transparent>
+                            <Icon name="refresh" onPress={() => this.fetchStuff()}/>
+                        </Button>
+                    </Right>
                 </Header>
                 
                     <View style={{ flex: 1 }}>
