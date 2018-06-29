@@ -101,6 +101,13 @@ export default class Transaksi extends React.Component {
         this.props.navigation.push(page)
     }
 
+    _refresh() {
+        this.fetchStuff
+        return new Promise((resolve) => {
+          setTimeout(()=>{resolve()}, 2000)
+        });
+      }
+
 
 
     render() {
@@ -126,6 +133,7 @@ export default class Transaksi extends React.Component {
                     </Right>
                 </Header>
 
+                <PTRView onRefresh={this._refresh} >
                 <View style={{ flex: 1 }}>
                     <Content>
                         {/* <TouchableOpacity onPress = {()=> this.anotherPage('DetailTransaksi')}> */}
@@ -133,6 +141,7 @@ export default class Transaksi extends React.Component {
                         {/* </TouchableOpacity> */}
                     </Content>
                 </View>
+                </PTRView>
                 {this.state.loading ?
                     <View style={{ paddingTop: 250, alignSelf: 'center', justifyContent: 'center', position: 'absolute' }}>
                         <ActivityIndicator size="large" />
