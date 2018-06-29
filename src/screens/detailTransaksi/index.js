@@ -79,6 +79,7 @@ class DetailTransaksi extends React.Component {
     }
 
     panggilData() {
+        this.setState({status :2})
         this.setState({
             datas : [
                 { time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: this.state.status >= 1 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png') },
@@ -133,9 +134,9 @@ class DetailTransaksi extends React.Component {
                     { name: 'id', data: JSON.stringify(this.props.navigation.state.params.id) },
                 ]).then((resp) => {
                     let dataku = JSON.parse(resp.data)
-                    this.setState({
-                        status: dataku.data.status
-                    })
+                    // this.setState({
+                    //     status: dataku.data.status
+                    // })
                     this.panggilData()
                     if (dataku) {
                         this.setState({ loading: false })

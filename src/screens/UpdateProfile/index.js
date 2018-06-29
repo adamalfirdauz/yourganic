@@ -60,24 +60,24 @@ export default class UpdateProfile extends React.Component {
     token: '',
     imageSource: null,
     loading: false,
-    gambar : false,
-    img : null
+    gambar: false,
+    img: null
   }
 
-  getToken(){
+  getToken() {
     provider.getToken().then((value) => {
       //this callback is executed when your Promise is resolved
       let parsed = JSON.parse(value)
       this.setState({
-        token : parsed
+        token: parsed
       })
-  }).catch((error) => {
+    }).catch((error) => {
       console.log('Terjadi kesalahan : ' + error);
-  });
+    });
   }
 
-  getProfile(){
-    provider.fetchProfile().then((value)=>{
+  getProfile() {
+    provider.fetchProfile().then((value) => {
       let parsed = JSON.parse(value)
       if (value !== null) {
         // We have data!!
@@ -87,14 +87,14 @@ export default class UpdateProfile extends React.Component {
           email: parsed.email,
           hp: parsed.phone,
           alamat: parsed.address,
-          imageSource : parsed.img,
+          imageSource: parsed.img,
         })
       }
-    }).catch((error)=>{
+    }).catch((error) => {
       console.error(error)
     })
   }
-  
+
   selectPhoto() {
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
@@ -106,7 +106,7 @@ export default class UpdateProfile extends React.Component {
       }
       else {
         let source = { uri: response.uri }
-        this.setState({ imageSource: source , gambar : true })
+        this.setState({ imageSource: source, gambar: true })
         // console.error(gambar.uri)
       }
     })
@@ -116,53 +116,58 @@ export default class UpdateProfile extends React.Component {
     this.setState({ loading: true })
     this.uploadPhoto()
     axios.post('/api/profile/update',
-    {
+      {
         name: this.state.nama,
         phone: this.state.hp,
         address: this.state.alamat
-    },{
+      }, {
         headers: {
-            Accept: 'application/json',
-            'Authorization' : 'Bearer ' + this.state.token
+          Accept: 'application/json',
+          'Authorization': 'Bearer ' + this.state.token
         },
-    }).then(response => {
-        if(response.data){
-            // console.error(response.data)
-            // this.storeItem('user-profile',response.data.data)
-            provider.storeItem('user-profile', response.data.data)
-            alert("Update Berhasil")
-            this.props.navigation.pop()
-          }
-        else{
-            alert("Login gagal, periksa email dan password anda")
-            this.setState({ loading: false })
+      }).then(response => {
+        if (response.data) {
+          // console.error(response.data)
+          // this.storeItem('user-profile',response.data.data)
+          provider.storeItem('user-profile', response.data.data)
+          alert("Update Berhasil")
+          this.back()
         }
-    }).catch( error => {
+        else {
+          alert("Login gagal, periksa email dan password anda")
+          this.setState({ loading: false })
+        }
+      }).catch(error => {
         alert("Login Gagal, periksa email dan password anda")
-        this.setState({loading: false})
-        console.error(error)    
-        
-    });
-}
+        this.setState({ loading: false })
+        console.error(error)
 
-uploadPhoto() {
-  if(this.state.gambar){
-  this.setState({
-    loading: true
-  })
-  RNFetchBlob.fetch('POST', 'http://yourganic.codepanda.web.id/api/profile/update', {
-    'Authorization' : 'Bearer ' + this.state.token,
-    // 'Content-Type': 'multipart/form-data',
-  }, [
-      { name: 'img', filename: 'image.jpg', type: 'image/png', data: RNFetchBlob.wrap(this.state.imageSource.uri) },
-    ]).then((resp) => {
-      let dataku = JSON.parse(resp.data)
-      provider.storeItem('user-profile', dataku.data)
-    }).catch((err) => {
-      console.error(err)
-    })
+      });
   }
-}
+
+  back() {
+    this.props.navigation.state.params.onSelect
+    this.props.navigation.goBack()
+  }
+
+  uploadPhoto() {
+    if (this.state.gambar) {
+      this.setState({
+        loading: true
+      })
+      RNFetchBlob.fetch('POST', 'http://yourganic.codepanda.web.id/api/profile/update', {
+        'Authorization': 'Bearer ' + this.state.token,
+        // 'Content-Type': 'multipart/form-data',
+      }, [
+          { name: 'img', filename: 'image.jpg', type: 'image/png', data: RNFetchBlob.wrap(this.state.imageSource.uri) },
+        ]).then((resp) => {
+          let dataku = JSON.parse(resp.data)
+          provider.storeItem('user-profile', dataku.data)
+        }).catch((err) => {
+          console.error(err)
+        })
+    }
+  }
 
   render() {
     return (
@@ -171,7 +176,7 @@ uploadPhoto() {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.goBack()
+              onPress={() => this.back()
               }
             >
               <Icon name="ios-arrow-back" />
@@ -184,29 +189,29 @@ uploadPhoto() {
         </Header>
         <View style={{ flex: 1 }}>
           <Content>
-          { this.state.loading ?
-          <View style={{paddingTop:250 ,alignSelf: 'center',justifyContent: 'center', position: 'absolute'}}>
-                    <ActivityIndicator size="large"/>
-          </View>
-          :
-          <View />
-          }
+            {this.state.loading ?
+              <View style={{ paddingTop: 250, alignSelf: 'center', justifyContent: 'center', position: 'absolute' }}>
+                <ActivityIndicator size="large" />
+              </View>
+              :
+              <View />
+            }
             <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
-              {this.state.imageSource !== null ?  
+              {this.state.imageSource !== null ?
                 <Image
-                square
-                style={{
-                  height: 120,
-                  width: 110,
-                  alignSelf: "center",
-                  top: 20,
-                  borderRadius: 100
-                }}
-                source={!this.state.gambar ? {uri : "http://yourganic.codepanda.web.id/"+ this.state.imageSource} : this.state.imageSource } /> 
+                  square
+                  style={{
+                    height: 120,
+                    width: 110,
+                    alignSelf: "center",
+                    top: 20,
+                    borderRadius: 100
+                  }}
+                  source={!this.state.gambar ? { uri: "http://yourganic.codepanda.web.id/" + this.state.imageSource } : this.state.imageSource} />
                 :
-              <Icon name='person' style={{ fontSize: 120, alignSelf: 'center', paddingTop: 20, }} />}
+                <Icon name='person' style={{ fontSize: 120, alignSelf: 'center', paddingTop: 20, }} />}
             </TouchableOpacity>
-            <Input onChangeText={(nama) => this.setState( {nama} )} style={styles.nama}>{this.state.nama}</Input>
+            <Input onChangeText={(nama) => this.setState({ nama })} style={styles.nama}>{this.state.nama}</Input>
             <View style={styles.hairStyle} />
             <View style={styles.row}>
               <Icon name="mail" style={styles.emailIcon} />

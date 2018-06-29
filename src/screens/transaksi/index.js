@@ -30,6 +30,8 @@ import {
 import styles from './styles.js';
 import { NavigationActions } from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
+import PTRView from 'react-native-pull-to-refresh';
+
 
 import TrackCard from '../../theme/components/TrackCard';
 import Provider from '../../provider/setup.js'
@@ -41,52 +43,52 @@ export default class Transaksi extends React.Component {
         super(props)
         provider = new Provider()
         this.state = {
-                token :null,
-                data : [],
-                buah: [require('../../../assets/image/card/fruit/banana.jpg')],
-                loading : true
-            }
-    // this.getToken()
-    this.fetchStuff()
+            token: null,
+            data: [],
+            buah: [require('../../../assets/image/card/fruit/banana.jpg')],
+            loading: true
+        }
+        // this.getToken()
+        this.fetchStuff()
     }
 
-    getToken(){
-      }
+    getToken() {
+    }
 
-    fetchStuff(){
+    fetchStuff() {
         provider.getToken().then((value) => {
             //this callback is executed when your Promise is resolved
-            this.setState({loading :true})
+            this.setState({ loading: true })
             let parsed = JSON.parse(value)
             this.setState({
-              token : parsed
+                token: parsed
             })
-            axios.get('/api/transaction/getAll',{
+            axios.get('/api/transaction/getAll', {
                 headers: {
                     Accept: 'application/json',
-                    'Authorization' : 'Bearer ' + parsed
+                    'Authorization': 'Bearer ' + parsed
                 },
             }).then(response => {
-                if(response.data.data){
+                if (response.data.data) {
                     // console.error(response.data.data)
                     // this.setState({barang : response.data.data})
                     // console.error(this.state.barang)
                     // console.error(this.state.barang)
                     this.setState({
-                        data : response.data,
+                        data: response.data,
                         loading: false
                     })
-                    }
-                else{
+                }
+                else {
                     alert("Koneksi gagal, muat ulang halaman ini")
                     this.setState({ loading: false })
 
                 }
-            }).catch( error => {
+            }).catch(error => {
                 alert("Koneksi gagal, muat ulang halaman ini")
                 // this.setState({loading: false})
-                console.error(error)    
-                
+                console.error(error)
+
             });
         }).catch((error) => {
             console.log('Terjadi kesalahan : ' + error);
@@ -94,23 +96,16 @@ export default class Transaksi extends React.Component {
         });
     }
 
-    anotherPage(page){
+    anotherPage(page) {
         // this.storeItem('Barang'+0, this.state.barang)
-        this.props.navigation.push(page) 
+        this.props.navigation.push(page)
     }
 
-    
+
 
     render() {
         return (
             <Container style={{ backgroundColor: 'white' }}>
-                { this.state.loading ?
-                <View style={{paddingTop:250 ,alignSelf: 'center',justifyContent: 'center', position: 'absolute'}}>
-                    <ActivityIndicator size="large"/>
-                </View>
-                :
-                <View />
-                }
                 <Header style={styles.headerStyle} androidStatusBarColor='#004600'>
                     <StatusBar barStyle="light-content" />
                     <Left>
@@ -126,18 +121,25 @@ export default class Transaksi extends React.Component {
                     </Body>
                     <Right>
                         <Button transparent>
-                            <Icon name="refresh" onPress={() => this.fetchStuff()}/>
+                            <Icon name="refresh" onPress={() => this.fetchStuff()} />
                         </Button>
                     </Right>
                 </Header>
-                
-                    <View style={{ flex: 1 }}>
-                        <Content>
-                            {/* <TouchableOpacity onPress = {()=> this.anotherPage('DetailTransaksi')}> */}
-                                <TrackCard style={styles.TrackCard} data={this.state.data} navigation={this.props.navigation}/>
-                            {/* </TouchableOpacity> */}
-                        </Content>
+
+                <View style={{ flex: 1 }}>
+                    <Content>
+                        {/* <TouchableOpacity onPress = {()=> this.anotherPage('DetailTransaksi')}> */}
+                        <TrackCard style={styles.TrackCard} data={this.state.data} navigation={this.props.navigation} />
+                        {/* </TouchableOpacity> */}
+                    </Content>
+                </View>
+                {this.state.loading ?
+                    <View style={{ paddingTop: 250, alignSelf: 'center', justifyContent: 'center', position: 'absolute' }}>
+                        <ActivityIndicator size="large" />
                     </View>
+                    :
+                    <View />
+                }
             </Container>
         );
     }
