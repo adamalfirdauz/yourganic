@@ -82,10 +82,10 @@ class KonfirmasiPembayaran extends React.Component {
                             <Title>Pembayaran</Title>
                         </Body>
                         <Right>
-                            <Button transparent>
+                            {/* <Button transparent> */}
                                 {/* <Icon name="cart" onPress={() => this.props.navigation.push('CheckOut', this.props.navigation.state.params.data)}/> */}
-                                <Icon name="cart" onPress={() => this.checkOut()}/>
-                            </Button>
+                                {/* <Icon name="cart" onPress={() => this.checkOut()}/> */}
+                            {/* </Button> */}
                         </Right>
                     </Header>
 

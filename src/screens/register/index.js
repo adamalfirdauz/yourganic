@@ -56,30 +56,31 @@ class Register extends React.Component {
     registerAPI() {
         this.setState({ loading: true })
         axios.post('/api/register',
-        {
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password,
-            c_password: this.state.retype,
-            phone: this.state.phone,
-            address: this.state.address,
-        },{
-            headers: {
-                Accept: 'application/json',
-                'Content-type': 'application/json'
-            },
-        }).then(response => {
-            // console.error(response)
-            try {
-                this.storeItem('user-profile', response.data.data)
-                this.storeItem('access-token', response.data.meta.token)
-            } catch (error) {
+            {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password,
+                c_password: this.state.retype,
+                phone: this.state.phone,
+                address: this.state.address,
+            }, {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-type': 'application/json'
+                },
+            }).then(response => {
+                // console.error(response)
+                try {
+                    this.storeItem('user-profile', response.data.data)
+                    this.storeItem('access-token', response.data.meta.token)
+                    alert('Pendaftaran Berhasil !!')
+                } catch (error) {
+                    console.error(error);
+                }
+                this.homeNavigate()
+            }).catch(error => {
                 console.error(error);
-            }
-            this.homeNavigate()
-        }).catch( error => {
-            console.error(error);
-        });
+            });
     }
     homeNavigate() {
         const resetActionHome = NavigationActions.reset({
@@ -92,7 +93,7 @@ class Register extends React.Component {
         });
         this.props.navigation.dispatch(resetActionHome);
     }
-    loginNavigate(){
+    loginNavigate() {
         this.props.navigation.navigate('Login')
     }
     render() {
@@ -102,13 +103,19 @@ class Register extends React.Component {
                     backgroundColor="#004600"
                     barStyle="light-content"
                 />
+                <ScrollView style={{ flex: 2, alignSelf: 'stretch', flexDirection: 'column' }}>
                 <View style={{ flex: 1, alignSelf: 'center' }}>
                     <Image source={logo} style={styles.logo} />
                 </View>
                 <View style={{ flex: 2, alignSelf: 'stretch', flexDirection: 'column' }}>
-                    <KeyboardAvoidingView style={{ flex: 2 }}>
+                        {this.state.loading ?
+                            <View style={{ paddingTop:150, alignSelf: 'center', justifyContent: 'center', position: 'absolute' }}>
+                                <ActivityIndicator size="large" />
+                            </View>
+                            :
+                            <View />
+                        }
                         <View style={{ flex: 3, paddingHorizontal: 20 }}>
-                            <ActivityIndicator style={styles.loading} size="large" animating={this.state.loading} />
                             <Item floatingLabel>
                                 <Label style={styles.title}>Nama</Label>
                                 <Input style={styles.input}
@@ -162,8 +169,8 @@ class Register extends React.Component {
                                 <Text style={{ color: 'white', alignSelf: 'center' }}> Already have an account? Login here.</Text>
                             </TouchableOpacity>
                         </View>
-                    </KeyboardAvoidingView>
                 </View>
+                </ScrollView>
             </Container>
         );
     }

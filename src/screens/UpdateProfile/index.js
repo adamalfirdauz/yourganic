@@ -81,14 +81,27 @@ export default class UpdateProfile extends React.Component {
       let parsed = JSON.parse(value)
       if (value !== null) {
         // We have data!!
-        this.setState({
-          id: parsed.id,
-          nama: parsed.name,
-          email: parsed.email,
-          hp: parsed.phone,
-          alamat: parsed.address,
-          imageSource: parsed.img,
-        })
+        if(parsed.img == 'storage/'){
+          this.setState({
+            id: parsed.id,
+            nama: parsed.name,
+            email: parsed.email,
+            hp: parsed.phone,
+            alamat: parsed.address,
+            imageSource: null,
+          })
+        }
+        else{
+          this.setState({
+            id: parsed.id,
+            nama: parsed.name,
+            email: parsed.email,
+            hp: parsed.phone,
+            alamat: parsed.address,
+            imageSource: parsed.img,
+          })
+        }
+        
       }
     }).catch((error) => {
       console.error(error)

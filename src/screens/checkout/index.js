@@ -11,7 +11,8 @@ import {
     FlatList,
     TouchableOpacity,
     Picker,
-    Alert
+    Alert,
+    ActivityIndicator
 } from "react-native";
 import {
     Button,
@@ -26,7 +27,7 @@ import {
     Left,
     Icon,
     Right,
-    Footer, 
+    Footer,
     Input
 } from "native-base";
 import {
@@ -46,47 +47,47 @@ class CheckOut extends React.Component {
         super(props)
         this.state = {
             barang: [],
-            isReady :false,
-            checkOut : [],
-            jumlah : 0,
-            sum : 0,
+            isReady: false,
+            checkOut: [],
+            jumlah: 0,
+            sum: 0,
             panjang: 0,
-            total : 0,
-            image : 'http://yourganic.codepanda.web.id/',
-            loading : false,
-            token : null
-           }
-           this.fetchData()
-           this.retrieveToken()
+            total: 0,
+            image: 'http://yourganic.codepanda.web.id/',
+            loading: false,
+            token: null
+        }
+        this.fetchData()
+        this.retrieveToken()
     }
 
     async retrieveItem() {
-        const items  = []
+        const items = []
         var total = 0
         var j = 0
-        for(var i = 0; i < 15; i++){
+        for (var i = 0; i < 15; i++) {
             try {
-                const retrievedItem = await AsyncStorage.getItem('Barang'+i);
-                if(retrievedItem != null){
+                const retrievedItem = await AsyncStorage.getItem('Barang' + i);
+                if (retrievedItem != null) {
                     items[j] = JSON.parse(retrievedItem)
-                    total = total + (parseInt(items[j].price)*parseInt(items[j].jumlah))
-                    j = j +1
+                    total = total + (parseInt(items[j].price) * parseInt(items[j].jumlah))
+                    j = j + 1
                 }
             } catch (error) {
                 console.log(error.message);
             }
         }
-        this.setState({total : total})
+        this.setState({ total: total })
         return items
     }
 
-    fetchData(){
+    fetchData() {
         this.retrieveItem().then((parsed) => {
             //this callback is executed when your Promise is resolved
             this.setState({
-                barang : parsed,
-                isReady : true,
-                panjang : parsed.length
+                barang: parsed,
+                isReady: true,
+                panjang: parsed.length
             })
         }).catch((error) => {
             console.log('Terjadi kesalahan : ' + error);
@@ -102,95 +103,95 @@ class CheckOut extends React.Component {
         }
     }
 
-    remove(index){
-        try{
-            var jsonOfItem =  AsyncStorage.removeItem('Barang'+index)
+    remove(index) {
+        try {
+            var jsonOfItem = AsyncStorage.removeItem('Barang' + index)
             this.fetchData()
             return jsonOfItem
-            
-        }catch (error){
+
+        } catch (error) {
             console.log(error.message)
         }
         this.setState({ barang });
     }
-    
 
 
-    jumlah({jumlah, index}){
+
+    jumlah({ jumlah, index }) {
         let { barang } = this.state;
         let targetPost = barang[index]
-    
+
         // Flip the 'liked' property of the targetPost
         targetPost.jumlah = jumlah
-    
+
         // Then update targetPost in 'posts'
         // You probably don't need the following line.
-         barang[index] = targetPost
-    
+        barang[index] = targetPost
+
         // Then reset the 'state.posts' property
         this.setState({ barang })
         this.fetchData()
         // console.error(this.state.barang[index])
-        this.storeItem('Barang'+this.state.barang[index].id, this.state.barang[index])
+        this.storeItem('Barang' + this.state.barang[index].id, this.state.barang[index])
     }
 
-   async retrieveToken(){
+    async retrieveToken() {
         const tokens = await AsyncStorage.getItem('access-token');
-        if(tokens){
+        if (tokens) {
             this.setState({
-                token : JSON.parse(tokens)
+                token: JSON.parse(tokens)
             })
         }
     }
 
-    checkOut(){
+    checkOut() {
         this.setState({ loading: true })
         const checkOuts = []
         var hasil = null
 
-        if(this.state.barang.length != 0){
-            for(var i = 0 ; i< this.state.barang.length; i++){
+        if (this.state.barang.length != 0) {
+            for (var i = 0; i < this.state.barang.length; i++) {
                 let checkOut = {
-                    item_id : this.state.barang[i].id,
-                    qty : this.state.barang[i].jumlah,
-                    msg : "Testing kuy"
+                    item_id: this.state.barang[i].id,
+                    qty: this.state.barang[i].jumlah,
+                    msg: "Testing kuy"
                 }
                 checkOuts.push(checkOut)
             }
-            axios.post('/api/transaction/create', checkOuts ,{
+            axios.post('/api/transaction/create', checkOuts, {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization' : 'Bearer ' + this.state.token  
+                    'Authorization': 'Bearer ' + this.state.token
                 },
             }).then(response => {
-                if(response.data){
+                if (response.data) {
                     // console.error(response.data)
                     // this.storeItem('user-profile',response.data.data)
                     // alert("Update Berhasil")
                     // this.props.navigation.pop()
                     // console.error(response.data)
                     // console.error(response.data.data[0].code)
-                    for(var i = 0; i<15; i++){
-                        AsyncStorage.removeItem('Barang'+i)
+                    for (var i = 0; i < 15; i++) {
+                        AsyncStorage.removeItem('Barang' + i)
                     }
                     this.props.navigation.push("KonfirmasiPembayaran", response.data.data[0])
                 }
-                else{
+                else {
                     alert("Pembelian Gagal Periksa Koneksi anda")
                     this.setState({ loading: false })
                 }
-            }).catch( error => {
+            }).catch(error => {
                 alert("Login Gagal, periksa email dan password anda")
-                this.setState({loading: false})
-                console.error(error)    
+                this.setState({ loading: false })
+                console.error(error)
             });
         }
-        else{
+        else {
             alert("Cart Kosong, silahkan beli barang terlebih dahulu")
         }
-     }
-    
+    }
+
     render() {
         return (
             <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
@@ -211,7 +212,7 @@ class CheckOut extends React.Component {
                     </Header>
                 </View>
                 <Content style={styles.content}>
-                    <Card style={{padding:0, margin:0}}>
+                    <Card style={{ padding: 0, margin: 0 }}>
                         <Text style={styles.shoppingBag}>
                             YOUR SHOPPING BAG
                         </Text>
@@ -219,26 +220,26 @@ class CheckOut extends React.Component {
                             Review {this.state.panjang} items Rp{this.state.total}
                         </Text>
                         <FlatList
-                            data={ this.state.barang }
+                            data={this.state.barang}
                             renderItem={({ item, index }) => (
                                 <CardItem transparent>
                                     <Image style={styles.itemCardImage}
-                                        source={{uri : this.state.image + item.img}}
+                                        source={{ uri: this.state.image + item.img }}
                                     />
                                     <View style={{ flexDirection: 'column', }}>
                                         <Text style={styles.itemCardTitle}>{item.title}</Text>
                                         <Text style={styles.itemCardPrice}>Rp {item.price}</Text>
                                     </View>
-                                    <View style={{ flex: 1, flexDirection: 'row', position: 'absolute', marginLeft: 280}}>
+                                    <View style={{ flex: 1, flexDirection: 'row', position: 'absolute', marginLeft: 280 }}>
                                         <Input
-                                            style={{flex: 0.5, margin: 7, paddingBottom: 3, borderBottomWidth: 0.7}}
+                                            style={{ flex: 0.5, margin: 7, paddingBottom: 3, borderBottomWidth: 0.7 }}
                                             keyboardType={"numeric"}
                                             maxLength={1}
                                             onChangeText={(jumlah) => this.jumlah({ jumlah, index })}>
                                             {item.jumlah}
-                                        </Input>   
-                                        <TouchableOpacity onPress={() => this.remove( item.id )}>    
-                                            <Icon name='close' style={{flex: 0.5, textAlignVertical: 'center'}} />
+                                        </Input>
+                                        <TouchableOpacity onPress={() => this.remove(item.id)}>
+                                            <Icon name='close' style={{ flex: 0.5, textAlignVertical: 'center' }} />
                                         </TouchableOpacity>
                                         {/* <Picker
                                             selectedValue={this.state.sum}
@@ -259,34 +260,41 @@ class CheckOut extends React.Component {
                             )}
                             keyExtractor={(item, index) => index.toString()}
                         />
-                        <View style={styles.hairStyles}/>
-                        <View style={{ flexDirection: 'row'}}>
+                        <View style={styles.hairStyles} />
+                        <View style={{ flexDirection: 'row' }}>
                             <Text style={styles.shipping} >Shipping</Text>
                             <Text style={styles.priceShipping} >FREE</Text>
                         </View>
-                        <View style={{ flexDirection: 'row'}}>
+                        <View style={{ flexDirection: 'row' }}>
                             <Text style={styles.shipping} >SubTotal</Text>
                             <Text style={styles.priceShipping} >Rp{this.state.total}</Text>
                         </View>
-                        <View style={{ flexDirection: 'row'}}>
+                        <View style={{ flexDirection: 'row' }}>
                             <Text style={styles.shipping} >Total</Text>
                             <Text style={styles.priceTotal} >Rp{this.state.total}</Text>
                         </View>
-                        <View style={styles.hairStyles}/>
-                        <View style={{ flexDirection: 'row'}}>
-                            <TouchableOpacity onPress = {() => this.props.navigation.push('Home')}>
-                                <View style={{ flexDirection: 'row'}}>
-                                    <Icon name="arrow-dropleft" style={{marginLeft: 10, fontSize: 24, marginTop:10, color:'#636568'}}/>
-                                    <Text style={{marginLeft: 10, marginTop: 10, color:'#636568'}}>Continue Shipping</Text>
+                        <View style={styles.hairStyles} />
+                        <View style={{ flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.push('Home')}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Icon name="arrow-dropleft" style={{ marginLeft: 10, fontSize: 24, marginTop: 10, color: '#636568' }} />
+                                    <Text style={{ marginLeft: 10, marginTop: 10, color: '#636568' }}>Continue Shipping</Text>
                                 </View>
                             </TouchableOpacity>
                             {/* <Button onPress={() => this.props.navigation.push('KonfirmasiPembayaran')} transparent style={{borderRadius:80, borderColor:'white', borderWidth:2,  marginLeft: 80, marginBottom: 10, backgroundColor: '#007300'}}>
                                 <Text style={{ color: 'white'}}>CHECKOUT</Text> 
                             </Button> */}
-                                <Button onPress={() => this.checkOut()} transparent style={{borderRadius:80, borderColor:'white', borderWidth:2,  marginLeft: 80, marginBottom: 10, backgroundColor: '#007300'}}>
-                                <Text style={{ color: 'white'}}>CHECKOUT</Text> 
+                            <Button onPress={() => this.checkOut()} transparent style={{ borderRadius: 80, borderColor: 'white', borderWidth: 2, marginLeft: 80, marginBottom: 10, backgroundColor: '#007300' }}>
+                                <Text style={{ color: 'white' }}>CHECKOUT</Text>
                             </Button>
                         </View>
+                        {this.state.loading ?
+                        <View style={{ paddingTop: 250, alignSelf: 'center', justifyContent: 'center', position: 'absolute' }}>
+                            <ActivityIndicator size="large" />
+                        </View>
+                        :
+                        <View />
+                    }
                     </Card>
                 </Content>
             </Container>
