@@ -125,7 +125,7 @@ export default class Profile extends React.Component {
 
     editProfile() {
         // this.props.navigation.navigate('editProfile', 'onGoBack : () => this.getProfile()')
-        this.props.navigation.navigate('editProfile', {name: 'from parent', onSelect: this.getProfile});
+        this.props.navigation.navigate('editProfile', {name: 'from parent', onSelect: this.getProfile.bind(this)});
     }
 
     selectPhoto() {

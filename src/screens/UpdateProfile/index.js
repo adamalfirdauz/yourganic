@@ -146,8 +146,8 @@ export default class UpdateProfile extends React.Component {
   }
 
   back() {
-    this.props.navigation.state.params.onSelect
     this.props.navigation.goBack()
+    this.props.navigation.state.params.onSelect()
   }
 
   uploadPhoto() {
