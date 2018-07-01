@@ -42,48 +42,11 @@ class ItemsPage extends Component {
                 <FlatList
                     showsHorizontalScrollIndicator={false}
                     numColumns={2}
-                    data={[
-                        {
-                            title: "Strawberry",
-                            price: "10.000",
-                            unit: "250 gr",
-                            key: 'strawberry',
-                            image: require('../../../assets/image/card/fruit/strawberry.jpg'),
-                        }, {
-                            title: "Banana",
-                            price: "15.000",
-                            unit: "500 gr",
-                            key: 'banana',
-                            image: require('../../../assets/image/card/fruit/banana.jpg'),
-                        }, {
-                            title: "Strawberry",
-                            price: "10.000",
-                            unit: "250 gr",
-                            key: 'strawberry',
-                            image: require('../../../assets/image/card/fruit/strawberry.jpg'),
-                        }, {
-                            title: "Banana Panjang Gimana dong",
-                            price: "15.000",
-                            unit: "500 gr",
-                            key: 'banana',
-                            image: require('../../../assets/image/card/fruit/banana.jpg'),
-                        }, {
-                            title: "Strawberry",
-                            price: "10.000",
-                            unit: "250 gr",
-                            key: 'strawberry',
-                            image: require('../../../assets/image/card/fruit/strawberry.jpg'),
-                        }, {
-                            title: "Banana",
-                            price: "15.000",
-                            unit: "500 gr",
-                            key: 'banana',
-                            image: require('../../../assets/image/card/fruit/banana.jpg'),
-                        },
-                    ]}
+                    data={this.props.navigation.state.params.data}
                     renderItem={({ item }) => (
                         <ItemCard data={item} navigation={this.props.navigation}/>
                     )}
+                    keyExtractor={(item, index) => index.toString()}
                 />
             </Container>
         );

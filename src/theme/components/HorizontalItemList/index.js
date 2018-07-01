@@ -25,7 +25,7 @@ class HorizontalItemList extends Component {
                 <View style={{flexDirection:'row'}}>
                     <Text style={Styles.cardTitle}>{this.props.title}</Text>
                     <TouchableOpacity style={{marginLeft:'auto'}} 
-                        onPress={() => this.pushNavigate("ItemsPage",{title: this.props.title})}
+                        onPress={() => this.pushNavigate("ItemsPage", this.props.data)}
                         // onPress={() => this.props.navigation.navigate('ItemsPage') }
                         >
                         <Text style={Styles.cardTitleRight}>
