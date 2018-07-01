@@ -227,7 +227,7 @@ class CheckOut extends React.Component {
                                         source={{ uri: this.state.image + item.img }}
                                     />
                                     <View style={{ flexDirection: 'column', }}>
-                                        <Text style={styles.itemCardTitle}>{item.title}</Text>
+                                        <Text style={styles.itemCardTitle}>{item.name}</Text>
                                         <Text style={styles.itemCardPrice}>Rp {item.price}</Text>
                                     </View>
                                     <View style={{ flex: 1, flexDirection: 'row', position: 'absolute', marginLeft: 280 }}>

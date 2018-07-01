@@ -93,7 +93,7 @@ class KonfirmasiPembayaran extends React.Component {
                 <Content style={styles.content}>
                 <List>
                     <Text style={styles.bayarDesc}>Jumlah Tagihan</Text>
-                    <Text style={styles.bayarNum}>Rp. 55000</Text>
+                    <Text style={styles.bayarNum}>Rp{this.props.navigation.state.params.total}</Text>
                     <ListItem avatar>
                         <Left>
                             <Thumbnail style={styles.images} source={bni} />

@@ -27,6 +27,7 @@ import {
   Icon,
   Right
 } from "native-base";
+import PTRView from 'react-native-pull-to-refresh';
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
 import ItemBanner from '../../theme/components/ItemBanner';
 import styles from './styles';
@@ -97,6 +98,13 @@ export default class HomeScreen extends React.Component {
     });
 }
 
+_refresh() {
+  this.fetchStuff
+  return new Promise((resolve) => {
+    setTimeout(()=>{resolve()}, 2000)
+  });
+}
+
   render() {
     return (
       <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
@@ -117,6 +125,7 @@ export default class HomeScreen extends React.Component {
             <Right />
           </Header>
         </View>
+        <PTRView onRefresh={this._refresh} >
         <Content style={styles.content}>
           <ItemBanner data={this.state.resep} />
           <HorizontalItemList title="Resep Sehat" data={this.state.barang} navigation={this.props.navigation} />
@@ -126,6 +135,7 @@ export default class HomeScreen extends React.Component {
           <HorizontalItemList title="Buah Organik" data={this.state.barang} navigation={this.props.navigation} />
           <ItemBanner data={this.state.resep} />
         </Content>
+        </PTRView>
         { this.state.loading ?
           <View style={{paddingTop:250 ,alignSelf: 'center',justifyContent: 'center', position: 'absolute'}}>
               <ActivityIndicator size="large"/>

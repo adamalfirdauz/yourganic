@@ -74,6 +74,7 @@ export default class Transaksi extends React.Component {
                     // this.setState({barang : response.data.data})
                     // console.error(this.state.barang)
                     // console.error(this.state.barang)
+                    response.data.data = response.data.data.reverse()
                     this.setState({
                         data: response.data,
                         loading: false
