@@ -26,9 +26,8 @@ class ItemBanner extends Component {
                             <View style={Styles.cardTrack}>
                                 {item.item.status == 1 ? <Text style={Styles.cardTrackTop}>Check-Out</Text> :
                                     item.item.status == 2 ? <Text style={Styles.cardTrackTop}>Dibayar</Text> :
-                                        item.item.status == 3 ? <Text style={Styles.cardTrackTop}>Pending</Text> :
-                                            item.item.status == 4 ? <Text style={Styles.cardTrackTop}>Pengiriman</Text> :
-                                                <Text style={Styles.cardTrackTop}>Selesai</Text>}
+                                        item.item.status == 3 ? <Text style={Styles.cardTrackTop}>Pengiriman</Text> :
+                                            <Text style={Styles.cardTrackTop}>Selesai</Text>}
                                 <Text style={Styles.cardTrackBottom}>Rp. {item.item.total}</Text>
                             </View>
                         </Card>
