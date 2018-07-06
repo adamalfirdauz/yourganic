@@ -134,6 +134,7 @@ import Transaksi from './screens/transaksi/'
 import DetailTransaksi from './screens/detailTransaksi/'
 import KonfirmasiPembayaran from './screens/konfirmasiPembayaran/'
 import Search from './screens/search'
+import Guest from './screens/guest'
 
 const Drawer = DrawerNavigator(
   {
@@ -151,6 +152,13 @@ const Drawer = DrawerNavigator(
     },
     Register: {
       screen: Register,
+      navigationOptions: ({ navigation }) => ({
+        drawerLockMode: 'locked-closed'
+      })
+    },
+
+    Guest: {
+      screen: Guest,
       navigationOptions: ({ navigation }) => ({
         drawerLockMode: 'locked-closed'
       })
