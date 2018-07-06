@@ -94,6 +94,9 @@ class Search extends React.Component {
             }).then(response => {
                 // console.error(this.props.navigation.state.params.id)
                 if (response.data) {
+                    this.setState({
+                        barang : []
+                    })
                     // console.error(response.data)
                     // this.storeItem('user-profile',response.data.data)
                     // provider.storeItem('user-profile', response.data.data)
@@ -101,6 +104,7 @@ class Search extends React.Component {
                         barang: response.data.data,
                         loading : false
                     })
+                    // console.error(this.state.barang)
                 }
                 else {
                     this.setState({ loading: false })
