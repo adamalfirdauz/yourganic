@@ -3,11 +3,13 @@ import { Image, Text, TouchableOpacity } from 'react-native';
 import { Card, View } from 'native-base';
 import Styles from './Styles';
 import { FlatList } from 'react-native-gesture-handler';
+import Moment from 'moment';
 
 class ItemBanner extends Component {
     constructor(props) {
         super(props);
         this.state = {}
+        
     }
 
     render() {
@@ -20,7 +22,7 @@ class ItemBanner extends Component {
                         <Card style={Styles.cardBody}>
                             <Image style={Styles.cardImage} source={this.props.data[0]} />
                             <View style={Styles.cardName}>
-                                <Text numberOfLines={1} style={Styles.cardNameTop}>{item.item.created_at.date}</Text>
+                                <Text numberOfLines={1} style={Styles.cardNameTop}>{Moment(item.item.created_at.date).format('d MMMM ')}at{Moment(item.item.created_at.date).format(' hh:mm ')}</Text>
                                 <Text style={Styles.cardNameBottom}>No. {item.item.code}</Text>
                             </View >
                             <View style={Styles.cardTrack}>
