@@ -62,6 +62,9 @@ class Prelogin extends React.Component {
     registerNavigate() {
         this.props.navigation.navigate('Register')
     }
+    gusetNavigate() {
+        this.props.navigation.navigate('Guest')
+    }
 
     render() {
         return (
@@ -92,7 +95,7 @@ class Prelogin extends React.Component {
                     </View>
                 </View>
                 <Footer style={styles.footer}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.gusetNavigate()}>
                         <Text style={{ color: 'white', alignSelf: 'center', marginTop:15 }}> Continue as guest mode.</Text>
                     </TouchableOpacity>
                 </Footer>
