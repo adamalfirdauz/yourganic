@@ -125,7 +125,7 @@ class DetailTransaksi extends React.Component {
             this.setState({
                 loading: true
             })
-            RNFetchBlob.fetch('POST', 'http://yourganic.codepanda.web.id/api/transaction/update', {
+            RNFetchBlob.fetch('POST', 'https://yourganic.codepanda.web.id/api/transaction/update', {
                 Accept: 'application/json',
                 'Authorization': 'Bearer ' + this.state.token,
                 'Content-Type': 'multipart/form-data',

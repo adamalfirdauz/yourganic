@@ -53,7 +53,7 @@ class CheckOut extends React.Component {
             sum: 0,
             panjang: 0,
             total: 0,
-            image: 'http://yourganic.codepanda.web.id/',
+            image: 'https://yourganic.codepanda.web.id/',
             loading: false,
             token: null
         }

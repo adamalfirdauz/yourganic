@@ -10,7 +10,7 @@ class HorizontalItemList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            image : 'http://yourganic.codepanda.web.id/'
+            image : 'https://yourganic.codepanda.web.id/'
           }
     }
       

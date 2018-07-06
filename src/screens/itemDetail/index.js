@@ -51,7 +51,7 @@ class ItemDetails extends React.Component {
             barang: this.props.navigation.state.params.data,
             exist : false,
             finished : false,
-            image : 'http://yourganic.codepanda.web.id/'
+            image : 'https://yourganic.codepanda.web.id/'
         };
         this.data = [
             {time: '', title: 'Harga', description: 'Rp. '+this.props.navigation.state.params.data.price+' / '+this.props.navigation.state.params.data.unit, icon: require('../../../assets/details/money.png')},

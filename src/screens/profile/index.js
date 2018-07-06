@@ -187,7 +187,7 @@ export default class Profile extends React.Component {
                                         top: 20,
                                         borderRadius: 100
                                     }}
-                                    source={{uri :'http://yourganic.codepanda.web.id/'+this.state.imageSource}} />
+                                    source={{uri :'https://yourganic.codepanda.web.id/'+this.state.imageSource}} />
                                 :
                                 <Icon name='person' style={{ fontSize: 120, alignSelf: 'center', paddingTop: 20, }} />}
                         {/* <Icon active={this.state.icon} name="person" style={styles.photoProfile} /> */}

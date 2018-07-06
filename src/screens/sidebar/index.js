@@ -261,7 +261,7 @@ class SideBar extends Component {
           style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
         >
           <Image source={drawerCover} style={styles.drawerCover} />
-           {this.state.imageSource ? <Image square style={styles.drawerImage} source={{uri: 'http://yourganic.codepanda.web.id/'+ this.state.imageSource }} /> : <Icon style={{fontSize:80, position: 'absolute', alignSelf: 'center', paddingTop: 60,}} name='person' />}
+           {this.state.imageSource ? <Image square style={styles.drawerImage} source={{uri: 'https://yourganic.codepanda.web.id/'+ this.state.imageSource }} /> : <Icon style={{fontSize:80, position: 'absolute', alignSelf: 'center', paddingTop: 60,}} name='person' />}
            <Text style={styles.nama}>{this.state.nama}</Text>
 
           <List

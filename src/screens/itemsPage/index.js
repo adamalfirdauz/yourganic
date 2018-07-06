@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, StatusBar, Platform, FlatList } from 'rea
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
 import ItemCard from '../../theme/components/ItemCard';
-import { Container, Header, Left, Right, Button, Icon, Body, Title, Card, ListItem } from 'native-base';
+import { Container, Header, Left, Right, Button, Icon, Body, Title, Card, ListItem, Item } from 'native-base';
 import Styles from './Styles';
 
 var strawberry = require('../../../assets/image/card/fruit/strawberry.jpg');
@@ -37,6 +37,11 @@ class ItemsPage extends Component {
                                 <Icon name="search" />
                             </Button>
                         </Right>
+                        <Item>
+                            <Icon active name="search" />
+                            <Input placeholder="Search" />
+                            <Icon active name="people" />
+                        </Item>
                     </Header>
                 </View>
                 <FlatList
@@ -44,7 +49,7 @@ class ItemsPage extends Component {
                     numColumns={2}
                     data={this.props.navigation.state.params.data}
                     renderItem={({ item }) => (
-                        <ItemCard data={item} navigation={this.props.navigation}/>
+                        <ItemCard data={item} navigation={this.props.navigation} />
                     )}
                     keyExtractor={(item, index) => index.toString()}
                 />

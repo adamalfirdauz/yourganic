@@ -20,7 +20,7 @@ class ItemBanner extends Component {
                         <Card style={Styles.cardBody}>
                             <Image style={Styles.cardImage} source={this.props.data[0]} />
                             <View style={Styles.cardName}>
-                                <Text numberOfLines={1} style={Styles.cardNameTop}>{Date(item.item.created_at.date)}</Text>
+                                <Text numberOfLines={1} style={Styles.cardNameTop}>{item.item.created_at.date}</Text>
                                 <Text style={Styles.cardNameBottom}>No. {item.item.code}</Text>
                             </View >
                             <View style={Styles.cardTrack}>

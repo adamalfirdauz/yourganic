@@ -168,7 +168,7 @@ export default class UpdateProfile extends React.Component {
       this.setState({
         loading: true
       })
-      RNFetchBlob.fetch('POST', 'http://yourganic.codepanda.web.id/api/profile/update', {
+      RNFetchBlob.fetch('POST', 'https://yourganic.codepanda.web.id/api/profile/update', {
         'Authorization': 'Bearer ' + this.state.token,
         // 'Content-Type': 'multipart/form-data',
       }, [
@@ -220,7 +220,7 @@ export default class UpdateProfile extends React.Component {
                     top: 20,
                     borderRadius: 100
                   }}
-                  source={!this.state.gambar ? { uri: "http://yourganic.codepanda.web.id/" + this.state.imageSource } : this.state.imageSource} />
+                  source={!this.state.gambar ? { uri: "https://yourganic.codepanda.web.id/" + this.state.imageSource } : this.state.imageSource} />
                 :
                 <Icon name='person' style={{ fontSize: 120, alignSelf: 'center', paddingTop: 20, }} />}
             </TouchableOpacity>

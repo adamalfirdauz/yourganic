@@ -30,6 +30,7 @@ import {
 import PTRView from 'react-native-pull-to-refresh';
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
 import ItemBanner from '../../theme/components/ItemBanner';
+import ItemCard from '../../theme/components/ItemCard';
 import styles from './styles';
 
 var sayur = require('../../../assets/image/sayur.png');
@@ -59,9 +60,9 @@ export default class HomeScreen extends React.Component {
     try {
       const value = await AsyncStorage.getItem('profile');
       let parsed = JSON.parse(value)
-      if(value !== null){
+      if (value !== null) {
         this.setState({
-          profile:{
+          profile: {
             nama: parsed.data.nama,
             email: parsed.data.email,
           }
@@ -72,38 +73,42 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-  fetchStuff(){
+  fetchStuff() {
 
     // this.setState({ loading: true })
-    axios.get('/api/product/getAll',{
-        headers: {
-            Accept: 'application/json',
-            // 'Authorization' : 'Bearer ' + this.state.token
-        },
+    axios.get('/api/product/getAll', {
+      headers: {
+        Accept: 'application/json',
+        // 'Authorization' : 'Bearer ' + this.state.token
+      },
     }).then(response => {
-        if(response.data){
-            this.setState({barang : response.data.data, loading : false})
-            // console.error(this.state.barang)
-            // console.error(this.state.barang)
-            }
-        else{
-            alert("Koneksi gagal")
-            this.setState({ loading: false })
-        }
-    }).catch( error => {
+      if (response.data) {
+        this.setState({ barang: response.data.data, loading: false })
+        // console.error(this.state.barang)
+        // console.error(this.state.barang)
+      }
+      else {
         alert("Koneksi gagal")
-        // this.setState({loading: false})
-        console.error(error)    
-        
-    });
-}
+        this.setState({ loading: false })
+      }
+    }).catch(error => {
+      alert("Koneksi gagal")
+      // this.setState({loading: false})
+      console.error(error)
 
-_refresh() {
-  this.fetchStuff
-  return new Promise((resolve) => {
-    setTimeout(()=>{resolve()}, 2000)
-  });
-}
+    });
+  }
+
+  _refresh() {
+    this.fetchStuff
+    return new Promise((resolve) => {
+      setTimeout(() => { resolve() }, 2000)
+    });
+  }
+
+  search(){
+    this.props.navigation.push("Search")
+  }
 
   render() {
     return (
@@ -122,23 +127,28 @@ _refresh() {
             <Body>
               <Title>Home</Title>
             </Body>
-            <Right />
+            <Right>
+              <Button transparent>
+                {/* <Icon name="cart" onPress={() => this.props.navigation.push('CheckOut', this.props.navigation.state.params.data)}/> */}
+                <Icon name="search" onPress={() => this.search()} />
+              </Button>
+            </Right>
           </Header>
         </View>
         <PTRView onRefresh={this._refresh} >
-        <Content style={styles.content}>
-          <ItemBanner data={this.state.resep} />
-          <HorizontalItemList title="Resep Sehat" data={this.state.barang} navigation={this.props.navigation} />
-          <ItemBanner data={this.state.buah} />
-          <HorizontalItemList title="Sayuran Organik" data={this.state.barang} navigation={this.props.navigation} />
-          <ItemBanner data={this.state.sayur} />
-          <HorizontalItemList title="Buah Organik" data={this.state.barang} navigation={this.props.navigation} />
-          <ItemBanner data={this.state.resep} />
-        </Content>
+          <Content style={styles.content}>
+            <ItemBanner data={this.state.resep} />
+            <HorizontalItemList title="Resep Sehat" data={this.state.barang} navigation={this.props.navigation} />
+            <ItemBanner data={this.state.buah} />
+            <HorizontalItemList title="Sayuran Organik" data={this.state.barang} navigation={this.props.navigation} />
+            <ItemBanner data={this.state.sayur} />
+            <HorizontalItemList title="Buah Organik" data={this.state.barang} navigation={this.props.navigation} />
+            <ItemBanner data={this.state.resep} />
+          </Content>
         </PTRView>
-        { this.state.loading ?
-          <View style={{paddingTop:250 ,alignSelf: 'center',justifyContent: 'center', position: 'absolute'}}>
-              <ActivityIndicator size="large"/>
+        {this.state.loading ?
+          <View style={{ paddingTop: 250, alignSelf: 'center', justifyContent: 'center', position: 'absolute' }}>
+            <ActivityIndicator size="large" />
           </View>
           :
           <View />

@@ -23,7 +23,7 @@ class ItemCard extends Component {
         return (
             <TouchableOpacity onPress={() => this.pushNavigate('ItemDetail', this.state.data)}>
                 <Card style={Styles.card}>
-                    <Image source={{uri : 'http://yourganic.codepanda.web.id/' + this.state.data.img}} style={Styles.image} />
+                    <Image source={{uri : 'https://yourganic.codepanda.web.id/' + this.state.data.img}} style={Styles.image} />
                     <Text numberOfLines={1} style={Styles.title}>{this.state.data.name}</Text>
                     <Text style={Styles.price}>{this.state.data.price}</Text>
                 </Card>

@@ -133,6 +133,7 @@ import CheckOut from './screens/checkout/'
 import Transaksi from './screens/transaksi/'
 import DetailTransaksi from './screens/detailTransaksi/'
 import KonfirmasiPembayaran from './screens/konfirmasiPembayaran/'
+import Search from './screens/search'
 
 const Drawer = DrawerNavigator(
   {
@@ -220,6 +221,7 @@ const AppNavigator = StackNavigator(
     Drawer: { screen: Drawer },
     DetailTransaksi: { screen: DetailTransaksi },
     KonfirmasiPembayaran : { screen: KonfirmasiPembayaran },
+    Search : { screen: Search },
 
     Header1: { screen: Header1 },
     Header2: { screen: Header2 },
