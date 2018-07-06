@@ -1,7 +1,7 @@
 import React from 'react'
 import {
     View, Text, ImageBackground, Image, Platform,
-    KeyboardAvoidingView, StatusBar, AsyncStorage, BackHandler
+    KeyboardAvoidingView, StatusBar, AsyncStorage, BackHandler, TouchableOpacity
 } from 'react-native';
 import {
     Container, Header, Left, Body, Right, Button, Icon,
@@ -91,6 +91,11 @@ class Prelogin extends React.Component {
                         </View>
                     </View>
                 </View>
+                <Footer style={styles.footer}>
+                    <TouchableOpacity>
+                        <Text style={{ color: 'white', alignSelf: 'center', marginTop:15 }}> Continue as guest mode.</Text>
+                    </TouchableOpacity>
+                </Footer>
             </Container>
         );
     }
