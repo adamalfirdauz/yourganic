@@ -81,10 +81,10 @@ class DetailTransaksi extends React.Component {
         this.setState({status :2})
         this.setState({
             datas : [
-                { time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: this.props.navigation.state.params.status >= 1 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png') },
-                { time: '', title: 'Dibayar', description: 'Pesanan telah dibayar, kami akan segera mengirim produk segar kerumah anda', color: 'green', icon: this.props.navigation.state.params.status >= 2 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png') },
-                { time: '', title: 'Pengiriman', description: 'Pesanan dalam proses pengiriman melalui jasa ekspedisi terbaik kerumah anda', color: 'red', icon: this.props.navigation.state.params.status >= 3 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png') },
-                { time: '', title: 'Selesai', description: 'Pesanan telah sampai, kami menanti pesanan anda selanjutnya.', color: 'red', icon: this.props.navigation.state.params.status >= 4 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png') },
+                { time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: this.state.status >= 1 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png') },
+                { time: '', title: 'Dibayar', description: 'Pesanan telah dibayar, kami akan segera mengirim produk segar kerumah anda', color: 'green', icon: this.state.status >= 2 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png') },
+                { time: '', title: 'Pengiriman', description: 'Pesanan dalam proses pengiriman melalui jasa ekspedisi terbaik kerumah anda', color: 'red', icon: this.state.status >= 3 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png') },
+                { time: '', title: 'Selesai', description: 'Pesanan telah sampai, kami menanti pesanan anda selanjutnya.', color: 'red', icon: this.state.status >= 4 ? require('../../../assets/details/yes.png') : require('../../../assets/details/no.png') },
             ]
         })
     }
