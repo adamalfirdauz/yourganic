@@ -222,6 +222,7 @@ const AppNavigator = StackNavigator(
     DetailTransaksi: { screen: DetailTransaksi },
     KonfirmasiPembayaran : { screen: KonfirmasiPembayaran },
     Search : { screen: Search },
+    Transaksi : { screen: Transaksi },
 
     Header1: { screen: Header1 },
     Header2: { screen: Header2 },

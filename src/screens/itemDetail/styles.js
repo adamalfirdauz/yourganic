@@ -79,8 +79,9 @@ const styles = StyleSheet.create({
         margin: 0,
         marginBottom: 10
     },
-    footer: {
-        
+    footers: {
+        backgroundColor : '#007300',
+        justifyContent: 'center',
     },
     tambahButton: {
         height : 60,
@@ -88,9 +89,24 @@ const styles = StyleSheet.create({
         backgroundColor: '#007300',
         justifyContent: 'center',
     },
+
+    habis: {
+        height : 60,
+        // ...StyleSheet.absoluteFillObject,
+        backgroundColor: '#007300',
+        justifyContent: 'center',
+    },
+
     ButtonWord: {
         fontSize: 17,
         fontWeight: 'bold'
+    },
+    ButtonWords: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: '#fff',
+        justifyContent: 'center',
+        paddingTop: 15
     },
     jumlah: {
         paddingLeft: 30,

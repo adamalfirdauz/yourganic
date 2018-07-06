@@ -152,7 +152,7 @@ class KonfirmasiPembayaran extends React.Component {
                 </List>
                 </Content>
                 <Footer style={styles.footer}>
-                    <Button style={styles.confirmButton} onPress={() => this.toAnother("DetailTransaksi", this.props.navigation.state.params)}>
+                    <Button style={styles.confirmButton} onPress={() => this.toAnother("Transaksi", this.props.navigation.state.params)}>
                         <Text style={styles.ButtonWord}>Konfirmasi</Text>
                     </Button>
                 </Footer>

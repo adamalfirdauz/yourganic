@@ -52,6 +52,7 @@ class CheckOut extends React.Component {
             jumlah: 0,
             sum: 0,
             panjang: 0,
+            habis: false,
             total: 0,
             image: 'https://yourganic.codepanda.web.id/',
             loading: false,
@@ -151,41 +152,54 @@ class CheckOut extends React.Component {
 
         if (this.state.barang.length != 0) {
             for (var i = 0; i < this.state.barang.length; i++) {
-                let checkOut = {
-                    item_id: this.state.barang[i].id,
-                    qty: this.state.barang[i].jumlah,
-                    msg: "Testing kuy"
-                }
-                checkOuts.push(checkOut)
-            }
-            axios.post('/api/transaction/create', checkOuts, {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + this.state.token
-                },
-            }).then(response => {
-                if (response.data) {
-                    // console.error(response.data)
-                    // this.storeItem('user-profile',response.data.data)
-                    // alert("Update Berhasil")
-                    // this.props.navigation.pop()
-                    // console.error(response.data)
-                    // console.error(response.data.data[0].code)
-                    for (var i = 0; i < 15; i++) {
-                        AsyncStorage.removeItem('Barang' + i)
+                if (this.state.barang[i].jumlah <= this.state.barang[i].stock) {
+                    let checkOut = {
+                        item_id: this.state.barang[i].id,
+                        qty: this.state.barang[i].jumlah,
+                        msg: "Testing kuy"
                     }
-                    this.props.navigation.push("KonfirmasiPembayaran", response.data.data[0])
+                    checkOuts.push(checkOut)
+                    habis = true
                 }
                 else {
-                    alert("Pembelian Gagal Periksa Koneksi anda")
-                    this.setState({ loading: false })
+                    alert("Barang " + this.state.barang[i].name + " tidak mencukupi")
+                    var habis = false
+                    this.setState({
+                        loading : false
+                    })
+                    break
                 }
-            }).catch(error => {
-                alert("Login Gagal, periksa email dan password anda")
-                this.setState({ loading: false })
-                console.error(error)
-            });
+            }
+            if (habis) {
+                axios.post('/api/transaction/create', checkOuts, {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + this.state.token
+                    },
+                }).then(response => {
+                    if (response.data) {
+                        // console.error(response.data)
+                        // this.storeItem('user-profile',response.data.data)
+                        // alert("Update Berhasil")
+                        // this.props.navigation.pop()
+                        // console.error(response.data)
+                        // console.error(response.data.data[0].code)
+                        for (var i = 0; i < 15; i++) {
+                            AsyncStorage.removeItem('Barang' + i)
+                        }
+                        this.props.navigation.push("KonfirmasiPembayaran", response.data.data[0])
+                    }
+                    else {
+                        alert("Pembelian Gagal Periksa Koneksi anda")
+                        this.setState({ loading: false })
+                    }
+                }).catch(error => {
+                    alert("Login Gagal, periksa email dan password anda")
+                    this.setState({ loading: false })
+                    console.error(error)
+                });
+            }
         }
         else {
             alert("Cart Kosong, silahkan beli barang terlebih dahulu")
@@ -289,12 +303,12 @@ class CheckOut extends React.Component {
                             </Button>
                         </View>
                         {this.state.loading ?
-                        <View style={{ paddingTop: 250, alignSelf: 'center', justifyContent: 'center', position: 'absolute' }}>
-                            <ActivityIndicator size="large" />
-                        </View>
-                        :
-                        <View />
-                    }
+                            <View style={{ paddingTop: 250, alignSelf: 'center', justifyContent: 'center', position: 'absolute' }}>
+                                <ActivityIndicator size="large" />
+                            </View>
+                            :
+                            <View />
+                        }
                     </Card>
                 </Content>
             </Container>
