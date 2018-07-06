@@ -103,7 +103,7 @@ export default class Transaksi extends React.Component {
     }
 
     _refresh() {
-        this.fetchStuff
+        this.fetchStuff()
         return new Promise((resolve) => {
           setTimeout(()=>{resolve()}, 2000)
         });
@@ -134,7 +134,7 @@ export default class Transaksi extends React.Component {
                     </Right>
                 </Header>
 
-                <PTRView onRefresh={this._refresh} >
+                <PTRView onRefresh={() => this._refresh()} >
                 <View style={{ flex: 1 }}>
                     <Content>
                         {/* <TouchableOpacity onPress = {()=> this.anotherPage('DetailTransaksi')}> */}
