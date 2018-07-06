@@ -39,26 +39,44 @@ import {
     Grid
 } from 'react-native-easy-grid';
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
-import ItemBanner from '../../theme/components/ItemBanner';
+import ItemCard from '../../theme/components/ItemCard';
 import styles from './styles';
 
-var bni = require('../../../assets/bank/bni.png')
-var mandiri = require('../../../assets/bank/mandiri.jpg')
-var bri = require('../../../assets/bank/bri.png')
-var bca = require('../../../assets/bank/bca.png')
-var sc = require('../../../assets/bank/sc.jpg')
+var axios = require('../../api/axios.js');
 
 class Guest extends React.Component {
     constructor(props) {
         super(props)
-        // console.error(this.props.navigation.state.params)
-        this.data = [
-            {time: '', title: 'Check-out', description: 'Bayar produk segar anda segera.', color: 'green', icon: require('../../../assets/details/yes.png')},
-            {time: '', title: 'Dibayar', description: 'Pesanan telah dibayar, kami akan segera mengirim produk segar kerumah anda', color: 'green', icon: require('../../../assets/details/yes.png')},
-            {time: '', title: 'Pengiriman', description: 'Pesanan dalam proses pengiriman melalui jasa ekspedisi terbaik kerumah anda', color: 'red', icon: require('../../../assets/details/no.png')},
-            {time: '', title: 'Selesai', description: 'Pesanan telah sampai, kami menanti pesanan anda selanjutnya.' , color: 'red', icon: require('../../../assets/details/no.png')},
-        ]
+        this.state = {
+            barang: [],
+            loading: true
+        };
+    this.fetchStuff() 
     }
+
+    fetchStuff() {
+        // this.setState({ loading: true })
+        axios.get('/api/product/getAll', {
+          headers: {
+            Accept: 'application/json',
+            // 'Authorization' : 'Bearer ' + this.state.token
+          },
+        }).then(response => {
+          if (response.data) {
+            this.setState({ barang: response.data.data, loading: false })
+            // console.error(this.state.barang)
+            // console.error(this.state.barang)
+          }
+          else {
+            alert("Koneksi gagal")
+            this.setState({ loading: false })
+          }
+        }).catch(error => {
+          alert("Koneksi gagal")
+          // this.setState({loading: false})
+          console.error(error)
+        });
+      }
 
     toAnother(page, data){
         this.props.navigation.push(page, data)
@@ -73,25 +91,31 @@ class Guest extends React.Component {
                             backgroundColor="#004600"
                             barStyle="light-content"
                         />
-                        {/* <Left>
-                            <Button transparent onPress={() => this.props.navigation.goBack()}>
-                                <Icon name="arrow-back" />
-                            </Button>
-                        </Left> */}
                         <Body>
-                            <Title>Guest</Title>
+                            <Title>Home</Title>
                         </Body>
                         <Right>
-                            {/* <Button transparent> */}
-                                {/* <Icon name="cart" onPress={() => this.props.navigation.push('CheckOut', this.props.navigation.state.params.data)}/> */}
-                                {/* <Icon name="cart" onPress={() => this.checkOut()}/> */}
-                            {/* </Button> */}
                         </Right>
                     </Header>
 
                 </View>
                 <Content style={styles.content}>
+                {/* {console.error(this.state.barang)} */}
+                    <FlatList
+                        showsHorizontalScrollIndicator={false}
+                        numColumns={2}
+                        data={this.state.barang}
+                        renderItem={({ item }) => (
+                            <ItemCard data={item} navigation={this.props.navigation} />
+                        )}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
                 </Content>
+                <Footer style={styles.footer}>
+                    <TouchableOpacity onPress={()=>this.gusetNavigate()}>
+                        <Text style={{ color: 'white', alignSelf: 'center', marginTop:15 }}>Register</Text>
+                    </TouchableOpacity>
+                </Footer>
             </Container>
         );
 
