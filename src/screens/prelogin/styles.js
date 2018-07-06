@@ -22,6 +22,12 @@ const styles = StyleSheet.create({
         height: 250,
         resizeMode: 'contain',
     },
+    footer: {
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        height: 50,
+        width: '100%'
+        
+    }
 });
 
 export default styles;
