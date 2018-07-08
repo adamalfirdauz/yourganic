@@ -77,9 +77,8 @@ class Guest extends React.Component {
           console.error(error)
         });
       }
-
-    toAnother(page, data){
-        this.props.navigation.push(page, data)
+      loginNavigate() {
+        this.props.navigation.navigate('Login')
     }
 
     render() {
@@ -112,8 +111,8 @@ class Guest extends React.Component {
                     />
                 </Content>
                 <Footer style={styles.footer}>
-                    <TouchableOpacity onPress={()=>this.gusetNavigate()}>
-                        <Text style={{ color: 'white', alignSelf: 'center', marginTop:15 }}>Register</Text>
+                    <TouchableOpacity onPress={()=>this.loginNavigate()}>
+                        <Text style={{ color: 'white', alignSelf: 'center', marginTop:15 }}>Login</Text>
                     </TouchableOpacity>
                 </Footer>
             </Container>

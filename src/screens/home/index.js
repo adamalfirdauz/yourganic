@@ -35,7 +35,7 @@ import styles from './styles';
 
 var sayur = require('../../../assets/image/sayur.png');
 var resep = require('../../../assets/image/resep.png');
-var buah = require('../../../assets/image/buah.png');
+var buahs = require('../../../assets/image/buah.png');
 var strawberry = require('../../../assets/image/card/fruit/strawberry.jpg');
 var axios = require('../../api/axios.js');
 
@@ -50,11 +50,17 @@ export default class HomeScreen extends React.Component {
       },
       resep: [require('../../../assets/image/resep.png')],
       sayur: [require('../../../assets/image/sayur.png')],
-      buah: [require('../../../assets/image/buah.png')],
+      buahs: [require('../../../assets/image/buah.png')],
       barang: [],
+      menu :[],
+      sayuran:[],
+      buah:[],
       loading: true
     };
     this.fetchStuff()
+    this.fetchMenu()
+    this.fetchSayuran()
+    this.fetchBuah()
   }
   async fetchProfile() {
     try {
@@ -74,7 +80,6 @@ export default class HomeScreen extends React.Component {
   }
 
   fetchStuff() {
-
     // this.setState({ loading: true })
     axios.get('/api/product/getAll', {
       headers: {
@@ -94,6 +99,69 @@ export default class HomeScreen extends React.Component {
     }).catch(error => {
       alert("Koneksi gagal")
       // this.setState({loading: false})
+      console.error(error)
+
+    });
+  }
+
+  fetchMenu(){
+    axios.get('/api/product/get/category/menu', {
+      headers: {
+        Accept: 'application/json',
+      },
+    }).then(response => {
+      if (response.data) {
+        // console.error(response.data)
+        this.setState({ menu: response.data.data, loading: false })
+      }
+      else {
+        alert("Koneksi gagal")
+        this.setState({ loading: false })
+      }
+    }).catch(error => {
+      alert("Koneksi gagal")
+      console.error(error)
+
+    });
+  }
+
+  fetchSayuran(){
+    axios.get('/api/product/get/category/sayuran', {
+      headers: {
+        Accept: 'application/json',
+      },
+    }).then(response => {
+      if (response.data) {
+        // console.error(response.data)
+        this.setState({ sayuran: response.data.data, loading: false })
+      }
+      else {
+        alert("Koneksi gagal")
+        this.setState({ loading: false })
+      }
+    }).catch(error => {
+      alert("Koneksi gagal")
+      console.error(error)
+
+    });
+  }
+
+  fetchBuah(){
+    axios.get('/api/product/get/category/buah', {
+      headers: {
+        Accept: 'application/json',
+      },
+    }).then(response => {
+      if (response.data) {
+        // console.error(response.data)
+        this.setState({ buah: response.data.data, loading: false })
+      }
+      else {
+        alert("Koneksi gagal")
+        this.setState({ loading: false })
+      }
+    }).catch(error => {
+      alert("Koneksi gagal")
       console.error(error)
 
     });
@@ -138,11 +206,11 @@ export default class HomeScreen extends React.Component {
         <PTRView onRefresh={this._refresh} >
           <Content style={styles.content}>
             <ItemBanner data={this.state.resep} />
-            <HorizontalItemList title="Resep Sehat" data={this.state.barang} navigation={this.props.navigation} />
-            <ItemBanner data={this.state.buah} />
-            <HorizontalItemList title="Sayuran Organik" data={this.state.barang} navigation={this.props.navigation} />
+            <HorizontalItemList title="Resep Sehat" data={this.state.menu} navigation={this.props.navigation} />
+            <ItemBanner data={this.state.buahs} />
+            <HorizontalItemList title="Sayuran Organik" data={this.state.sayuran} navigation={this.props.navigation} />
             <ItemBanner data={this.state.sayur} />
-            <HorizontalItemList title="Buah Organik" data={this.state.barang} navigation={this.props.navigation} />
+            <HorizontalItemList title="Buah Organik" data={this.state.buah} navigation={this.props.navigation} />
             <ItemBanner data={this.state.resep} />
           </Content>
         </PTRView>

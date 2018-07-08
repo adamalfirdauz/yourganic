@@ -14,6 +14,7 @@ class ItemsPage extends Component {
         this.state = {
 
         };
+        // console.error(this.props.navigation.state.params)
     }
     render() {
         return (
@@ -32,22 +33,12 @@ class ItemsPage extends Component {
                         <Body>
                             <Title>{this.props.navigation.state.params.data.title}</Title>
                         </Body>
-                        <Right>
-                            <Button transparent>
-                                <Icon name="search" />
-                            </Button>
-                        </Right>
-                        <Item>
-                            <Icon active name="search" />
-                            <Input placeholder="Search" />
-                            <Icon active name="people" />
-                        </Item>
                     </Header>
                 </View>
                 <FlatList
                     showsHorizontalScrollIndicator={false}
                     numColumns={2}
-                    data={this.props.navigation.state.params.data}
+                    data={this.props.navigation.state.params.data.data}
                     renderItem={({ item }) => (
                         <ItemCard data={item} navigation={this.props.navigation} />
                     )}
