@@ -71,13 +71,13 @@ class Register extends React.Component {
             }).then(response => {
                 // console.error(response)
                 try {
-                    this.storeItem('user-profile', response.data.data)
-                    this.storeItem('access-token', response.data.meta.token)
-                    alert('Pendaftaran Berhasil !!')
+                    // this.storeItem('user-profile', response.data.data)
+                    // this.storeItem('access-token', response.data.meta.token)
+                    alert('<b><center>Pendaftaran Berhasil !!</center></b>\nsilahkan lakukan konfirmasi melalui email anda sebelum login')
                 } catch (error) {
                     console.error(error);
                 }
-                this.homeNavigate()
+                this.loginNavigate()
             }).catch(error => {
                 console.error(error);
             });

@@ -54,6 +54,7 @@ class Search extends React.Component {
             id: 1,
             sum: 0,
             barang: [],
+            kosong: false,
             exist: false,
             finished: false,
             loading: false,
@@ -100,14 +101,22 @@ class Search extends React.Component {
                     // console.error(response.data)
                     // this.storeItem('user-profile',response.data.data)
                     // provider.storeItem('user-profile', response.data.data)
-                    this.setState({
-                        barang: response.data.data,
-                        loading : false
-                    })
+                    if(response.data.data.length == 0){
+                        this.setState({kosong :  true, loading: false})
+                    }
+                    else{
+                        this.setState({
+                            kosong: false,
+                            barang: response.data.data,
+                            loading : false
+                        })
+                    }
                     // console.error(this.state.barang)
                 }
                 else {
-                    this.setState({ loading: false })
+                    this.setState({ 
+                        loading: false 
+                    })
                 }
             }).catch(error => {
                 alert("Login Gagal, periksa email dan password anda")
@@ -130,11 +139,13 @@ class Search extends React.Component {
                             />
                         </Item>
                         <Button transparent>
-                            <Text>Search</Text>
                         </Button>
                     </Header>
                 </View>
                 <Content style={styles.content}>
+                    { this.state.kosong ?
+                        <Text style={{alignSelf:'center'}}>Barang Tidak Ditemukan</Text>  
+                    :
                     <FlatList
                         showsHorizontalScrollIndicator={false}
                         numColumns={2}
@@ -143,7 +154,7 @@ class Search extends React.Component {
                             <ItemCard data={item} navigation={this.props.navigation} />
                         )}
                         keyExtractor={(item, index) => index.toString()}
-                    />
+                    />}
                 </Content>
                 {this.state.loading ?
                     <View style={{ paddingTop: 250, alignSelf: 'center', justifyContent: 'center', position: 'absolute' }}>

@@ -25,7 +25,7 @@ class ItemCard extends Component {
                 <Card style={Styles.card}>
                     <Image source={{uri : 'https://yourganic.codepanda.web.id/' + this.state.data.img}} style={Styles.image} />
                     <Text numberOfLines={1} style={Styles.title}>{this.state.data.name}</Text>
-                    <Text style={Styles.price}>{this.state.data.price}</Text>
+                    <Text style={Styles.price}>{this.state.data.price}/{this.state.data.unit}</Text>
                 </Card>
 
             </TouchableOpacity>

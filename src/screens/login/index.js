@@ -65,10 +65,18 @@ class Login extends React.Component {
         }).then(response => {
             if(response.data){
                 // console.error(response.data)
-                this.storeItem('user-profile',response.data.data)
-                this.storeItem('access-token', response.data.meta.token)
-                alert("Login Berhasil")
-                this.homeNavigate()
+                if(response.data.data.verified == 1){
+                    this.storeItem('user-profile',response.data.data)
+                    this.storeItem('access-token', response.data.meta.token)
+                    alert("Login Berhasil")
+                    this.homeNavigate()
+                }
+                else{
+                    alert("Login Gagal, Silahkan lakukan konfirmasi akun anda")
+                    this.setState({
+                        loading: false
+                    })
+                }
             }
             else{
                 alert("Login gagal, periksa email dan password anda")
@@ -77,7 +85,7 @@ class Login extends React.Component {
         }).catch( error => {
             alert("Login Gagal, periksa email dan password anda")
             this.setState({loading: false})
-            console.error(error)    
+            // console.error(error)    
         });
     }
     registerNavigate() {

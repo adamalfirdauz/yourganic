@@ -58,7 +58,7 @@ class ItemDetails extends React.Component {
             { time: '', title: 'Deskripsi', description: this.props.navigation.state.params.data.description, icon: require('../../../assets/details/desc.png') },
         ]
         // var data = this.props.navigation.state.params.data
-        //  console.error(this.state.barang)
+        // console.error(this.state.barang)
     }
 
     async storeItem(key, item) {
