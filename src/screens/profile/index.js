@@ -59,11 +59,12 @@ export default class Profile extends React.Component {
             alamat: '',
             foto: 'default',
             icon: true,
-            token: '',
+            token: null,
             imageSource: null
         }
         //    console.error(data)
         this.getProfile()
+        this.retrieveToken()
     }
     async retrieveItem(key) {
         try {
@@ -74,6 +75,15 @@ export default class Profile extends React.Component {
             console.log(error.message);
         }
         return
+    }
+
+    async retrieveToken() {
+        const tokens = await AsyncStorage.getItem('access-token');
+        if (tokens) {
+            this.setState({
+                token: JSON.parse(tokens)
+            })
+        }
     }
 
     getProfile(){

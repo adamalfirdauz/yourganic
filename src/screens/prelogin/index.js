@@ -8,6 +8,7 @@ import {
     Title, Content, FooterTab, Footer, Form, Item, Input,
     Label
 } from 'native-base';
+import Provider from '../../provider/setup.js'
 import styles from './styles';
 
 
@@ -31,7 +32,8 @@ class Prelogin extends React.Component {
                 // console.error(parsed.nama);
                 this.props.navigation.replace('Home');
             }
-        } catch (error) {
+        } 
+        catch (error) {
             // Error retrieving data
             console.error("error")
         }
