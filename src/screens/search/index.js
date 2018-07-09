@@ -96,26 +96,26 @@ class Search extends React.Component {
                 // console.error(this.props.navigation.state.params.id)
                 if (response.data) {
                     this.setState({
-                        barang : []
+                        barang: []
                     })
                     // console.error(response.data)
                     // this.storeItem('user-profile',response.data.data)
                     // provider.storeItem('user-profile', response.data.data)
-                    if(response.data.data.length == 0){
-                        this.setState({kosong :  true, loading: false})
+                    if (response.data.data.length == 0) {
+                        this.setState({ kosong: true, loading: false })
                     }
-                    else{
+                    else {
                         this.setState({
                             kosong: false,
                             barang: response.data.data,
-                            loading : false
+                            loading: false
                         })
                     }
                     // console.error(this.state.barang)
                 }
                 else {
-                    this.setState({ 
-                        loading: false 
+                    this.setState({
+                        loading: false
                     })
                 }
             }).catch(error => {
@@ -131,6 +131,7 @@ class Search extends React.Component {
             <Container style={{ flex: 1, backgroundColor: '#f6f6f6' }}>
                 <View>
                     <Header searchBar noShadow rounded style={styles.header} androidStatusBarColor='#004600'>
+                        <StatusBar barStyle="light-content" />
                         <Item>
                             <Icon name="arrow-back" onPress={() => this.props.navigation.pop()} />
                             <Icon name="ios-search" />
@@ -143,18 +144,18 @@ class Search extends React.Component {
                     </Header>
                 </View>
                 <Content style={styles.content}>
-                    { this.state.kosong ?
-                        <Text style={{alignSelf:'center'}}>Barang Tidak Ditemukan</Text>  
-                    :
-                    <FlatList
-                        showsHorizontalScrollIndicator={false}
-                        numColumns={2}
-                        data={this.state.barang}
-                        renderItem={({ item }) => (
-                            <ItemCard data={item} navigation={this.props.navigation} />
-                        )}
-                        keyExtractor={(item, index) => index.toString()}
-                    />}
+                    {this.state.kosong ?
+                        <Text style={{ alignSelf: 'center' }}>Barang Tidak Ditemukan</Text>
+                        :
+                        <FlatList
+                            showsHorizontalScrollIndicator={false}
+                            numColumns={2}
+                            data={this.state.barang}
+                            renderItem={({ item }) => (
+                                <ItemCard data={item} navigation={this.props.navigation} />
+                            )}
+                            keyExtractor={(item, index) => index.toString()}
+                        />}
                 </Content>
                 {this.state.loading ?
                     <View style={{ paddingTop: 250, alignSelf: 'center', justifyContent: 'center', position: 'absolute' }}>
