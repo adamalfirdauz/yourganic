@@ -81,7 +81,7 @@ export default class UpdateProfile extends React.Component {
       let parsed = JSON.parse(value)
       if (value !== null) {
         // We have data!!
-        if(parsed.img == 'storage/'){
+        if (parsed.img == 'storage/') {
           this.setState({
             id: parsed.id,
             nama: parsed.name,
@@ -91,7 +91,7 @@ export default class UpdateProfile extends React.Component {
             imageSource: null,
           })
         }
-        else{
+        else {
           this.setState({
             id: parsed.id,
             nama: parsed.name,
@@ -101,7 +101,7 @@ export default class UpdateProfile extends React.Component {
             imageSource: parsed.img,
           })
         }
-        
+
       }
     }).catch((error) => {
       console.error(error)
@@ -186,6 +186,7 @@ export default class UpdateProfile extends React.Component {
     return (
       <Container style={{ backgroundColor: 'white' }}>
         <Header style={styles.headerStyle} androidStatusBarColor='#004600'>
+          <StatusBar barStyle="light-content" />
           <Left>
             <Button
               transparent
