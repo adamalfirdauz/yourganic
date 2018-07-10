@@ -47,25 +47,26 @@ export default class Provider extends React.Component {
   }
 
   async fetchProfile() {
-      const value = await AsyncStorage.getItem('user-profile');
-      return value
+    const value = await AsyncStorage.getItem('user-profile');
+    return value
   }
 
   async storeItem(key, item) {
     try {
-        var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
-        return jsonOfItem;
+      var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
+      return jsonOfItem;
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
     }
-}
+  }
 
-    async getToken(){
-        const tokens = await AsyncStorage.getItem('access-token')
-        return tokens
-    }
+  async getToken() {
+    const tokens = await AsyncStorage.getItem('access-token')
+    return tokens
+  }
 
-  push(page, data){
+  push(page, data) {
     this.props.navigation.push(page, data)
-    }
+  }
+
 }

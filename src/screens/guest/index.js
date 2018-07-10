@@ -41,6 +41,7 @@ import {
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
 import ItemCard from '../../theme/components/ItemCard';
 import styles from './styles';
+import Styles from './Styles2';
 
 var axios = require('../../api/axios.js');
 
@@ -105,7 +106,14 @@ class Guest extends React.Component {
                         numColumns={2}
                         data={this.state.barang}
                         renderItem={({ item }) => (
-                            <ItemCard data={item} navigation={this.props.navigation} />
+                            // <ItemCard data={item} navigation={this.props.navigation} />
+                            <Card style={Styles.card}>
+                            <Image source={{uri : 'https://yourganic.codepanda.web.id/' + item.img}} style={Styles.image} />
+                            <Text numberOfLines={1} style={Styles.title}>{item.name}</Text>
+                            <Text style={Styles.price}>{item.price}/{item.unit}</Text>
+                            </Card>
+        
+                            
                         )}
                         keyExtractor={(item, index) => index.toString()}
                     />

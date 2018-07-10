@@ -36,13 +36,16 @@ import {
 } from 'react-native-easy-grid';
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
 import ItemBanner from '../../theme/components/ItemBanner';
+import Provider from '../../provider/setup.js'
 import styles from './styles';
 
 var resep = require('../../../assets/image/resep.png');
 
 
 class ItemDetails extends React.Component {
+    
     constructor(props) {
+        provider = new Provider()
         super(props)
         this.parse()
         this.state = {
@@ -61,28 +64,6 @@ class ItemDetails extends React.Component {
         // console.error(this.state.barang)
     }
 
-    async storeItem(key, item) {
-        try {
-            var jsonOfItem = await AsyncStorage.setItem(key, JSON.stringify(item));
-            return jsonOfItem;
-        } catch (error) {
-            console.log(error.message);
-        }
-    }
-
-    incrementItem() {
-        if (this.state.sum < 6) {
-            this.setState({ sum: this.state.sum + 1 })
-        }
-        else {
-            alert("Melebihi Batas, Max 6")
-        }
-    }
-    decrementItem() {
-        if (this.state.sum > 0)
-            this.setState({ sum: this.state.sum - 1 })
-    }
-
     checkOut() {
         // this.storeItem('Barang'+0, this.state.barang)
         this.props.navigation.push('CheckOut')
@@ -92,7 +73,8 @@ class ItemDetails extends React.Component {
         let targetPost = this.state.barang
         targetPost.jumlah = 1
         // console.error(targetPost)
-        this.storeItem('Barang' + this.state.barang.id, targetPost)
+        // this.storeItem('Barang' + this.state.barang.id, targetPost)
+        provider.storeItem('Barang'+this.state.barang.id, targetPost)
         this.props.navigation.push('CheckOut')
     }
 
@@ -113,7 +95,7 @@ class ItemDetails extends React.Component {
         let items = null
         var total = 0
         var j = 0
-        for (var i = 0; i < 15; i++) {
+        for (var i = 0; i < 99; i++) {
             try {
                 const retrievedItem = await AsyncStorage.getItem('Barang' + i);
                 if (retrievedItem != null) {

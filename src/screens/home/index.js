@@ -42,7 +42,6 @@ var axios = require('../../api/axios.js');
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.fetchProfile()
     this.state = {
       profile: {
         nama: '',
@@ -57,28 +56,11 @@ export default class HomeScreen extends React.Component {
       buah:[],
       loading: true
     };
-    this.fetchStuff()
+    // this.fetchStuff()
     this.fetchMenu()
     this.fetchSayuran()
     this.fetchBuah()
   }
-  async fetchProfile() {
-    try {
-      const value = await AsyncStorage.getItem('profile');
-      let parsed = JSON.parse(value)
-      if (value !== null) {
-        this.setState({
-          profile: {
-            nama: parsed.data.nama,
-            email: parsed.data.email,
-          }
-        })
-      }
-    } catch (error) {
-      console.error("error")
-    }
-  }
-
   fetchStuff() {
     // this.setState({ loading: true })
     axios.get('/api/product/getAll', {
@@ -99,7 +81,7 @@ export default class HomeScreen extends React.Component {
     }).catch(error => {
       alert("Koneksi gagal")
       // this.setState({loading: false})
-      console.error(error)
+      // console.error(error)
 
     });
   }
@@ -119,8 +101,8 @@ export default class HomeScreen extends React.Component {
         this.setState({ loading: false })
       }
     }).catch(error => {
-      alert("Koneksi gagal")
-      console.error(error)
+      alert("Koneksi gagal1")
+      // console.error(error)
 
     });
   }
@@ -140,8 +122,8 @@ export default class HomeScreen extends React.Component {
         this.setState({ loading: false })
       }
     }).catch(error => {
-      alert("Koneksi gagal")
-      console.error(error)
+      alert("Koneksi gagal2")
+      // console.error(error)
 
     });
   }
@@ -161,14 +143,14 @@ export default class HomeScreen extends React.Component {
         this.setState({ loading: false })
       }
     }).catch(error => {
-      alert("Koneksi gagal")
-      console.error(error)
+      alert("Koneksi gagal3")
+      // console.error(error)
 
     });
   }
 
   _refresh() {
-    this.fetchStuff
+    this.fetchStuff()
     return new Promise((resolve) => {
       setTimeout(() => { resolve() }, 2000)
     });
@@ -203,7 +185,7 @@ export default class HomeScreen extends React.Component {
             </Right>
           </Header>
         </View>
-        <PTRView onRefresh={this._refresh} >
+        <PTRView onRefresh={()=>this._refresh()} >
           <Content style={styles.content}>
             <ItemBanner data={this.state.resep} />
             <HorizontalItemList title="Resep Sehat" data={this.state.menu} navigation={this.props.navigation} />

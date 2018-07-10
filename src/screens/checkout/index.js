@@ -37,6 +37,7 @@ import {
 } from 'react-native-easy-grid';
 import HorizontalItemList from '../../theme/components/HorizontalItemList';
 import ItemBanner from '../../theme/components/ItemBanner';
+import Provider from '../../provider/setup.js'
 import styles from './styles';
 
 var resep = require('../../../assets/image/resep.png');
@@ -44,6 +45,7 @@ var axios = require('../../api/axios.js');
 
 class CheckOut extends React.Component {
     constructor(props) {
+        provider = new Provider()
         super(props)
         this.state = {
             barang: [],
@@ -66,7 +68,7 @@ class CheckOut extends React.Component {
         const items = []
         var total = 0
         var j = 0
-        for (var i = 0; i < 15; i++) {
+        for (var i = 0; i < 99; i++) {
             try {
                 const retrievedItem = await AsyncStorage.getItem('Barang' + i);
                 if (retrievedItem != null) {
@@ -133,16 +135,28 @@ class CheckOut extends React.Component {
         this.setState({ barang })
         this.fetchData()
         // console.error(this.state.barang[index])
-        this.storeItem('Barang' + this.state.barang[index].id, this.state.barang[index])
+        // this.storeItem('Barang' + this.state.barang[index].id, this.state.barang[index])
+        provider.storeItem('Barang'+this.state.barang[index].id, this.state.barang[index])
     }
 
     async retrieveToken() {
-        const tokens = await AsyncStorage.getItem('access-token');
-        if (tokens) {
-            this.setState({
-                token: JSON.parse(tokens)
-            })
-        }
+        // const tokens = await AsyncStorage.getItem('access-token');
+        // if (tokens) {
+        //     this.setState({
+        //         token: JSON.parse(tokens)
+        //     })
+        // }
+
+        provider.getToken().then((value)=>{
+            // console.error(value)
+            if(value){
+                this.setState({
+                    token: JSON.parse(value)
+                })
+            }
+        }).catch((error) => {
+            console.log('Terjadi kesalahan : ' + error);
+        });
     }
 
     checkOut() {
